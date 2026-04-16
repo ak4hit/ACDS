@@ -1,0 +1,13 @@
+node_modules/
+__pycache__/
+*.pyc
+.env
+venv/
+env/
+.vscode/
+.idea/
+dist/
+build/
+.next/
+*.log
+acds/backend/fake_logs/

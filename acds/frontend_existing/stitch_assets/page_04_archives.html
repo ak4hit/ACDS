@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ACDS ARCHIVES — Tactical Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#72ff70",
+                        "background": "#131313",
+                        "on-tertiary": "#690003",
+                        "tertiary-fixed": "#ffdad5",
+                        "inverse-primary": "#006e16",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary": "#c8c6c5",
+                        "on-error": "#690005",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#353534",
+                        "on-surface-variant": "#b9ccb2",
+                        "surface-dim": "#131313",
+                        "on-primary-container": "#007117",
+                        "outline": "#84967e",
+                        "on-secondary-fixed-variant": "#474746",
+                        "tertiary-fixed-dim": "#ffb4aa",
+                        "surface": "#131313",
+                        "on-surface": "#e5e2e1",
+                        "on-primary": "#003907",
+                        "on-secondary-container": "#b7b5b4",
+                        "tertiary-container": "#ffd2cc",
+                        "on-tertiary-fixed-variant": "#930005",
+                        "primary-fixed-dim": "#00e639",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-background": "#e5e2e1",
+                        "secondary-container": "#474746",
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary": "#303030",
+                        "tertiary": "#fff7f6",
+                        "surface-container": "#201f1f",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "surface-tint": "#00e639",
+                        "on-tertiary-fixed": "#410001",
+                        "surface-variant": "#353534",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-primary-fixed": "#002203",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-primary-fixed-variant": "#00530e",
+                        "outline-variant": "#3b4b37",
+                        "surface-bright": "#3a3939",
+                        "on-tertiary-container": "#c4010b",
+                        "primary-container": "#00ff41",
+                        "primary": "#ebffe2",
+                        "inverse-on-surface": "#313030"
+                    },
+                    "borderRadius": {
+                        "none": "0px",
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["IBM Plex Mono"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-shift-displacement {
+            transition: background-color 0.2s ease;
+        }
+        body {
+            background-color: #131313;
+            background-image: radial-gradient(circle at 50% 50%, rgba(0, 255, 65, 0.02) 0%, transparent 80%);
+            height: 1024px;
+            width: 1280px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="font-body text-on-surface selection:bg-primary-container selection:text-on-primary">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-[#1c1b1b] dark:bg-neutral-900 flex flex-col py-8 z-50">
+<div class="px-6 mb-12">
+<div class="font-['Space_Grotesk'] font-black text-[#00FF41] tracking-widest text-xl mb-1">SOVEREIGN ARCHITECT</div>
+<div class="font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs text-neutral-500">ACDS LOGO</div>
+</div>
+<nav class="flex-grow space-y-1">
+<a class="group flex items-center px-6 py-4 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="architecture">architecture</span>
+                BLUEPRINTS
+            </a>
+<a class="group flex items-center px-6 py-4 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="security">security</span>
+                THREATS
+            </a>
+<a class="group flex items-center px-6 py-4 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="psychology">psychology</span>
+                INTELLIGENCE
+            </a>
+<a class="group flex items-center px-6 py-4 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs text-[#ebffe2] bg-[#3a3939] border-l-2 border-[#00FF41]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="inventory_2">inventory_2</span>
+                ARCHIVES
+            </a>
+<a class="group flex items-center px-6 py-4 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a]" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="settings">settings</span>
+                SETTINGS
+            </a>
+</nav>
+<div class="px-6 mt-auto">
+<div class="h-1 w-full bg-surface-container-high relative overflow-hidden">
+<div class="absolute inset-0 bg-[#00FF41] w-1/3 animate-pulse"></div>
+</div>
+<p class="font-mono text-[10px] mt-2 text-neutral-600">CORE STATUS: STABLE</p>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-20 ml-64 bg-[#131313]/60 backdrop-blur-xl flex justify-between items-center px-8 z-40">
+<div class="flex items-center space-x-6">
+<h1 class="font-['Space_Grotesk'] font-bold text-lg uppercase text-[#00FF41]">ACDS — AI Cyber Defense System</h1>
+<div class="h-4 w-px bg-outline-variant/30"></div>
+<div class="flex items-center text-[#00FF41] font-mono text-xs tracking-widest bg-primary-container/10 px-3 py-1">
+<span class="w-2 h-2 rounded-full bg-[#00FF41] mr-2 animate-ping"></span>
+                LIVE FEED ACTIVE
+            </div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="bg-surface-container-high px-4 py-2 font-mono text-[10px] uppercase tracking-widest text-[#00FF41] hover:bg-[#00FF41] hover:text-black transition-all cursor-crosshair">LOGS</button>
+<button class="bg-primary-container px-6 py-2 font-['Space_Grotesk'] font-bold text-sm uppercase text-on-primary-container hover:bg-primary-fixed-dim transition-all cursor-crosshair">DEPLOY SHIELD</button>
+<span class="material-symbols-outlined text-[#00FF41] ml-4" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-20 p-8 h-[calc(100%-144px)] overflow-hidden">
+<!-- Action Header -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<div class="flex items-center space-x-3 mb-2">
+<button class="w-10 h-10 bg-[#00FF41] flex items-center justify-center text-black">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+<h2 class="text-3xl font-headline font-bold uppercase tracking-tight">System Archives</h2>
+</div>
+<p class="font-mono text-xs text-outline tracking-wider">247 ARCHIVED EVENTS FOUND IN SECURE STORAGE</p>
+</div>
+<div class="flex space-x-1 bg-surface-container-low p-1">
+<button class="px-4 py-2 bg-[#00FF41] text-black font-mono text-[10px] tracking-widest uppercase">LIVE FEED ACTIVE</button>
+<button class="px-4 py-2 hover:bg-surface-bright transition-colors font-mono text-[10px] tracking-widest uppercase">RESET</button>
+<button class="px-4 py-2 hover:bg-surface-bright transition-colors font-mono text-[10px] tracking-widest uppercase">FILE MODE</button>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="flex justify-between items-center bg-surface-container-low px-4 py-2 mb-6">
+<div class="flex space-x-8">
+<button class="font-mono text-[11px] uppercase tracking-widest text-[#00FF41] border-b border-[#00FF41] pb-1">ALL</button>
+<button class="font-mono text-[11px] uppercase tracking-widest text-neutral-500 hover:text-on-surface">WITH PLAYBOOK</button>
+<button class="font-mono text-[11px] uppercase tracking-widest text-neutral-500 hover:text-on-surface">CORRELATED ONLY</button>
+</div>
+<div class="flex items-center space-x-4">
+<button class="flex items-center font-mono text-[11px] uppercase tracking-widest text-neutral-400 hover:text-[#00FF41]">
+<span class="material-symbols-outlined text-sm mr-2" data-icon="filter_list">filter_list</span>
+</button>
+<button class="font-mono text-[11px] uppercase tracking-widest bg-surface-container-highest px-3 py-1 hover:bg-surface-bright">ADVANCED FILTERS</button>
+</div>
+</div>
+<!-- Events List Container -->
+<div class="h-[calc(100%-180px)] overflow-y-auto no-scrollbar space-y-[2px]">
+<!-- Table Header -->
+<div class="grid grid-cols-12 gap-4 px-4 py-2 bg-surface-container-highest/50 font-mono text-[10px] text-outline uppercase tracking-widest mb-1">
+<div class="col-span-2">TIMESTAMP</div>
+<div class="col-span-2">THREAT TYPE</div>
+<div class="col-span-3">SOURCE IDENTIFIER</div>
+<div class="col-span-1">SEVERITY</div>
+<div class="col-span-1 text-center">PLAYBOOK</div>
+<div class="col-span-1 text-center">CORR</div>
+<div class="col-span-1 text-center">FP</div>
+<div class="col-span-1"></div>
+</div>
+<!-- Event Card 01 -->
+<div class="grid grid-cols-12 gap-4 px-4 py-4 bg-surface-container-low hover:bg-surface-container transition-colors items-center group">
+<div class="col-span-2 font-mono text-xs text-on-surface/80">2024-05-24 14:02:11</div>
+<div class="col-span-2">
+<span class="px-2 py-1 bg-error-container/20 text-error text-[10px] font-mono border-l-2 border-error uppercase">SQL Injection</span>
+</div>
+<div class="col-span-3 font-mono text-xs text-primary-fixed-dim">192.168.1.105 // EXT-SVR-04</div>
+<div class="col-span-1">
+<div class="flex space-x-1">
+<div class="w-1 h-3 bg-error"></div>
+<div class="w-1 h-3 bg-error"></div>
+<div class="w-1 h-3 bg-error"></div>
+</div>
+</div>
+<div class="col-span-1 text-center">
+<span class="material-symbols-outlined text-[#00FF41] text-lg" data-icon="verified">verified</span>
+</div>
+<div class="col-span-1 text-center">
+<span class="material-symbols-outlined text-outline/30 text-lg" data-icon="link">link</span>
+</div>
+<div class="col-span-1 text-center">
+<span class="material-symbols-outlined text-outline/20 text-lg" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+</div>
+<div class="col-span-1 text-right">
+<span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 cursor-pointer hover:text-white" data-icon="open_in_new">open_in_new</span>
+</div>
+</div>
+<!-- Event Card 02 -->
+<div class="grid grid-cols-12 gap-4 px-4 py-4 bg-surface-container-low hover:bg-surface-container transition-colors items-center group">
+<div class="col-span-2 font-mono text-xs text-on-surface/80">2024-05-24 13:58:44</div>
+<div class="col-span-2">
+<span class="px-2 py-1 bg-primary-container/10 text-[#00FF41] text-[10px] font-mono border-l-2 border-[#00FF41] uppercase">DDoS Burst</span>
+</div>
+<div class="col-span-3 font-mono text-xs text-primary-fixed-dim">MULTIPLE_IPS // CLOUD_GATEWAY</div>
+<div class="col-span-1">
+<div class="flex space-x-1">
+<div class="w-1 h-3 bg-primary-container"></div>
+<div class="w-1 h-3 bg-primary-container"></div>
+<div class="w-1 h-3 bg-outline-variant"></div>
+</div>
+</div>
+<div class="col-span-1 text-center">
+<span class="material-symbols-outlined text-outline/30 text-lg" data-icon="verified">verified</span>
+</div>
+<div class="col-span-1 text-center">
+<span class="material-symbols-outlined text-[#00FF41] text-lg" data-icon="link">link</span>
+</div>
+<div class="col-span-1 text-center">
+<span class="material-symbols-outlined text-outline/20 text-lg" data-icon="radio_button_unchecked">radio_button_unchecked</span>
+</div>
+<div class="col-span-1 text-right">
+<span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 cursor-pointer" data-icon="open_in_new">open_in_new</span>
+</div>
+</div>
+<!-- Event Card 03 (Correlated) -->
+<div class="grid grid-cols-12 gap-4 px-4 py-4 bg-surface-container-low hover:bg-surface-container transition-colors items-center group">
+<div class="col-span-2 font-mono text-xs text-on-surface/80">2024-05-24 13:45:01</div>
+<div class="col-span-2">
+<span class="px-2 py-1 bg-surface-container-highest text-secondary text-[10px] font-mono border-l-2 border-secondary uppercase">Port Scan</span>
+</div>
+<div class="col-span-3 font-mono text-xs text-primary-fixed-dim">45.32.12.89 // UNKNOWN_HOST</div>
+<div class="col-span-1">
+<div class="flex space-x-1">
+<div class="w-1 h-3 bg-secondary"></div>
+<div class="w-1 h-3 bg-outline-variant"></div>
+<div class="w-1 h-3 bg-outline-variant"></div>
+</div>
+</div>
+<div class="col-span-1 text-center">
+<span class="material-symbols-outlined text-outline/30 text-lg" data-icon="verified">verified</span>
+</div>
+<div class="col-span-1 text-center">
+<span class="material-symbols-outlined text-[#00FF41] text-lg" data-icon="link">link</span>
+</div>
+<div class="col-span-1 text-center">
+<span class="material-symbols-outlined text-error text-lg" data-icon="check_circle">check_circle</span>
+</div>
+<div class="col-span-1 text-right">
+<span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 cursor-pointer" data-icon="open_in_new">open_in_new</span>
+</div>
+</div>
+<!-- More rows to fill space -->
+<div class="grid grid-cols-12 gap-4 px-4 py-4 bg-surface-container-low hover:bg-surface-container transition-colors items-center group opacity-80">
+<div class="col-span-2 font-mono text-xs text-on-surface/60">2024-05-24 13:30:12</div>
+<div class="col-span-2"><span class="px-2 py-1 bg-error-container/20 text-error text-[10px] font-mono border-l-2 border-error uppercase">Ransomware Sig</span></div>
+<div class="col-span-3 font-mono text-xs text-primary-fixed-dim">ENDPOINT_SEC_01 // WORKSTATION-X</div>
+<div class="col-span-1"><div class="flex space-x-1"><div class="w-1 h-3 bg-error"></div><div class="w-1 h-3 bg-error"></div><div class="w-1 h-3 bg-error"></div></div></div>
+<div class="col-span-1 text-center"><span class="material-symbols-outlined text-[#00FF41] text-lg" data-icon="verified">verified</span></div>
+<div class="col-span-1 text-center"><span class="material-symbols-outlined text-[#00FF41] text-lg" data-icon="link">link</span></div>
+<div class="col-span-1 text-center"><span class="material-symbols-outlined text-outline/20 text-lg" data-icon="radio_button_unchecked">radio_button_unchecked</span></div>
+<div class="col-span-1 text-right"><span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 cursor-pointer" data-icon="open_in_new">open_in_new</span></div>
+</div>
+<div class="grid grid-cols-12 gap-4 px-4 py-4 bg-surface-container-low hover:bg-surface-container transition-colors items-center group opacity-60">
+<div class="col-span-2 font-mono text-xs text-on-surface/40">2024-05-24 13:12:45</div>
+<div class="col-span-2"><span class="px-2 py-1 bg-primary-container/10 text-[#00FF41] text-[10px] font-mono border-l-2 border-[#00FF41] uppercase">Anomaly Det</span></div>
+<div class="col-span-3 font-mono text-xs text-primary-fixed-dim">INTERNAL_VLAN_2 // APP_SVR_PROD</div>
+<div class="col-span-1"><div class="flex space-x-1"><div class="w-1 h-3 bg-primary-container"></div><div class="w-1 h-3 bg-outline-variant"></div><div class="w-1 h-3 bg-outline-variant"></div></div></div>
+<div class="col-span-1 text-center"><span class="material-symbols-outlined text-outline/30 text-lg" data-icon="verified">verified</span></div>
+<div class="col-span-1 text-center"><span class="material-symbols-outlined text-outline/30 text-lg" data-icon="link">link</span></div>
+<div class="col-span-1 text-center"><span class="material-symbols-outlined text-outline/20 text-lg" data-icon="radio_button_unchecked">radio_button_unchecked</span></div>
+<div class="col-span-1 text-right"><span class="material-symbols-outlined text-outline opacity-0 group-hover:opacity-100 cursor-pointer" data-icon="open_in_new">open_in_new</span></div>
+</div>
+</div>
+</main>
+<!-- Footer Cluster -->
+<footer class="fixed bottom-0 right-0 w-[calc(100%-16rem)] bg-[#0e0e0e] flex justify-between items-center px-8 py-3 ml-64 border-t border-neutral-800/20 z-40">
+<div class="flex items-center space-x-8">
+<button class="bg-error-container/20 text-error font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest px-4 py-1 hover:bg-error-container hover:text-white transition-colors">END STREAM</button>
+<div class="flex space-x-6">
+<div class="flex flex-col">
+<span class="font-['IBM_Plex_Mono'] text-[8px] text-neutral-600">TOTAL EVENTS</span>
+<span class="font-['IBM_Plex_Mono'] text-[10px] text-on-surface">247</span>
+</div>
+<div class="flex flex-col">
+<span class="font-['IBM_Plex_Mono'] text-[8px] text-neutral-600">GEMINI PLAYBOOKS</span>
+<span class="font-['IBM_Plex_Mono'] text-[10px] text-[#00FF41]">34</span>
+</div>
+<div class="flex flex-col">
+<span class="font-['IBM_Plex_Mono'] text-[8px] text-neutral-600">CORRELATED</span>
+<span class="font-['IBM_Plex_Mono'] text-[10px] text-on-surface">12</span>
+</div>
+</div>
+</div>
+<div class="flex items-center space-x-12">
+<div class="flex items-center space-x-4">
+<button class="material-symbols-outlined text-sm text-neutral-600 hover:text-[#00FF41]" data-icon="chevron_left">chevron_left</button>
+<span class="font-['IBM_Plex_Mono'] text-[10px] text-[#00FF41] tracking-widest uppercase">PAGE 01 / 42</span>
+<button class="material-symbols-outlined text-sm text-neutral-600 hover:text-[#00FF41]" data-icon="chevron_right">chevron_right</button>
+</div>
+<div class="flex space-x-4">
+<span class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-neutral-600">Core Version ACDS-V4.0.2-ALPHA</span>
+<span class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-[#00FF41]">Encryption Status OAK-HARDENED</span>
+</div>
+</div>
+</footer>
+<!-- Decorative Watermark Overlay -->
+<div class="fixed bottom-32 right-12 opacity-[0.02] pointer-events-none select-none z-0">
+<h3 class="text-8xl font-black font-headline rotate-12">SOVEREIGN ARCHITECT</h3>
+</div>
+</body></html>

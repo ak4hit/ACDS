@@ -1,0 +1,542 @@
+[
+  {
+    "timestamp": "2024-10-24T12:43:50Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:43:52Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:43:54Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:43:56Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:43:58Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:44:00Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:44:02Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:44:04Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:44:06Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:44:08Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:44:10Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:44:12Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:44:14Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:44:16Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:44:18Z",
+    "src_ip": "192.168.1.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:45:00Z",
+    "src_ip": "10.0.0.55",
+    "dst_ip": "185.220.101.34",
+    "event_type": "outbound_transfer",
+    "bytes": 200,
+    "protocol": "HTTP",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:45:32Z",
+    "src_ip": "10.0.0.55",
+    "dst_ip": "185.220.101.34",
+    "event_type": "outbound_transfer",
+    "bytes": 200,
+    "protocol": "HTTP",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:46:05Z",
+    "src_ip": "10.0.0.55",
+    "dst_ip": "185.220.101.34",
+    "event_type": "outbound_transfer",
+    "bytes": 200,
+    "protocol": "HTTP",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:46:36Z",
+    "src_ip": "10.0.0.55",
+    "dst_ip": "185.220.101.34",
+    "event_type": "outbound_transfer",
+    "bytes": 200,
+    "protocol": "HTTP",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:47:09Z",
+    "src_ip": "10.0.0.55",
+    "dst_ip": "185.220.101.34",
+    "event_type": "outbound_transfer",
+    "bytes": 200,
+    "protocol": "HTTP",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:47:40Z",
+    "src_ip": "10.0.0.55",
+    "dst_ip": "185.220.101.34",
+    "event_type": "outbound_transfer",
+    "bytes": 200,
+    "protocol": "HTTP",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:48:12Z",
+    "src_ip": "10.0.0.55",
+    "dst_ip": "185.220.101.34",
+    "event_type": "outbound_transfer",
+    "bytes": 200,
+    "protocol": "HTTP",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:48:43Z",
+    "src_ip": "10.0.0.55",
+    "dst_ip": "185.220.101.34",
+    "event_type": "outbound_transfer",
+    "bytes": 200,
+    "protocol": "HTTP",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:49:15Z",
+    "src_ip": "10.0.0.55",
+    "dst_ip": "185.220.101.34",
+    "event_type": "outbound_transfer",
+    "bytes": 200,
+    "protocol": "HTTP",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:49:47Z",
+    "src_ip": "10.0.0.55",
+    "dst_ip": "185.220.101.34",
+    "event_type": "outbound_transfer",
+    "bytes": 200,
+    "protocol": "HTTP",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:50:00Z",
+    "src_ip": "172.16.0.4",
+    "dst_ip": "88.10.33.241",
+    "event_type": "outbound_transfer",
+    "bytes": 52000000,
+    "protocol": "HTTPS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:50:01Z",
+    "src_ip": "172.16.0.4",
+    "dst_ip": "88.10.33.241",
+    "event_type": "outbound_transfer",
+    "bytes": 55000000,
+    "protocol": "HTTPS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:50:02Z",
+    "src_ip": "172.16.0.4",
+    "dst_ip": "88.10.33.241",
+    "event_type": "outbound_transfer",
+    "bytes": 53000000,
+    "protocol": "HTTPS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:50:03Z",
+    "src_ip": "172.16.0.4",
+    "dst_ip": "88.10.33.241",
+    "event_type": "outbound_transfer",
+    "bytes": 51000000,
+    "protocol": "HTTPS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:50:04Z",
+    "src_ip": "172.16.0.4",
+    "dst_ip": "88.10.33.241",
+    "event_type": "outbound_transfer",
+    "bytes": 82000000,
+    "protocol": "HTTPS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:51:00Z",
+    "src_ip": "10.0.0.12",
+    "dst_ip": "s3.amazonaws.com",
+    "event_type": "outbound_transfer",
+    "bytes": 200000000,
+    "protocol": "HTTPS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:51:01Z",
+    "src_ip": "10.0.0.12",
+    "dst_ip": "s3.amazonaws.com",
+    "event_type": "outbound_transfer",
+    "bytes": 300000000,
+    "protocol": "HTTPS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:51:02Z",
+    "src_ip": "10.0.0.12",
+    "dst_ip": "s3.amazonaws.com",
+    "event_type": "outbound_transfer",
+    "bytes": 250000000,
+    "protocol": "HTTPS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:00Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:02Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:05Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed",
+    "bytes": 0,
+    "protocol": "HTTP",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:07Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed",
+    "bytes": 0,
+    "protocol": "HTTP",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:09Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:11Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:13Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed",
+    "bytes": 0,
+    "protocol": "HTTP",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:15Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:17Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed_login",
+    "bytes": 0,
+    "protocol": "SSH",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:18Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed",
+    "bytes": 0,
+    "protocol": "HTTP",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:20Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed",
+    "bytes": 0,
+    "protocol": "HTTP",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:52:25Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "failed",
+    "bytes": 0,
+    "protocol": "HTTP",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:01Z",
+    "src_ip": "82.161.0.244",
+    "dst_ip": "10.0.0.12",
+    "event_type": "http_request",
+    "bytes": 500,
+    "protocol": "HTTP",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:02Z",
+    "src_ip": "101.32.204.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "dns_query",
+    "bytes": 60,
+    "protocol": "DNS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:03Z",
+    "src_ip": "180.76.76.76",
+    "dst_ip": "10.0.0.12",
+    "event_type": "http_request",
+    "bytes": 1200,
+    "protocol": "HTTPS",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:04Z",
+    "src_ip": "82.161.0.244",
+    "dst_ip": "10.0.0.12",
+    "event_type": "dns_query",
+    "bytes": 45,
+    "protocol": "DNS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:05Z",
+    "src_ip": "94.23.111.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "http_request",
+    "bytes": 800,
+    "protocol": "HTTP",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:06Z",
+    "src_ip": "103.4.11.9",
+    "dst_ip": "10.0.0.12",
+    "event_type": "http_request",
+    "bytes": 400,
+    "protocol": "HTTP",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:07Z",
+    "src_ip": "45.22.112.9",
+    "dst_ip": "10.0.0.12",
+    "event_type": "http_request",
+    "bytes": 200,
+    "protocol": "HTTPS",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:08Z",
+    "src_ip": "88.10.33.241",
+    "dst_ip": "10.0.0.12",
+    "event_type": "http_request",
+    "bytes": 100,
+    "protocol": "HTTPS",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:09Z",
+    "src_ip": "101.32.204.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "dns_query",
+    "bytes": 55,
+    "protocol": "DNS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:10Z",
+    "src_ip": "82.161.0.244",
+    "dst_ip": "10.0.0.12",
+    "event_type": "http_request",
+    "bytes": 800,
+    "protocol": "HTTP",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:11Z",
+    "src_ip": "194.122.45.11",
+    "dst_ip": "10.0.0.12",
+    "event_type": "http_request",
+    "bytes": 400,
+    "protocol": "HTTPS",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:12Z",
+    "src_ip": "103.4.11.9",
+    "dst_ip": "10.0.0.12",
+    "event_type": "dns_query",
+    "bytes": 70,
+    "protocol": "DNS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:13Z",
+    "src_ip": "45.22.112.9",
+    "dst_ip": "10.0.0.12",
+    "event_type": "http_request",
+    "bytes": 2200,
+    "protocol": "HTTP",
+    "layer": "application"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:14Z",
+    "src_ip": "94.23.111.45",
+    "dst_ip": "10.0.0.12",
+    "event_type": "dns_query",
+    "bytes": 60,
+    "protocol": "DNS",
+    "layer": "network"
+  },
+  {
+    "timestamp": "2024-10-24T12:53:15Z",
+    "src_ip": "88.10.33.241",
+    "dst_ip": "10.0.0.12",
+    "event_type": "http_request",
+    "bytes": 500,
+    "protocol": "HTTPS",
+    "layer": "application"
+  }
+]

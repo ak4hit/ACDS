@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ACDS — THREATS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#72ff70",
+                        "background": "#131313",
+                        "on-tertiary": "#690003",
+                        "tertiary-fixed": "#ffdad5",
+                        "inverse-primary": "#006e16",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary": "#c8c6c5",
+                        "on-error": "#690005",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "surface-container-highest": "#353534",
+                        "on-surface-variant": "#b9ccb2",
+                        "surface-dim": "#131313",
+                        "on-primary-container": "#007117",
+                        "outline": "#84967e",
+                        "on-secondary-fixed-variant": "#474746",
+                        "tertiary-fixed-dim": "#ffb4aa",
+                        "surface": "#131313",
+                        "on-surface": "#e5e2e1",
+                        "on-primary": "#003907",
+                        "on-secondary-container": "#b7b5b4",
+                        "tertiary-container": "#ffd2cc",
+                        "on-tertiary-fixed-variant": "#930005",
+                        "primary-fixed-dim": "#00e639",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-background": "#e5e2e1",
+                        "secondary-container": "#474746",
+                        "inverse-surface": "#e5e2e1",
+                        "on-secondary": "#303030",
+                        "tertiary": "#fff7f6",
+                        "surface-container": "#201f1f",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "surface-tint": "#00e639",
+                        "on-tertiary-fixed": "#410001",
+                        "surface-variant": "#353534",
+                        "error": "#ffb4ab",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-primary-fixed": "#002203",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-primary-fixed-variant": "#00530e",
+                        "outline-variant": "#3b4b37",
+                        "surface-bright": "#3a3939",
+                        "on-tertiary-container": "#c4010b",
+                        "primary-container": "#00ff41",
+                        "primary": "#ebffe2",
+                        "inverse-on-surface": "#313030"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["IBM Plex Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 20px;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0e0e0e; }
+        ::-webkit-scrollbar-thumb { background: #3a3939; }
+        ::-webkit-scrollbar-thumb:hover { background: #00FF41; }
+        .tonal-shift-displacement { transition: background-color 0.2s ease; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- SIDE NAVIGATION -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-[#1c1b1b] dark:bg-neutral-900 flex flex-col py-8 z-50">
+<div class="px-6 mb-12">
+<div class="font-['Space_Grotesk'] font-black text-[#00FF41] tracking-widest text-xl">SOVEREIGN</div>
+<div class="font-['IBM_Plex_Mono'] uppercase tracking-tighter text-[10px] text-neutral-500 mt-1">ACDS LOGO // V4.0.2</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center px-6 py-3 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a]" href="#">
+<span class="material-symbols-outlined mr-3">architecture</span>
+                BLUEPRINTS
+            </a>
+<a class="flex items-center px-6 py-3 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs text-[#ebffe2] bg-[#3a3939] border-l-2 border-[#00FF41]" href="#">
+<span class="material-symbols-outlined mr-3">security</span>
+                THREATS
+            </a>
+<a class="flex items-center px-6 py-3 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a]" href="#">
+<span class="material-symbols-outlined mr-3">psychology</span>
+                INTELLIGENCE
+            </a>
+<a class="flex items-center px-6 py-3 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a]" href="#">
+<span class="material-symbols-outlined mr-3">inventory_2</span>
+                ARCHIVES
+            </a>
+<div class="pt-8 mt-8 border-t border-neutral-800/50">
+<a class="flex items-center px-6 py-3 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a]" href="#">
+<span class="material-symbols-outlined mr-3">settings</span>
+                    SETTINGS
+                </a>
+</div>
+</nav>
+<div class="px-6 mt-auto">
+<div class="bg-surface-container-lowest p-4 border-l border-[#00FF41]/30">
+<p class="font-mono text-[10px] text-[#00FF41]">OPERATOR_ID: ARCHITECT_01</p>
+<p class="font-mono text-[10px] text-neutral-600">STATUS: ENCRYPTED</p>
+</div>
+</div>
+</aside>
+<!-- MAIN WRAPPER -->
+<main class="ml-64 flex flex-col min-h-screen">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-20 bg-[#131313]/60 backdrop-blur-xl flex justify-between items-center px-8 z-40">
+<h1 class="font-['Space_Grotesk'] font-bold text-lg uppercase text-[#00FF41] tracking-tight">
+                ACDS — AI Cyber Defense System
+            </h1>
+<div class="flex items-center space-x-6">
+<div class="flex items-center text-[#00FF41] font-mono text-[10px] tracking-widest">
+<span class="relative flex h-2 w-2 mr-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF41] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#00FF41]"></span>
+</span>
+                    LIVE FEED ACTIVE
+                </div>
+<button class="bg-primary-container text-on-primary px-4 py-2 font-headline font-bold text-xs uppercase tracking-widest cursor-crosshair hover:bg-surface-tint transition-all active:scale-95">
+                    DEPLOY SHIELD
+                </button>
+<div class="flex space-x-2">
+<button class="text-neutral-400 hover:text-[#00FF41] transition-colors">
+<span class="material-symbols-outlined">signal_cellular_alt</span>
+</button>
+</div>
+</div>
+</header>
+<!-- CONTENT CANVAS -->
+<section class="mt-20 flex-1 px-8 pt-10 pb-20 overflow-y-auto">
+<!-- HEADER SECTION -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
+<div>
+<div class="font-mono text-[12px] text-primary-fixed mb-2 tracking-widest uppercase">// threat_reconnaissance_module</div>
+<h2 class="font-headline text-4xl font-black text-on-surface tracking-tighter uppercase leading-none">
+                        47 ACTIVE THREATS DETECTED
+                    </h2>
+</div>
+<div class="flex items-center space-x-3">
+<button class="px-4 py-2 bg-surface-container-high border border-outline-variant/20 font-mono text-[10px] uppercase tracking-widest hover:bg-surface-bright transition-all">
+                        RESET
+                    </button>
+<button class="px-4 py-2 bg-surface-container-high border border-outline-variant/20 font-mono text-[10px] uppercase tracking-widest hover:bg-surface-bright transition-all">
+                        FILE MODE
+                    </button>
+</div>
+</div>
+<!-- FILTERS & METRICS GRID -->
+<div class="grid grid-cols-12 gap-1 mb-8">
+<!-- TABS -->
+<div class="col-span-12 md:col-span-8 flex bg-surface-container-low p-1">
+<button class="flex-1 py-3 px-4 bg-surface-bright text-[#00FF41] font-mono text-[11px] font-bold uppercase tracking-widest">
+                        ALL (47)
+                    </button>
+<button class="flex-1 py-3 px-4 text-neutral-500 font-mono text-[11px] uppercase tracking-widest hover:text-on-surface hover:bg-surface-container transition-all">
+                        CRITICAL (12)
+                    </button>
+<button class="flex-1 py-3 px-4 text-neutral-500 font-mono text-[11px] uppercase tracking-widest hover:text-on-surface hover:bg-surface-container transition-all">
+                        HIGH (18)
+                    </button>
+<button class="flex-1 py-3 px-4 text-neutral-500 font-mono text-[11px] uppercase tracking-widest hover:text-on-surface hover:bg-surface-container transition-all">
+                        CORRELATED (17)
+                    </button>
+</div>
+<!-- METRIC BLOCK -->
+<div class="col-span-12 md:col-span-4 bg-surface-container-lowest border border-outline-variant/10 p-4 flex flex-col justify-center">
+<div class="flex justify-between items-center mb-1">
+<span class="font-mono text-[10px] text-neutral-500 uppercase">SYSTEM INTEGRITY</span>
+<span class="font-mono text-[10px] text-primary-fixed uppercase font-bold">NOMINAL</span>
+</div>
+<div class="w-full h-[2px] bg-surface-container-highest">
+<div class="w-[92%] h-full bg-primary-fixed"></div>
+</div>
+</div>
+</div>
+<!-- METRIC TILES ASYMMETRIC -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+<div class="bg-surface-container-low p-6 border-l-4 border-primary-fixed">
+<div class="font-mono text-[10px] text-neutral-500 uppercase mb-1">NETWORK LATENCY</div>
+<div class="font-headline text-3xl font-bold text-on-surface">4ms <span class="text-xs font-mono text-primary-fixed">LOW</span></div>
+</div>
+<div class="bg-surface-container-low p-6 border-l-4 border-primary-fixed">
+<div class="font-mono text-[10px] text-neutral-500 uppercase mb-1">THROUGHPUT</div>
+<div class="font-headline text-3xl font-bold text-on-surface">14,222 <span class="text-xs font-mono text-primary-fixed">OPS/SEC</span></div>
+</div>
+<div class="bg-surface-container-low p-6 border-l-4 border-primary-fixed">
+<div class="font-mono text-[10px] text-neutral-500 uppercase mb-1">EVENT DENSITY</div>
+<div class="font-headline text-3xl font-bold text-on-surface">50 / <span class="text-xs font-mono text-primary-fixed">EVENTS</span></div>
+</div>
+</div>
+<!-- THREAT TABLE -->
+<div class="bg-surface-container-low overflow-hidden">
+<div class="bg-surface-container-highest px-6 py-4 flex justify-between items-center border-b border-outline-variant/10">
+<span class="font-mono text-xs uppercase tracking-widest font-bold">LATEST_INTEL_STREAM</span>
+<span class="font-mono text-[10px] text-neutral-500">LAST SYNC: 14:02:11 GMT</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse">
+<thead>
+<tr class="text-left border-b border-outline-variant/10">
+<th class="px-6 py-4 font-mono text-[10px] uppercase text-neutral-500 tracking-widest">THREAT ID</th>
+<th class="px-6 py-4 font-mono text-[10px] uppercase text-neutral-500 tracking-widest">TYPE</th>
+<th class="px-6 py-4 font-mono text-[10px] uppercase text-neutral-500 tracking-widest">SOURCE IP</th>
+<th class="px-6 py-4 font-mono text-[10px] uppercase text-neutral-500 tracking-widest">COUNTRY</th>
+<th class="px-6 py-4 font-mono text-[10px] uppercase text-neutral-500 tracking-widest">SEVERITY</th>
+<th class="px-6 py-4 font-mono text-[10px] uppercase text-neutral-500 tracking-widest">MITRE TTP</th>
+<th class="px-6 py-4 font-mono text-[10px] uppercase text-neutral-500 tracking-widest">FIRST SEEN</th>
+<th class="px-6 py-4 font-mono text-[10px] uppercase text-neutral-500 tracking-widest">STATUS</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- ROW 1 -->
+<tr class="hover:bg-surface-bright/50 transition-colors cursor-pointer group">
+<td class="px-6 py-5 font-mono text-xs text-primary-fixed group-hover:text-primary-container">#XQ-4029</td>
+<td class="px-6 py-5 text-sm font-medium">SQL_INJECTION_V3</td>
+<td class="px-6 py-5 font-mono text-xs text-neutral-400">192.168.1.104</td>
+<td class="px-6 py-5 text-xs">CN // CHINA</td>
+<td class="px-6 py-5">
+<span class="bg-error-container text-on-error-container font-mono text-[9px] px-2 py-0.5 font-bold uppercase tracking-tighter">CRITICAL</span>
+</td>
+<td class="px-6 py-5 font-mono text-[10px] text-neutral-500">T1190</td>
+<td class="px-6 py-5 font-mono text-xs text-neutral-400">12:04:12</td>
+<td class="px-6 py-5 text-xs text-primary-fixed uppercase font-bold tracking-widest">ISOLATED</td>
+</tr>
+<!-- ROW 2 -->
+<tr class="hover:bg-surface-bright/50 transition-colors cursor-pointer group">
+<td class="px-6 py-5 font-mono text-xs text-primary-fixed group-hover:text-primary-container">#XQ-5112</td>
+<td class="px-6 py-5 text-sm font-medium">BRUTE_FORCE_AUTH</td>
+<td class="px-6 py-5 font-mono text-xs text-neutral-400">45.22.190.11</td>
+<td class="px-6 py-5 text-xs">RU // RUSSIA</td>
+<td class="px-6 py-5">
+<span class="bg-on-tertiary-container text-on-tertiary font-mono text-[9px] px-2 py-0.5 font-bold uppercase tracking-tighter" style="background-color: #ff9800; color: #000;">HIGH</span>
+</td>
+<td class="px-6 py-5 font-mono text-[10px] text-neutral-500">T1110.001</td>
+<td class="px-6 py-5 font-mono text-xs text-neutral-400">12:15:44</td>
+<td class="px-6 py-5 text-xs text-neutral-400 uppercase font-bold tracking-widest">MONITORING</td>
+</tr>
+<!-- ROW 3 -->
+<tr class="hover:bg-surface-bright/50 transition-colors cursor-pointer group">
+<td class="px-6 py-5 font-mono text-xs text-primary-fixed group-hover:text-primary-container">#XQ-0992</td>
+<td class="px-6 py-5 text-sm font-medium">DNS_EXFILTRATION</td>
+<td class="px-6 py-5 font-mono text-xs text-neutral-400">104.18.23.41</td>
+<td class="px-6 py-5 text-xs">US // USA</td>
+<td class="px-6 py-5">
+<span class="bg-error-container text-on-error-container font-mono text-[9px] px-2 py-0.5 font-bold uppercase tracking-tighter">CRITICAL</span>
+</td>
+<td class="px-6 py-5 font-mono text-[10px] text-neutral-500">T1071.004</td>
+<td class="px-6 py-5 font-mono text-xs text-neutral-400">12:30:01</td>
+<td class="px-6 py-5 text-xs text-error uppercase font-bold tracking-widest">ACTIVE</td>
+</tr>
+<!-- ROW 4 -->
+<tr class="hover:bg-surface-bright/50 transition-colors cursor-pointer group">
+<td class="px-6 py-5 font-mono text-xs text-primary-fixed group-hover:text-primary-container">#XQ-7721</td>
+<td class="px-6 py-5 text-sm font-medium">ANOMALOUS_API_CALL</td>
+<td class="px-6 py-5 font-mono text-xs text-neutral-400">INTERNAL_GW_02</td>
+<td class="px-6 py-5 text-xs">LOCAL</td>
+<td class="px-6 py-5">
+<span class="bg-surface-container-highest text-neutral-400 font-mono text-[9px] px-2 py-0.5 font-bold uppercase tracking-tighter">LOW</span>
+</td>
+<td class="px-6 py-5 font-mono text-[10px] text-neutral-500">T1567</td>
+<td class="px-6 py-5 font-mono text-xs text-neutral-400">13:11:59</td>
+<td class="px-6 py-5 text-xs text-neutral-500 uppercase font-bold tracking-widest">REJECTED</td>
+</tr>
+<!-- ROW 5 -->
+<tr class="hover:bg-surface-bright/50 transition-colors cursor-pointer group">
+<td class="px-6 py-5 font-mono text-xs text-primary-fixed group-hover:text-primary-container">#XQ-4033</td>
+<td class="px-6 py-5 text-sm font-medium">REVERSE_SHELL_DETECT</td>
+<td class="px-6 py-5 font-mono text-xs text-neutral-400">201.12.88.9</td>
+<td class="px-6 py-5 text-xs">BR // BRAZIL</td>
+<td class="px-6 py-5">
+<span class="bg-error-container text-on-error-container font-mono text-[9px] px-2 py-0.5 font-bold uppercase tracking-tighter">CRITICAL</span>
+</td>
+<td class="px-6 py-5 font-mono text-[10px] text-neutral-500">T1059.004</td>
+<td class="px-6 py-5 font-mono text-xs text-neutral-400">13:45:22</td>
+<td class="px-6 py-5 text-xs text-primary-fixed uppercase font-bold tracking-widest">QUARANTINED</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- FOOTER -->
+<footer class="fixed bottom-0 right-0 w-[calc(100%-16rem)] h-12 bg-[#0e0e0e] border-t border-neutral-800/20 flex justify-between items-center px-8 z-40">
+<div class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-neutral-600">
+                DESIGNED BY SOVEREIGN ARCHITECT / 2024
+            </div>
+<div class="flex items-center space-x-8">
+<a class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-neutral-600 hover:text-[#00FF41] transition-colors" href="#">Core Version ACDS-V4.0.2-ALPHA</a>
+<a class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-neutral-600 hover:text-[#00FF41] transition-colors" href="#">Encryption Status OAK-HARDENED</a>
+</div>
+</footer>
+</main>
+<!-- FLOATING WATERMARK -->
+<div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.02] z-0">
+<h1 class="font-headline text-[20vw] font-black leading-none">ACDS</h1>
+</div>
+</body></html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ACDS — BLUEPRINTS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Inter:wght@300;400;500;600;700&amp;family=IBM+Plex+Mono:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#72ff70",
+                    "background": "#131313",
+                    "on-tertiary": "#690003",
+                    "tertiary-fixed": "#ffdad5",
+                    "inverse-primary": "#006e16",
+                    "surface-container-high": "#2a2a2a",
+                    "secondary": "#c8c6c5",
+                    "on-error": "#690005",
+                    "on-error-container": "#ffdad6",
+                    "error-container": "#93000a",
+                    "surface-container-highest": "#353534",
+                    "on-surface-variant": "#b9ccb2",
+                    "surface-dim": "#131313",
+                    "on-primary-container": "#007117",
+                    "outline": "#84967e",
+                    "on-secondary-fixed-variant": "#474746",
+                    "tertiary-fixed-dim": "#ffb4aa",
+                    "surface": "#131313",
+                    "on-surface": "#e5e2e1",
+                    "on-primary": "#003907",
+                    "on-secondary-container": "#b7b5b4",
+                    "tertiary-container": "#ffd2cc",
+                    "on-tertiary-fixed-variant": "#930005",
+                    "primary-fixed-dim": "#00e639",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-background": "#e5e2e1",
+                    "secondary-container": "#474746",
+                    "inverse-surface": "#e5e2e1",
+                    "on-secondary": "#303030",
+                    "tertiary": "#fff7f6",
+                    "surface-container": "#201f1f",
+                    "on-secondary-fixed": "#1b1c1c",
+                    "surface-tint": "#00e639",
+                    "on-tertiary-fixed": "#410001",
+                    "surface-variant": "#353534",
+                    "error": "#ffb4ab",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "on-primary-fixed": "#002203",
+                    "secondary-fixed": "#e5e2e1",
+                    "on-primary-fixed-variant": "#00530e",
+                    "outline-variant": "#3b4b37",
+                    "surface-bright": "#3a3939",
+                    "on-tertiary-container": "#c4010b",
+                    "primary-container": "#00ff41",
+                    "primary": "#ebffe2",
+                    "inverse-on-surface": "#313030"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "0px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk", "sans-serif"],
+                    "body": ["Inter", "sans-serif"],
+                    "label": ["Inter", "sans-serif"],
+                    "mono": ["IBM Plex Mono", "monospace"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .watermark {
+            position: fixed;
+            bottom: 10%;
+            right: 5%;
+            font-family: 'Space Grotesk';
+            font-weight: 900;
+            font-size: 12rem;
+            color: #e5e2e1;
+            opacity: 0.02;
+            pointer-events: none;
+            z-index: 0;
+            letter-spacing: -0.05em;
+        }
+    </style>
+</head>
+<body class="overflow-hidden">
+<div class="watermark">ACDS</div>
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-[#1c1b1b] flex flex-col py-8 z-50">
+<div class="px-6 mb-12">
+<h1 class="font-['Space_Grotesk'] font-black text-[#00FF41] tracking-widest text-xl">SOVEREIGN ARCHITECT</h1>
+<p class="font-['IBM_Plex_Mono'] uppercase tracking-tighter text-[10px] text-neutral-500 mt-1">ACDS LOGO</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Active Navigation -->
+<a class="flex items-center px-6 py-4 text-[#ebffe2] bg-[#3a3939] border-l-2 border-[#00FF41] font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="architecture">architecture</span>
+                BLUEPRINTS
+            </a>
+<a class="flex items-center px-6 py-4 text-neutral-500 hover:text-[#00FF41] hover:bg-[#2a2a2a] transition-all duration-75 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="security">security</span>
+                THREATS
+            </a>
+<a class="flex items-center px-6 py-4 text-neutral-500 hover:text-[#00FF41] hover:bg-[#2a2a2a] transition-all duration-75 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="psychology">psychology</span>
+                INTELLIGENCE
+            </a>
+<a class="flex items-center px-6 py-4 text-neutral-500 hover:text-[#00FF41] hover:bg-[#2a2a2a] transition-all duration-75 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="inventory_2">inventory_2</span>
+                ARCHIVES
+            </a>
+</nav>
+<div class="mt-auto px-6">
+<a class="flex items-center py-4 text-neutral-500 hover:text-[#00FF41] hover:bg-[#2a2a2a] transition-all duration-75 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="settings">settings</span>
+                SETTINGS
+            </a>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-16rem)] h-20 bg-[#131313]/60 backdrop-blur-xl flex justify-between items-center px-8 z-40">
+<h2 class="font-['Space_Grotesk'] font-bold text-lg uppercase text-[#00FF41]">ACDS — AI Cyber Defense System</h2>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="h-2 w-2 bg-[#00FF41] rounded-full animate-pulse"></span>
+<span class="font-['Space_Grotesk'] font-bold text-sm text-[#00FF41] tracking-widest uppercase">LIVE FEED ACTIVE</span>
+</div>
+<div class="flex items-center gap-4 border-l border-neutral-800/50 pl-6">
+<button class="font-['Space_Grotesk'] font-bold text-sm uppercase text-neutral-400 hover:text-[#00FF41] transition-all">LOGS</button>
+<button class="bg-[#00ff41] text-[#003907] font-['Space_Grotesk'] font-black text-sm px-6 py-2 uppercase cursor-crosshair hover:bg-[#ebffe2] transition-all">DEPLOY SHIELD</button>
+<span class="material-symbols-outlined text-[#00FF41] cursor-pointer" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 mt-20 p-8 h-[calc(100vh-80px-36px)] overflow-y-auto relative z-10">
+<!-- Header Actions & KPIs -->
+<div class="flex justify-between items-start mb-8">
+<div class="flex gap-4">
+<button class="flex items-center gap-2 bg-surface-container-high px-4 py-2 text-xs font-mono uppercase tracking-widest text-on-surface hover:bg-surface-bright transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span>
+                    Reset
+                </button>
+<button class="flex items-center gap-2 bg-surface-container-high px-4 py-2 text-xs font-mono uppercase tracking-widest text-on-surface hover:bg-surface-bright transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="folder_open">folder_open</span>
+                    File Mode
+                </button>
+</div>
+<div class="grid grid-cols-4 gap-4 w-2/3">
+<div class="bg-surface-container-low p-4 border-l-2 border-outline-variant/20">
+<p class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest mb-1">TOTAL EVENTS</p>
+<h3 class="text-2xl font-headline font-black text-on-surface">1,248,092</h3>
+</div>
+<div class="bg-surface-container-low p-4 border-l-2 border-primary-fixed/40">
+<p class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest mb-1">CRITICAL ALERTS</p>
+<h3 class="text-2xl font-headline font-black text-primary-fixed-dim">042</h3>
+</div>
+<div class="bg-surface-container-low p-4 border-l-2 border-outline-variant/20">
+<p class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest mb-1">FALSE POSITIVES</p>
+<h3 class="text-2xl font-headline font-black text-on-surface">128</h3>
+</div>
+<div class="bg-surface-container-low p-4 border-l-2 border-outline-variant/20">
+<p class="font-mono text-[10px] text-neutral-500 uppercase tracking-widest mb-1">CORRELATED ACTIONS</p>
+<h3 class="text-2xl font-headline font-black text-on-surface">8,102</h3>
+</div>
+</div>
+</div>
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Left Column: Alerts & Status -->
+<div class="col-span-4 space-y-6">
+<!-- Latest Alerts -->
+<div class="bg-surface-container-low h-[400px] flex flex-col">
+<div class="p-4 bg-surface-container-highest flex justify-between items-center">
+<span class="font-headline font-bold uppercase text-sm tracking-widest">Latest Alerts</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:rotate-180 transition-transform duration-300" data-icon="filter_list">filter_list</span>
+</div>
+<div class="overflow-y-auto flex-1 font-mono text-[11px]">
+<div class="p-4 border-b border-outline-variant/10 hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex justify-between mb-1">
+<span class="text-primary-fixed-dim">#AC-8892</span>
+<span class="text-neutral-500">14:22:01</span>
+</div>
+<p class="text-on-surface group-hover:text-primary transition-colors uppercase">Suspicious SSH Login Attempt</p>
+</div>
+<div class="p-4 border-b border-outline-variant/10 hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex justify-between mb-1">
+<span class="text-error">#AC-8891</span>
+<span class="text-neutral-500">14:19:54</span>
+</div>
+<p class="text-on-surface group-hover:text-primary transition-colors uppercase">Large Data Exfiltration (5.2GB)</p>
+</div>
+<div class="p-4 border-b border-outline-variant/10 hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex justify-between mb-1">
+<span class="text-primary-fixed-dim">#AC-8890</span>
+<span class="text-neutral-500">14:15:22</span>
+</div>
+<p class="text-on-surface group-hover:text-primary transition-colors uppercase">C2 Beaconing Detected - V-NET</p>
+</div>
+<div class="p-4 border-b border-outline-variant/10 hover:bg-surface-container-high cursor-pointer transition-colors group">
+<div class="flex justify-between mb-1">
+<span class="text-neutral-500">#AC-8889</span>
+<span class="text-neutral-500">14:12:10</span>
+</div>
+<p class="text-on-surface group-hover:text-primary transition-colors uppercase">Multiple Failed MFA Syncs</p>
+</div>
+</div>
+</div>
+<!-- Engine Status -->
+<div class="bg-surface-container-low p-6">
+<h4 class="font-headline font-bold uppercase text-xs tracking-widest mb-4">Engine Status</h4>
+<div class="space-y-3">
+<div class="flex justify-between items-center bg-surface-container-high p-3">
+<span class="font-mono text-xs text-neutral-400 uppercase">Brute Force Detector</span>
+<span class="text-[10px] font-bold text-primary-fixed-dim bg-on-primary-container/20 px-2 py-0.5 uppercase tracking-tighter">Active</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-high p-3">
+<span class="font-mono text-xs text-neutral-400 uppercase">C2 Beacon Detector</span>
+<span class="text-[10px] font-bold text-primary-fixed-dim bg-on-primary-container/20 px-2 py-0.5 uppercase tracking-tighter">Active</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-high p-3">
+<span class="font-mono text-xs text-neutral-400 uppercase">Exfil Detector</span>
+<span class="text-[10px] font-bold text-primary-fixed-dim bg-on-primary-container/20 px-2 py-0.5 uppercase tracking-tighter">Active</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-high p-3">
+<span class="font-mono text-xs text-neutral-400 uppercase">Cross-Layer Correlator</span>
+<span class="text-[10px] font-bold text-primary-fixed-dim bg-on-primary-container/20 px-2 py-0.5 uppercase tracking-tighter">Active</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Middle Column: Detailed Incident Analysis -->
+<div class="col-span-5 space-y-6">
+<div class="bg-surface-container-low flex flex-col">
+<div class="p-4 bg-surface-container-highest border-b border-primary-fixed/20 flex justify-between items-center">
+<div>
+<span class="font-mono text-[10px] text-primary uppercase">Active Analysis</span>
+<h3 class="font-headline font-black text-lg uppercase leading-none">Incident #AC-8892</h3>
+</div>
+<div class="bg-error-container/20 px-3 py-1 text-error text-[10px] font-black uppercase tracking-widest">Critical</div>
+</div>
+<div class="p-6 space-y-6">
+<!-- Origin/Target Node -->
+<div class="flex items-center justify-between bg-surface-container-high p-4 border-l-4 border-primary-fixed">
+<div class="text-center">
+<p class="font-mono text-[9px] text-neutral-500 uppercase mb-1">Source Origin</p>
+<p class="font-mono text-sm text-primary-fixed-dim">192.168.1.104</p>
+</div>
+<span class="material-symbols-outlined text-primary-fixed-dim animate-pulse" data-icon="arrow_forward">arrow_forward</span>
+<div class="text-center">
+<p class="font-mono text-[9px] text-neutral-500 uppercase mb-1">Target Node</p>
+<p class="font-mono text-sm text-[#ffb4ab]">V-NET_CORE_01</p>
+</div>
+</div>
+<!-- Analysis Sections -->
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<p class="font-headline font-bold text-[10px] uppercase tracking-widest text-neutral-400">Why Flagged</p>
+<div class="bg-surface-container-high p-3 min-h-[80px]">
+<p class="font-mono text-[11px] leading-relaxed">Credential stuffing pattern detected from anomalous geo-location. 50+ attempts/min.</p>
+</div>
+</div>
+<div class="space-y-2">
+<p class="font-headline font-bold text-[10px] uppercase tracking-widest text-neutral-400">Attack Trajectory</p>
+<div class="bg-surface-container-high p-3 min-h-[80px]">
+<p class="font-mono text-[11px] leading-relaxed">External IP -&gt; FW_DMZ -&gt; Web_Srv_04 -&gt; SSH_Auth_Module.</p>
+</div>
+</div>
+</div>
+<!-- AI Response Playbook -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<p class="font-headline font-bold text-[10px] uppercase tracking-widest text-primary-fixed">AI Response Playbook</p>
+<span class="font-mono text-[9px] text-neutral-500 uppercase">Gemini Pro Enabled</span>
+</div>
+<div class="bg-surface-container-high/50 p-4 border border-primary-fixed/10 space-y-3">
+<div class="flex gap-4">
+<span class="font-mono text-primary-fixed">01</span>
+<p class="font-body text-xs text-on-surface">Isolate source IP 192.168.1.104 at the gateway firewall level immediately.</p>
+</div>
+<div class="flex gap-4">
+<span class="font-mono text-primary-fixed">02</span>
+<p class="font-body text-xs text-on-surface">Suspend account "ADMIN_SVC_02" globally across all domains.</p>
+</div>
+<div class="flex gap-4">
+<span class="font-mono text-primary-fixed">03</span>
+<p class="font-body text-xs text-on-surface">Dump memory forensics for Web_Srv_04 to check for persistent backdoors.</p>
+</div>
+<div class="flex gap-4">
+<span class="font-mono text-primary-fixed">04</span>
+<p class="font-body text-xs text-on-surface">Trigger global audit for all SSH session timeouts.</p>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-surface-container-highest border border-primary-fixed/30 text-primary-fixed font-headline font-bold text-[10px] uppercase py-3 hover:bg-primary-fixed/10 transition-all">
+                                PREVENTIVE ACTION: ROTATE ALL SSH KEYS
+                            </button>
+<button class="flex-none bg-primary-container text-on-primary-container px-8 font-headline font-black text-xs uppercase hover:bg-primary-fixed transition-all">
+                                EXECUTE
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Visuals & IOCs -->
+<div class="col-span-3 space-y-6">
+<!-- Alert Volume Chart -->
+<div class="bg-surface-container-low p-4">
+<p class="font-headline font-bold text-[10px] uppercase tracking-widest mb-4">Alert Volume (24H)</p>
+<div class="h-24 w-full relative">
+<!-- Simulated SVG Line Chart -->
+<svg class="h-full w-full" viewbox="0 0 400 100">
+<path d="M0,80 L40,75 L80,85 L120,60 L160,65 L200,40 L240,45 L280,20 L320,35 L360,10 L400,15" fill="none" stroke="#00FF41" stroke-width="2"></path>
+<path d="M0,80 L40,75 L80,85 L120,60 L160,65 L200,40 L240,45 L280,20 L320,35 L360,10 L400,15 V100 H0 Z" fill="url(#grad1)" opacity="0.1"></path>
+<defs>
+<lineargradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#00FF41;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#00FF41;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+<div class="flex justify-between font-mono text-[8px] text-neutral-600 mt-2">
+<span>00:00</span>
+<span>08:00</span>
+<span>16:00</span>
+<span>24:00</span>
+</div>
+</div>
+</div>
+<!-- Threat Origin Map -->
+<div class="bg-surface-container-low h-64 overflow-hidden relative">
+<div class="p-4 bg-surface-container-highest/50 absolute top-0 left-0 w-full z-10">
+<p class="font-headline font-bold text-[10px] uppercase tracking-widest">Threat Origin Map</p>
+</div>
+<img alt="Dark world map" class="w-full h-full object-cover grayscale brightness-50 contrast-125" data-alt="Minimalist dark world map with neon green glowing connection lines and hot spots over Eastern Europe and East Asia" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJKdVdIJ2bLQ9xu6ruv8tGJz_TgUhTbiijZn3lJfbASzv1MAVv4FpqKiMapCGTKiXk5DMm4yX7mcMCVQfJsvCLjVF_rJaq0g8zv2D-7XC2Q1peduimzeh7z7PUf4tXEVffqC8nrmljxXY9giMUT38GZZP7LnwtT2mX_mRzpJjmLjpD4CIXEqEYormiSYHtfA372rbfZYBGfvL4bRnnbKROLdcyXswV08Yk-vBTPhtGQGoCZ0sOkxO24wVZuRfW3dnH9PL5nXfvTsE"/>
+<div class="absolute inset-0 bg-primary-fixed/5 pointer-events-none"></div>
+<div class="absolute bottom-4 left-4 font-mono text-[9px] text-primary-fixed uppercase bg-background/80 px-2 py-1">
+                        High Risk: RU, CN, KP, IR
+                    </div>
+</div>
+<!-- Recent IOCs -->
+<div class="bg-surface-container-low p-4">
+<p class="font-headline font-bold text-[10px] uppercase tracking-widest mb-4">Recent IOCs</p>
+<div class="space-y-2">
+<div class="bg-surface-container-high p-2 flex items-center justify-between">
+<span class="font-mono text-[10px] text-neutral-400">SHA256: 8a2f...1e0b</span>
+<span class="material-symbols-outlined text-[12px] text-neutral-600" data-icon="content_copy">content_copy</span>
+</div>
+<div class="bg-surface-container-high p-2 flex items-center justify-between">
+<span class="font-mono text-[10px] text-neutral-400">IP: 45.122.0.19</span>
+<span class="material-symbols-outlined text-[12px] text-neutral-600" data-icon="content_copy">content_copy</span>
+</div>
+<div class="bg-surface-container-high p-2 flex items-center justify-between">
+<span class="font-mono text-[10px] text-neutral-400">DOMAIN: secure-log-v4.io</span>
+<span class="material-symbols-outlined text-[12px] text-neutral-600" data-icon="content_copy">content_copy</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="fixed bottom-0 right-0 w-[calc(100%-16rem)] h-9 bg-[#0e0e0e] flex justify-between items-center px-8 ml-64 border-t border-neutral-800/20 z-40">
+<p class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-neutral-600">DESIGNED BY SOVEREIGN ARCHITECT / 2024</p>
+<div class="flex gap-6">
+<span class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-neutral-600 hover:text-[#00FF41] transition-colors cursor-default">Core Version ACDS-V4.0.2-ALPHA</span>
+<span class="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-neutral-600 hover:text-[#00FF41] transition-colors cursor-default">Encryption Status OAK-HARDENED</span>
+</div>
+</footer>
+</body></html>

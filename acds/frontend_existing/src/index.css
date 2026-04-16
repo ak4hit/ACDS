@@ -1,0 +1,14 @@
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  background-color: #131313;
+  color: #e5e2e1;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Leaflet Dark Styles Override */
+.leaflet-container { background: #000 !important; }
+.leaflet-layer { filter: grayscale(100%) invert(100%) contrast(150%) !important; }

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ACDS — INTELLIGENCE TERMINAL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600&amp;family=IBM+Plex+Mono:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#72ff70",
+                    "background": "#131313",
+                    "on-tertiary": "#690003",
+                    "tertiary-fixed": "#ffdad5",
+                    "inverse-primary": "#006e16",
+                    "surface-container-high": "#2a2a2a",
+                    "secondary": "#c8c6c5",
+                    "on-error": "#690005",
+                    "on-error-container": "#ffdad6",
+                    "error-container": "#93000a",
+                    "surface-container-highest": "#353534",
+                    "on-surface-variant": "#b9ccb2",
+                    "surface-dim": "#131313",
+                    "on-primary-container": "#007117",
+                    "outline": "#84967e",
+                    "on-secondary-fixed-variant": "#474746",
+                    "tertiary-fixed-dim": "#ffb4aa",
+                    "surface": "#131313",
+                    "on-surface": "#e5e2e1",
+                    "on-primary": "#003907",
+                    "on-secondary-container": "#b7b5b4",
+                    "tertiary-container": "#ffd2cc",
+                    "on-tertiary-fixed-variant": "#930005",
+                    "primary-fixed-dim": "#00e639",
+                    "surface-container-low": "#1c1b1b",
+                    "surface-container-lowest": "#0e0e0e",
+                    "on-background": "#e5e2e1",
+                    "secondary-container": "#474746",
+                    "inverse-surface": "#e5e2e1",
+                    "on-secondary": "#303030",
+                    "tertiary": "#fff7f6",
+                    "surface-container": "#201f1f",
+                    "on-secondary-fixed": "#1b1c1c",
+                    "surface-tint": "#00e639",
+                    "on-tertiary-fixed": "#410001",
+                    "surface-variant": "#353534",
+                    "error": "#ffb4ab",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "on-primary-fixed": "#002203",
+                    "secondary-fixed": "#e5e2e1",
+                    "on-primary-fixed-variant": "#00530e",
+                    "outline-variant": "#3b4b37",
+                    "surface-bright": "#3a3939",
+                    "on-tertiary-container": "#c4010b",
+                    "primary-container": "#00ff41",
+                    "primary": "#ebffe2",
+                    "inverse-on-surface": "#313030"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Space Grotesk"],
+                    "body": ["Inter"],
+                    "label": ["Inter"],
+                    "mono": ["IBM Plex Mono"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .ghost-border { outline: 1px solid rgba(59, 75, 55, 0.15); }
+    </style>
+</head>
+<body class="bg-background text-on-background overflow-hidden h-screen w-screen flex">
+<!-- Watermark Integration -->
+<div class="fixed inset-0 pointer-events-none opacity-[0.02] flex items-center justify-center overflow-hidden">
+<span class="text-[40rem] font-headline font-black select-none -rotate-12 translate-x-20">ACDS</span>
+</div>
+<!-- SideNavBar -->
+<aside class="bg-[#1c1b1b] dark:bg-neutral-900 font-['IBM_Plex_Mono'] uppercase tracking-tighter text-xs docked fixed left-0 top-0 h-full w-64 rounded-none border-r-0 flex flex-col h-full py-8 z-50">
+<div class="px-6 mb-12">
+<h1 class="font-['Space_Grotesk'] font-black text-[#00FF41] tracking-widest text-xl">SOVEREIGN ARCHITECT</h1>
+<p class="text-neutral-500 text-[10px] tracking-[0.2em] mt-1">ACDS LOGO</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a] transition-all duration-75 flex items-center px-6 py-4 gap-4 group" href="#">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span>BLUEPRINTS</span>
+</a>
+<a class="text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a] transition-all duration-75 flex items-center px-6 py-4 gap-4 group" href="#">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+<span>THREATS</span>
+</a>
+<a class="text-[#ebffe2] bg-[#3a3939] border-l-2 border-[#00FF41] transition-all duration-75 flex items-center px-6 py-4 gap-4 group" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span>INTELLIGENCE</span>
+</a>
+<a class="text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a] transition-all duration-75 flex items-center px-6 py-4 gap-4 group" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>ARCHIVES</span>
+</a>
+<a class="text-neutral-500 hover:text-[#00FF41] transition-colors hover:bg-[#2a2a2a] transition-all duration-75 flex items-center px-6 py-4 gap-4 group mt-auto" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>SETTINGS</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 h-screen overflow-hidden flex flex-col relative">
+<!-- TopAppBar -->
+<header class="bg-[#131313]/60 backdrop-blur-xl text-[#00FF41] font-['Space_Grotesk'] font-bold text-lg uppercase docked fixed top-0 right-0 w-[calc(100%-16rem)] rounded-none flex justify-between items-center px-8 h-20 z-40">
+<div class="flex items-center gap-6">
+<span class="text-on-background/40">/</span>
+<h2>ACDS — AI Cyber Defense System</h2>
+<div class="flex items-center gap-2 px-3 py-1 bg-primary-container/10 border border-primary-container/20">
+<span class="w-2 h-2 bg-[#00FF41] animate-pulse"></span>
+<span class="text-[10px] font-mono tracking-widest text-[#00FF41]">LIVE FEED ACTIVE</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-[#00FF41] hover:text-black transition-all cursor-crosshair px-6 py-2 border border-[#00FF41] text-xs tracking-widest">DEPLOY SHIELD</button>
+<button class="hover:bg-[#00FF41] hover:text-black transition-all cursor-crosshair px-4 py-2 text-xs tracking-widest">LOGS</button>
+<div class="w-[1px] h-6 bg-outline-variant/30 mx-2"></div>
+<span class="material-symbols-outlined text-[#00FF41] cursor-pointer" data-icon="signal_cellular_alt">signal_cellular_alt</span>
+</div>
+</header>
+<!-- Intelligence Content Scrollable Area -->
+<div class="mt-20 flex-1 overflow-y-auto no-scrollbar p-8 pb-16">
+<!-- Context Header & Utility Row -->
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="font-headline font-bold text-4xl tracking-tighter uppercase">Tactical Coverage &amp; Active Observations</h3>
+<p class="font-mono text-xs text-on-surface-variant mt-2 tracking-widest">INTELLIGENCE_LAYER_V03.DATA_EXPORT</p>
+</div>
+<div class="flex gap-2">
+<button class="bg-surface-container-high px-4 py-2 font-mono text-[10px] tracking-widest hover:bg-surface-bright transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="refresh">refresh</span> RESET
+                    </button>
+<button class="bg-surface-container-high px-4 py-2 font-mono text-[10px] tracking-widest hover:bg-surface-bright transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="file_open">file_open</span> FILE MODE
+                    </button>
+</div>
+</div>
+<!-- MITRE ATT&CK Matrix Grid -->
+<div class="grid grid-cols-5 gap-px bg-outline-variant/10 mb-12">
+<!-- Header Column 1 -->
+<div class="bg-surface-container-low p-4">
+<div class="text-[10px] font-mono text-primary-container mb-4 flex justify-between">
+<span>TA0001</span>
+<span class="material-symbols-outlined text-xs" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<h4 class="font-headline font-bold text-sm tracking-widest mb-6">INITIAL ACCESS</h4>
+<div class="space-y-2">
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container">T1190 EXPLOIT PUBLIC-FACING APP</div>
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container/30">T1566 PHISHING</div>
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container/30">T1133 EXTERNAL REMOTE SERVICES</div>
+</div>
+</div>
+<!-- Header Column 2 -->
+<div class="bg-surface-container-low p-4">
+<div class="text-[10px] font-mono text-primary-container mb-4 flex justify-between">
+<span>TA0002</span>
+<span class="material-symbols-outlined text-xs" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<h4 class="font-headline font-bold text-sm tracking-widest mb-6">EXECUTION</h4>
+<div class="space-y-2">
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-error">T1059 COMMAND &amp; SCRIPTING</div>
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container/30">T1204 USER EXECUTION</div>
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container/30">T1053 SCHEDULED TASK/JOB</div>
+</div>
+</div>
+<!-- Header Column 3 -->
+<div class="bg-surface-container-low p-4">
+<div class="text-[10px] font-mono text-primary-container mb-4 flex justify-between">
+<span>TA0003</span>
+<span class="material-symbols-outlined text-xs" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<h4 class="font-headline font-bold text-sm tracking-widest mb-6">PERSISTENCE</h4>
+<div class="space-y-2">
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container/30">T1098 ACCOUNT MANIPULATION</div>
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container/30">T1547 BOOT/LOGON AUTORUN</div>
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container/30">T1574 HIJACK EXECUTION FLOW</div>
+</div>
+</div>
+<!-- Header Column 4 -->
+<div class="bg-surface-container-low p-4">
+<div class="text-[10px] font-mono text-primary-container mb-4 flex justify-between">
+<span>TA0004</span>
+<span class="material-symbols-outlined text-xs" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<h4 class="font-headline font-bold text-sm tracking-widest mb-6">PRIVILEGE ESC</h4>
+<div class="space-y-2">
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-error">T1548 ABUSE PRIVILEGE CONTROL</div>
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container/30">T1068 EXPLOITATION FOR PRIV ESC</div>
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container/30">T1055 PROCESS INJECTION</div>
+</div>
+</div>
+<!-- Header Column 5 -->
+<div class="bg-surface-container-low p-4">
+<div class="text-[10px] font-mono text-primary-container mb-4 flex justify-between">
+<span>TA0005</span>
+<span class="material-symbols-outlined text-xs" data-icon="arrow_outward">arrow_outward</span>
+</div>
+<h4 class="font-headline font-bold text-sm tracking-widest mb-6">DEFENSE EVASION</h4>
+<div class="space-y-2">
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container/30">T1140 DEOBFUSCATE/DECODE</div>
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container">T1070 INDICATOR REMOVAL</div>
+<div class="bg-surface-container-high p-3 text-[10px] font-mono border-l-2 border-primary-container/30">T1562 IMPAIR DEFENSES</div>
+</div>
+</div>
+</div>
+<!-- Propagation & Indicators Layout -->
+<div class="grid grid-cols-12 gap-8">
+<!-- Propagation Vector Section -->
+<div class="col-span-4 space-y-6">
+<div class="bg-surface-container-low p-6 ghost-border">
+<div class="flex items-center gap-2 mb-6">
+<span class="w-1 h-4 bg-primary-container"></span>
+<h5 class="font-headline font-bold text-sm tracking-widest">PROPAGATION_VECTOR</h5>
+</div>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between font-mono text-[10px] mb-2 uppercase">
+<span>Cross-Site Scripting</span>
+<span class="text-primary-container">42.8%</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full">
+<div class="h-full bg-primary-container" style="width: 42.8%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-mono text-[10px] mb-2 uppercase">
+<span>Insecure APIs</span>
+<span class="text-primary-container">28.2%</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full">
+<div class="h-full bg-primary-container" style="width: 28.2%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-mono text-[10px] mb-2 uppercase">
+<span>SQL Injection</span>
+<span class="text-error">15.5%</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full">
+<div class="h-full bg-error" style="width: 15.5%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-mono text-[10px] mb-2 uppercase">
+<span>Buffer Overflow</span>
+<span class="text-primary-container">13.5%</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full">
+<div class="h-full bg-primary-container" style="width: 13.5%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 border border-primary-container/10">
+<div class="flex items-center justify-between mb-4">
+<p class="text-[10px] font-mono text-on-surface/40">ANALYTICS_SNAPSHOT</p>
+<span class="material-symbols-outlined text-primary-container text-lg" data-icon="hub">hub</span>
+</div>
+<img alt="Network Graph" class="w-full h-24 object-cover opacity-60 grayscale hover:grayscale-0 transition-all cursor-zoom-in" data-alt="abstract cyber security network graph data visualization with glowing green nodes on black obsidian background tactical aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAec_4jyFi6aaYCbIQmHQZPmYSeEcnI8LtLZtwSkNAwHfrtBbu6xtQIKfvsx59ehEaPSQf5drVCLJO02ZanW59byba1qC7Mw9_yrhbZ6Owx5qHMNvA5ZaRKkxNda7T48d1Zl3hDL3E67c97UE1wkVpV6fE2cK3JE2sAjFtZbWPSOP93tcdHHZI5GwOxJcvq3V0TCWb6LBOdC7tZa6FsNsBSnb7hoKE4dhX_QZiefMbAmMJPtCh2jcKmLIZiDrOJ0IZSEQK-rlOqIMc"/>
+</div>
+</div>
+<!-- Indicators of Compromise Database -->
+<div class="col-span-8">
+<div class="bg-surface-container-low ghost-border overflow-hidden">
+<div class="px-6 py-4 bg-surface-container-high flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container" data-icon="database">database</span>
+<h5 class="font-headline font-bold text-sm tracking-widest">INDICATORS OF COMPROMISE DATABASE</h5>
+</div>
+<span class="font-mono text-[10px] text-on-surface/50">ENTRY_COUNT: 4,021</span>
+</div>
+<div class="w-full">
+<table class="w-full border-collapse">
+<thead>
+<tr class="text-[10px] font-mono text-on-surface/40 uppercase tracking-widest text-left">
+<th class="px-6 py-4 font-normal">Indicator Value</th>
+<th class="px-6 py-4 font-normal">Type</th>
+<th class="px-6 py-4 font-normal">Last Seen</th>
+<th class="px-6 py-4 font-normal text-right">Status</th>
+</tr>
+</thead>
+<tbody class="text-xs font-mono">
+<tr class="border-t border-outline-variant/10 hover:bg-surface-bright transition-colors">
+<td class="px-6 py-4 text-primary-fixed">192.168.100.42</td>
+<td class="px-6 py-4 text-on-surface/60">IPv4</td>
+<td class="px-6 py-4 text-on-surface/60">2024.05.21 14:22:01</td>
+<td class="px-6 py-4 text-right">
+<span class="px-2 py-0.5 bg-error-container/20 text-error text-[9px] uppercase font-bold tracking-tighter">Active Threat</span>
+</td>
+</tr>
+<tr class="border-t border-outline-variant/10 hover:bg-surface-bright transition-colors">
+<td class="px-6 py-4 text-primary-fixed">dc01.corp.internal</td>
+<td class="px-6 py-4 text-on-surface/60">Domain</td>
+<td class="px-6 py-4 text-on-surface/60">2024.05.21 14:15:33</td>
+<td class="px-6 py-4 text-right">
+<span class="px-2 py-0.5 bg-primary-container/10 text-primary-container text-[9px] uppercase font-bold tracking-tighter">Monitored</span>
+</td>
+</tr>
+<tr class="border-t border-outline-variant/10 hover:bg-surface-bright transition-colors">
+<td class="px-6 py-4 text-primary-fixed">sha256:8f2a...1e4c</td>
+<td class="px-6 py-4 text-on-surface/60">File Hash</td>
+<td class="px-6 py-4 text-on-surface/60">2024.05.21 13:44:12</td>
+<td class="px-6 py-4 text-right">
+<span class="px-2 py-0.5 bg-error-container/20 text-error text-[9px] uppercase font-bold tracking-tighter">Blocked</span>
+</td>
+</tr>
+<tr class="border-t border-outline-variant/10 hover:bg-surface-bright transition-colors">
+<td class="px-6 py-4 text-primary-fixed">/api/v1/auth/bypass</td>
+<td class="px-6 py-4 text-on-surface/60">URL Path</td>
+<td class="px-6 py-4 text-on-surface/60">2024.05.21 12:01:05</td>
+<td class="px-6 py-4 text-right">
+<span class="px-2 py-0.5 bg-surface-container-highest text-on-surface/40 text-[9px] uppercase font-bold tracking-tighter">Inactive</span>
+</td>
+</tr>
+<tr class="border-t border-outline-variant/10 hover:bg-surface-bright transition-colors">
+<td class="px-6 py-4 text-primary-fixed">104.244.42.193</td>
+<td class="px-6 py-4 text-on-surface/60">IPv4</td>
+<td class="px-6 py-4 text-on-surface/60">2024.05.21 11:58:22</td>
+<td class="px-6 py-4 text-right">
+<span class="px-2 py-0.5 bg-error-container/20 text-error text-[9px] uppercase font-bold tracking-tighter">Active Threat</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="mt-8 flex gap-4">
+<div class="flex-1 bg-surface-container-low p-4 ghost-border flex items-center justify-between">
+<span class="font-mono text-[10px] tracking-widest text-on-surface/40 uppercase">Global Signal Strength</span>
+<div class="flex gap-1 h-3 items-end">
+<div class="w-1 bg-primary-container h-full"></div>
+<div class="w-1 bg-primary-container h-3/4"></div>
+<div class="w-1 bg-primary-container h-5/6"></div>
+<div class="w-1 bg-primary-container h-2/3"></div>
+<div class="w-1 bg-surface-container-highest h-full"></div>
+</div>
+</div>
+<div class="flex-1 bg-surface-container-low p-4 ghost-border flex items-center justify-between">
+<span class="font-mono text-[10px] tracking-widest text-on-surface/40 uppercase">Cluster Sync Status</span>
+<span class="font-mono text-[10px] text-primary-container">VERIFIED_SECURE</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="bg-[#0e0e0e] text-neutral-600 font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest docked fixed bottom-0 right-0 w-[calc(100%-16rem)] rounded-none border-t border-neutral-800/20 flex justify-between items-center px-8 py-3 z-40">
+<div class="flex gap-8">
+<span class="hover:text-[#00FF41] transition-colors cursor-default">ENCRYPTION: AES-256-GCM</span>
+<span class="hover:text-[#00FF41] transition-colors cursor-default">LATENCY: 14ms</span>
+<span class="hover:text-[#00FF41] transition-colors cursor-default">SESSION_ID: 88AF-0932-XL11</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="hover:text-[#00FF41] transition-colors cursor-pointer">Core Version ACDS-V4.0.2-ALPHA</span>
+<span class="hover:text-[#00FF41] transition-colors cursor-pointer">Encryption Status OAK-HARDENED</span>
+<span class="text-neutral-700">|</span>
+<span>DESIGNED BY SOVEREIGN ARCHITECT / 2024</span>
+</div>
+</footer>
+</main>
+</body></html>
