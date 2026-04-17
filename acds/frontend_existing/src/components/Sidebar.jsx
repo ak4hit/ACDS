@@ -5,7 +5,7 @@ export default function Sidebar() {
   return (
     <aside className="w-64 bg-[#1c1b1b] flex flex-col py-8 z-50 h-screen shrink-0 border-r-0">
       <div className="px-6 mb-12">
-        <h1 className="font-['Space_Grotesk'] font-black text-[#98FB98] tracking-widest text-xl">SOVEREIGN ARCHITECT</h1>
+        <h1 className="font-['Space_Grotesk'] font-black text-[#98FB98] tracking-widest text-xl">ACDS PLATFORM</h1>
         <p className="font-['IBM_Plex_Mono'] uppercase tracking-tighter text-[10px] text-neutral-500 mt-1">ACDS LOGO</p>
       </div>
       <nav className="flex-1 space-y-1">

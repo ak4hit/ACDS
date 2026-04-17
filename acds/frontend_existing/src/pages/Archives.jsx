@@ -316,7 +316,7 @@ export default function Archives() {
 
       {/* Watermark */}
       <div className="fixed bottom-32 right-12 opacity-[0.02] pointer-events-none select-none z-0">
-        <h3 className="text-8xl font-black font-['Space_Grotesk'] rotate-12">SOVEREIGN ARCHITECT</h3>
+        <h3 className="text-8xl font-black font-['Space_Grotesk'] rotate-12">ACDS ARCHIVES</h3>
       </div>
 
       <div className="relative z-10 h-full flex flex-col">

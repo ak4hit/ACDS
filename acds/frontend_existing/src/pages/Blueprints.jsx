@@ -432,23 +432,11 @@ export default function Blueprints() {
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4">
                       <div className="space-y-2">
                         <p className="font-['Space_Grotesk'] font-bold text-[10px] uppercase tracking-widest text-neutral-400">Why Flagged</p>
                         <div className="bg-[#2a2a2a] p-3 min-h-[80px]">
                           <p className="font-['IBM_Plex_Mono'] text-[11px] leading-relaxed">{activeAlert.why_flagged}</p>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <p className="font-['Space_Grotesk'] font-bold text-[10px] uppercase tracking-widest text-neutral-400">Attack Trajectory</p>
-                        <div className="bg-[#2a2a2a] p-3 min-h-[80px]">
-                          {activeAlert.attack_path?.length > 0 ? (
-                            <p className="font-['IBM_Plex_Mono'] text-[11px] leading-relaxed">
-                              {activeAlert.attack_path.map(n => n.name).join(' → ')}
-                            </p>
-                          ) : (
-                            <p className="font-['IBM_Plex_Mono'] text-[11px] text-neutral-500">Not sufficiently correlated.</p>
-                          )}
                         </div>
                       </div>
                     </div>

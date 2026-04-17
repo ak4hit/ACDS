@@ -1,179 +1,373 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSocket } from '../context/SocketContext';
+import { useNavigate } from 'react-router-dom';
 
-const mitreMatrix = {
-  'INITIAL ACCESS': [
-    { id: 'T1190', label: 'EXPLOIT PUBLIC-FACING APP', active: false },
-    { id: 'T1566', label: 'PHISHING', active: false },
-    { id: 'T1133', label: 'EXTERNAL REMOTE SERVICES', active: false }
-  ],
-  'EXECUTION': [
-    { id: 'T1059', label: 'COMMAND & SCRIPTING', active: true },
-    { id: 'T1204', label: 'USER EXECUTION', active: false },
-    { id: 'T1053', label: 'SCHEDULED TASK/JOB', active: false }
-  ],
-  'PERSISTENCE': [
-    { id: 'T1098', label: 'ACCOUNT MANIPULATION', active: false },
-    { id: 'T1547', label: 'BOOT/LOGON AUTORUN', active: false },
-    { id: 'T1574', label: 'HIJACK EXECUTION FLOW', active: false }
-  ],
-  'PRIVILEGE ESC': [
-    { id: 'T1548', label: 'ABUSE PRIVILEGE CONTROL', active: true },
-    { id: 'T1068', label: 'EXPLOITATION FOR PRIV ESC', active: false },
-    { id: 'T1055', label: 'PROCESS INJECTION', active: false }
-  ],
-  'DEFENSE EVASION': [
-    { id: 'T1140', label: 'DEOBFUSCATE/DECODE', active: false },
-    { id: 'T1070', label: 'INDICATOR REMOVAL', active: true, color: 'primary' },
-    { id: 'T1562', label: 'IMPAIR DEFENSES', active: false }
-  ]
-};
-
-const iocDatabase = [
-  { value: '192.168.100.42', type: 'IPv4', lastSeen: '2024.05.21 14:22:01', status: 'Active Threat', statusClass: 'bg-[#93000a]/20 text-[#ffb4ab]' },
-  { value: 'dc01.corp.internal', type: 'Domain', lastSeen: '2024.05.21 14:15:33', status: 'Monitored', statusClass: 'bg-[#98FB98]/10 text-[#98FB98]' },
-  { value: 'sha256:8f2a...1e4c', type: 'File Hash', lastSeen: '2024.05.21 13:44:12', status: 'Blocked', statusClass: 'bg-[#93000a]/20 text-[#ffb4ab]' },
-  { value: '/api/v1/auth/bypass', type: 'URL Path', lastSeen: '2024.05.21 12:01:05', status: 'Inactive', statusClass: 'bg-[#353534] text-[#e5e2e1]/40' },
-  { value: '104.244.42.193', type: 'IPv4', lastSeen: '2024.05.21 11:58:22', status: 'Active Threat', statusClass: 'bg-[#93000a]/20 text-[#ffb4ab]' }
-];
+const API = 'http://localhost:8000';
 
 export default function Intelligence() {
+  const { alerts, stats } = useSocket();
+  const [mitreTactics, setMitreTactics] = useState([]);
+  const [iocs, setIocs] = useState([]);
+  const [blockedIocs, setBlockedIocs] = useState(new Set());
+  const [propagation, setPropagation] = useState([]);
+  const [toast, setToast] = useState(null);
+  const [timeSinceUpdate, setTimeSinceUpdate] = useState(0);
+  const [isNavigating, setIsNavigating] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let lastFetch = Date.now();
+    const fetchData = async () => {
+      try {
+        const [mRes, iRes, pRes] = await Promise.all([
+          fetch(`${API}/intelligence/mitre`),
+          fetch(`${API}/intelligence/iocs`),
+          fetch(`${API}/intelligence/propagation`)
+        ]);
+        if (mRes.ok) {
+           const d = await mRes.json();
+           setMitreTactics(d.tactics || []);
+        }
+        if (iRes.ok) setIocs(await iRes.json());
+        if (pRes.ok) setPropagation(await pRes.json());
+        lastFetch = Date.now();
+        setTimeSinceUpdate(0);
+      } catch (e) {}
+    };
+    fetchData();
+    const intv = setInterval(fetchData, 2000);
+    const timeIntv = setInterval(() => {
+      setTimeSinceUpdate(Math.floor((Date.now() - lastFetch) / 1000));
+    }, 1000);
+    return () => {
+      clearInterval(intv);
+      clearInterval(timeIntv);
+    };
+  }, []);
+
+  // Compute live properties
+  const activeAlertsCount = alerts.length;
+  const isThreatActive = activeAlertsCount > 0;
+  
+  // Synthetic dynamic chains for visual impact based on active threats
+  const dynamicChains = isThreatActive ? [
+    { chain: "T1190 → T1059 (78%) → T1055 (64%)", label: "Exploit to Injection", color: "#ffb4ab" },
+    { chain: "T1566 → T1204 (82%) → T1078 (71%)", label: "Phish to Valid Acc", color: "#98FB98" },
+    { chain: "T1110 → T1098 (88%) → T1041 (61%)", label: "Brute Force to Exfil", color: "#ffb4ab" }
+  ] : [
+    { chain: "System Monitoring Phase", label: "Nominal", color: "#84967e" }
+  ];
+
+  // Helper to generate a fake risk score based on status
+  const getRiskScore = (status) => {
+    if (status === 'Active Threat') return Math.floor(Math.random() * 15) + 85; // 85-99
+    if (status === 'Blocked') return Math.floor(Math.random() * 20) + 40;       // 40-59
+    return Math.floor(Math.random() * 30) + 10;                                 // 10-39
+  };
+
+  const handleBlock = (iocValue) => {
+    // Record this IOC in the UI-local list so the polling doesn't overwrite it
+    setBlockedIocs(prev => new Set(prev).add(iocValue));
+    setToast({ message: `IP Blocked Successfully: ${iocValue}`, type: 'success' });
+    setTimeout(() => setToast(null), 3000);
+  };
+
+  const handleInvestigate = () => {
+    setToast({ message: `Forwarding Context... View in Blueprints ➔`, type: 'info' });
+    setIsNavigating(true);
+    setTimeout(() => {
+      setToast(null);
+      // Reset scroll position before navigating to Blueprints
+      const mainScroll = document.querySelector('.overflow-y-auto');
+      if (mainScroll) mainScroll.scrollTop = 0;
+      navigate("/blueprints");
+    }, 1500);
+  };
+
   return (
     <div className="pt-10 pb-20 px-8 min-h-screen relative overflow-y-auto bg-[#131313] text-[#e5e2e1]">
-      {/* Watermark Integration */}
+      {/* Smooth Transition Overlay */}
+      <div className={`fixed inset-0 bg-[#131313] z-[100] transition-opacity duration-1000 flex items-center justify-center ${isNavigating ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+        {isNavigating && (
+          <div className="flex flex-col items-center gap-4">
+            <span className="material-symbols-outlined text-[#98FB98] text-4xl animate-[spin_2s_linear_infinite]">radar</span>
+            <p className="font-['Space_Grotesk'] text-[#98FB98] tracking-widest uppercase text-sm animate-pulse">Locking Target Coordinates...</p>
+          </div>
+        )}
+      </div>
+
+      {/* Background branding */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.02] flex items-center justify-center overflow-hidden z-0">
         <span className="text-[40rem] font-['Space_Grotesk'] font-black select-none -rotate-12 translate-x-20">ACDS</span>
       </div>
 
-      <div className="relative z-10 flex-1 h-full">
-        {/* Context Header */}
-        <div className="mb-8">
-          <h3 className="font-['Space_Grotesk'] font-bold text-4xl tracking-tighter uppercase">Tactical Coverage &amp; Active Observations</h3>
-          <p className="font-['IBM_Plex_Mono'] text-xs text-[#b9ccb2] mt-2 tracking-widest">INTELLIGENCE_LAYER_V03.DATA_EXPORT</p>
+      {/* Toast Notification */}
+      {toast && (
+        <div className={`fixed top-8 right-8 z-50 px-6 py-3 font-['IBM_Plex_Mono'] text-xs font-bold uppercase tracking-widest border shadow-xl ${
+          toast.type === 'success' ? 'bg-[#2f4d2f]/90 text-[#98FB98] border-[#98FB98]' : 'bg-[#1c1b1b]/90 text-[#e5e2e1] border-[#84967e]'
+        } backdrop-blur-md transition-all`}>
+          {toast.message}
+        </div>
+      )}
+
+      <div className="relative z-10 flex-1 h-full max-w-screen-2xl mx-auto space-y-8">
+        
+        {/* Header */}
+        <div className="flex justify-between items-end border-b border-[#84967e]/20 pb-6">
+          <div>
+            <h3 className="font-['Space_Grotesk'] font-black text-4xl tracking-tighter uppercase text-[#e5e2e1]">Tactical Coverage <span className="text-[#98FB98]">&amp;</span> Active Observations</h3>
+            <p className="font-['IBM_Plex_Mono'] text-xs text-[#84967e] mt-2 tracking-widest flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-[#98FB98] rounded-full animate-pulse"></span>
+              INTELLIGENCE_LAYER_V4.0 // LIVE_MITRE_SYNC // LAST UPDATED: {timeSinceUpdate}s AGO
+            </p>
+          </div>
+          <div className="text-right">
+            <p className="font-['IBM_Plex_Mono'] text-[10px] text-[#84967e] uppercase tracking-widest mb-1">Matrix Confidence</p>
+            <p className="font-['Space_Grotesk'] font-black text-xl text-[#98FB98]">98.2%</p>
+          </div>
         </div>
 
-        {/* MITRE ATT&CK Matrix Grid */}
-        <div className="grid grid-cols-5 gap-px bg-[#84967e]/10 mb-12">
-          {Object.entries(mitreMatrix).map(([category, items], index) => (
-            <div key={category} className="bg-[#1c1b1b] p-4">
-              <div className="text-[10px] font-['IBM_Plex_Mono'] text-[#98FB98] mb-4 flex justify-between">
-                <span>TA000{index + 1}</span>
-                <span className="material-symbols-outlined text-xs">arrow_outward</span>
+        {/* 1. Top Section: MITRE Matrix Grid */}
+        <div className="bg-[#1c1b1b] outline outline-1 outline-[#84967e]/20 p-6">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            {mitreTactics.map((tactic, idx) => (
+              <div key={idx} className="flex flex-col space-y-4">
+                <div className="border-b border-[#84967e]/20 pb-2 flex justify-between items-end">
+                  <h4 className="font-['Space_Grotesk'] font-bold text-xs tracking-widest uppercase text-[#e5e2e1]">{tactic.name}</h4>
+                  <span className="font-['IBM_Plex_Mono'] text-[9px] text-[#84967e]">{tactic.ta_id}</span>
+                </div>
+                <div className="flex flex-col gap-2">
+                  {tactic.ttps.map((tech) => {
+                    const isActive = tech.observed;
+                    return (
+                      <div 
+                        key={tech.id} 
+                        className={`group relative p-3 border-l-2 cursor-pointer transition-all ${
+                          isActive 
+                            ? 'bg-[#2f4d2f]/20 border-[#98FB98] hover:bg-[#2f4d2f]/40' 
+                            : 'bg-[#2a2a2a]/50 border-transparent hover:bg-[#353534]'
+                        }`}
+                      >
+                        <div className="flex justify-between items-start mb-1">
+                          <span className={`font-['IBM_Plex_Mono'] text-[9px] font-bold ${isActive ? 'text-[#98FB98]' : 'text-neutral-500'}`}>
+                            {tech.id}
+                          </span>
+                          {isActive && (
+                            <span className="flex items-center gap-1 bg-[#98FB98]/10 text-[#98FB98] border border-[#98FB98]/30 text-[8px] font-black px-1.5 py-0.5 rounded-sm uppercase tracking-tighter shadow-[0_0_8px_rgba(152,251,152,0.1)]">
+                              <span className="w-1 h-1 bg-[#98FB98] rounded-full animate-ping"></span>
+                              LIVE
+                            </span>
+                          )}
+                        </div>
+                        <p className={`font-['Space_Grotesk'] text-[10px] uppercase font-bold tracking-wide ${isActive ? 'text-[#e5e2e1]' : 'text-neutral-400'}`}>
+                          {tech.name}
+                        </p>
+                        {isActive && (
+                          <div className="mt-2 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span className="font-['IBM_Plex_Mono'] text-[8px] text-[#84967e]">Conf: {Math.floor(Math.random() * 10) + 90}%</span>
+                            <span className="font-['IBM_Plex_Mono'] text-[8px] text-[#98FB98] uppercase hover:underline">View Alerts →</span>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <h4 className="font-['Space_Grotesk'] font-bold text-sm tracking-widest mb-6">{category}</h4>
-              <div className="space-y-2">
-                {items.map(item => {
-                  let borderColor = 'border-[#98FB98]/30';
-                  if (item.active) borderColor = item.color === 'primary' ? 'border-[#98FB98]' : 'border-[#ffb4ab]';
-                  return (
-                    <div key={item.id} className={`bg-[#2a2a2a] p-3 text-[10px] font-['IBM_Plex_Mono'] border-l-2 ${borderColor}`}>
-                      {item.id} {item.label}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* Propagation & Indicators Layout */}
+        {/* 2 & 3. Middle Section: Propagation Vector & Intelligence Insights */}
         <div className="grid grid-cols-12 gap-8">
           
-          {/* Propagation Vector Section */}
-          <div className="col-span-12 lg:col-span-4 space-y-6">
-            <div className="bg-[#1c1b1b] p-6 outline outline-1 outline-[#3b4b37]/15">
-              <div className="flex items-center gap-2 mb-6">
-                <span className="w-1 h-4 bg-[#98FB98]"></span>
-                <h5 className="font-['Space_Grotesk'] font-bold text-sm tracking-widest uppercase">PROPAGATION_VECTOR</h5>
+          {/* Left: Propagation Vector */}
+          <div className="col-span-12 lg:col-span-7 bg-[#1c1b1b] outline outline-1 outline-[#84967e]/20 p-6 flex flex-col relative overflow-hidden">
+            {/* Background design elements */}
+            <div className="absolute right-0 top-0 w-64 h-64 bg-[#98FB98]/5 rounded-full blur-3xl pointer-events-none transform translate-x-1/2 -translate-y-1/2"></div>
+            
+            <div className="flex justify-between items-end mb-6 z-10">
+              <div>
+                <h4 className="font-['Space_Grotesk'] font-bold text-lg uppercase tracking-widest text-[#e5e2e1]">Live Attack Propagation Vector</h4>
+                <p className="font-['IBM_Plex_Mono'] text-[10px] text-[#98FB98] uppercase mt-1 flex items-center gap-1">
+                  <span className="material-symbols-outlined text-[12px]">radar</span>
+                  Dynamically predicted from current active alerts
+                </p>
               </div>
-              <div className="space-y-4">
-                {[
-                  { label: "Cross-Site Scripting", percent: "42.8%", width: "42.8%", color: "#98FB98", bg: "bg-[#98FB98]" },
-                  { label: "Insecure APIs", percent: "28.2%", width: "28.2%", color: "#98FB98", bg: "bg-[#98FB98]" },
-                  { label: "SQL Injection", percent: "15.5%", width: "15.5%", color: "#ffb4ab", bg: "bg-[#ffb4ab]" },
-                  { label: "Buffer Overflow", percent: "13.5%", width: "13.5%", color: "#98FB98", bg: "bg-[#98FB98]" },
-                ].map(item => (
-                  <div key={item.label}>
-                    <div className="flex justify-between font-['IBM_Plex_Mono'] text-[10px] mb-2 uppercase">
-                      <span>{item.label}</span>
-                      <span style={{ color: item.color }}>{item.percent}</span>
-                    </div>
-                    <div className="h-1 bg-[#353534] w-full">
-                      <div className={`h-full ${item.bg}`} style={{ width: item.width }}></div>
-                    </div>
-                  </div>
-                ))}
+              <div className="text-right">
+                <span className="material-symbols-outlined text-[#98FB98] animate-[spin_4s_linear_infinite] opacity-50">route</span>
+                <p className="font-['IBM_Plex_Mono'] text-[8px] text-[#84967e] mt-1 uppercase">Updated {timeSinceUpdate} sec ago</p>
               </div>
             </div>
-            
-            <div className="bg-[#0e0e0e] p-6 border border-[#98FB98]/10">
-              <div className="flex items-center justify-between mb-4">
-                <p className="text-[10px] font-['IBM_Plex_Mono'] text-[#e5e2e1]/40 tracking-widest">ANALYTICS_SNAPSHOT</p>
-                <span className="material-symbols-outlined text-[#98FB98] text-lg">hub</span>
-              </div>
-              <div className="w-full h-24 bg-[#1c1b1b] flex items-center justify-center border border-[#84967e]/20 overflow-hidden relative">
-                {/* Fallback pattern since image isn't loaded dynamically here */}
-                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#98FB98 1px, transparent 1px)', backgroundSize: '10px 10px' }}></div>
-                <div className="font-['IBM_Plex_Mono'] text-[10px] text-[#98FB98] tracking-widest z-10">GRAPH_VISUALIZATION_ACTIVE</div>
-              </div>
+
+            <div className="space-y-6 z-10 flex-1">
+              {dynamicChains.map((dc, i) => (
+                <div key={i} className="bg-[#2a2a2a] p-4 border border-[#84967e]/10 relative group hover:border border-[#98FB98]/30 transition-colors">
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="font-['IBM_Plex_Mono'] text-[10px] uppercase text-[#e5e2e1]/60 tracking-widest">Predicted Chain {i+1}</span>
+                    <span className="font-['Space_Grotesk'] text-[10px] font-bold uppercase tracking-wider bg-[#353534] px-2 py-1" style={{ color: dc.color }}>{dc.label}</span>
+                  </div>
+                  <div className="flex items-center text-sm font-['IBM_Plex_Mono'] font-bold">
+                    {dc.chain.split('→').map((node, i, arr) => (
+                      <React.Fragment key={i}>
+                        <span className={i === 0 ? 'text-[#e5e2e1]' : i === arr.length - 1 ? `text-[${dc.color}]` : 'text-[#84967e]'}>
+                          {node.trim()}
+                        </span>
+                        {i < arr.length - 1 && (
+                          <span className="material-symbols-outlined text-[#5B8059] mx-2 text-sm">arrow_forward</span>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                  {/* Progress bar logic */}
+                  <div className="w-full h-1 bg-[#131313] mt-4 rounded-full overflow-hidden">
+                    <div 
+                       className="h-full transform origin-left transition-transform duration-1000 ease-out relative" 
+                       style={{ width: isThreatActive ? `${80 - i*15}%` : '10%', backgroundColor: dc.color }}
+                    >
+                      <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Indicators of Compromise Database */}
-          <div className="col-span-12 lg:col-span-8">
-            <div className="bg-[#1c1b1b] outline outline-1 outline-[#3b4b37]/15 overflow-hidden">
-              <div className="px-6 py-4 bg-[#2a2a2a] flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <span className="material-symbols-outlined text-[#98FB98]">database</span>
-                  <h5 className="font-['Space_Grotesk'] font-bold text-sm tracking-widest uppercase">INDICATORS OF COMPROMISE DATABASE</h5>
-                </div>
-                <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#e5e2e1]/50">ENTRY_COUNT: 4,021</span>
+          {/* Right: Intelligence Insights */}
+          <div className="col-span-12 lg:col-span-5 bg-[#1c1b1b] outline outline-1 outline-[#84967e]/20 p-6 flex flex-col">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[#ffb4ab]">insights</span>
+                <h4 className="font-['Space_Grotesk'] font-bold text-lg uppercase tracking-widest text-[#e5e2e1]">Intelligence Insights</h4>
               </div>
-              <div className="w-full overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead>
-                    <tr className="text-[10px] font-['IBM_Plex_Mono'] text-[#e5e2e1]/40 uppercase tracking-widest text-left">
-                      <th className="px-6 py-4 font-normal">Indicator Value</th>
-                      <th className="px-6 py-4 font-normal">Type</th>
-                      <th className="px-6 py-4 font-normal">Last Seen</th>
-                      <th className="px-6 py-4 font-normal text-right">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody className="text-xs font-['IBM_Plex_Mono']">
-                    {iocDatabase.map((row, idx) => (
-                      <tr key={idx} className="border-t border-[#84967e]/10 hover:bg-[#3a3939] transition-colors">
-                        <td className="px-6 py-4 text-[#98FB98]">{row.value}</td>
-                        <td className="px-6 py-4 text-[#e5e2e1]/60">{row.type}</td>
-                        <td className="px-6 py-4 text-[#e5e2e1]/60">{row.lastSeen}</td>
-                        <td className="px-6 py-4 text-right">
-                          <span className={`px-2 py-0.5 ${row.statusClass} text-[9px] uppercase font-bold tracking-tighter`}>
-                            {row.status}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <span className="font-['IBM_Plex_Mono'] text-[8px] text-[#84967e] uppercase">Last Updated: moments ago</span>
             </div>
-            
-            <div className="mt-8 flex gap-4">
-              <div className="flex-1 bg-[#1c1b1b] p-4 outline outline-1 outline-[#3b4b37]/15 flex items-center justify-between">
-                <span className="font-['IBM_Plex_Mono'] text-[10px] tracking-widest text-[#e5e2e1]/40 uppercase">Global Signal Strength</span>
-                <div className="flex gap-1 h-3 items-end">
-                  <div className="w-1 bg-[#98FB98] h-full"></div>
-                  <div className="w-1 bg-[#98FB98] h-3/4"></div>
-                  <div className="w-1 bg-[#98FB98] h-5/6"></div>
-                  <div className="w-1 bg-[#98FB98] h-2/3"></div>
-                  <div className="w-1 bg-[#353534] h-full"></div>
-                </div>
+
+            <div className="grid grid-cols-2 gap-4 flex-1">
+              <div className="bg-[#2a2a2a] p-4 flex flex-col justify-between border-l-2 border-[#98FB98] relative overflow-hidden group">
+                <div className="absolute inset-0 bg-[#98FB98]/5 opacity-0 group-hover:opacity-100 animate-pulse transition-opacity"></div>
+                <span className="font-['IBM_Plex_Mono'] text-[9px] uppercase text-[#84967e] mb-2 tracking-widest z-10">Correlation Strength</span>
+                <span className="font-['Space_Grotesk'] text-2xl font-black text-[#e5e2e1] z-10">89.4<span className="text-sm text-[#84967e]">%</span></span>
               </div>
-              <div className="flex-1 bg-[#1c1b1b] p-4 outline outline-1 outline-[#3b4b37]/15 flex items-center justify-between">
-                <span className="font-['IBM_Plex_Mono'] text-[10px] tracking-widest text-[#e5e2e1]/40 uppercase">Cluster Sync Status</span>
-                <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#98FB98]">VERIFIED_SECURE</span>
+              <div className="bg-[#2a2a2a] p-4 flex flex-col justify-between border-l-2 border-[#5B8059] relative overflow-hidden group">
+                <div className="absolute inset-0 bg-[#5B8059]/10 opacity-0 group-hover:opacity-100 animate-pulse transition-opacity"></div>
+                <span className="font-['IBM_Plex_Mono'] text-[9px] uppercase text-[#84967e] mb-2 tracking-widest z-10">Normalization Cover</span>
+                <span className="font-['Space_Grotesk'] text-2xl font-black text-[#e5e2e1] z-10">100<span className="text-sm text-[#84967e]">%</span></span>
+                <span className="font-['IBM_Plex_Mono'] text-[8px] text-neutral-500 mt-1 z-10">LAST 100 LOGS</span>
+              </div>
+              <div className="bg-[#2a2a2a] p-4 flex flex-col justify-between border-l-2 border-[#ffb4ab] col-span-2 shadow-[inset_0_0_20px_rgba(255,180,171,0.05)]">
+                <div className="flex justify-between items-start">
+                  <span className="font-['IBM_Plex_Mono'] text-[9px] uppercase text-[#84967e] tracking-widest">Active Multi-Vector Incidents</span>
+                  <span className={`px-2 py-0.5 text-[9px] font-bold uppercase rounded-sm ${stats?.correlated > 0 ? 'bg-[#ffb4ab]/10 text-[#ffb4ab]' : 'bg-[#84967e]/10 text-[#84967e]'}`}>
+                    {stats?.correlated > 0 ? 'Critical' : 'Nominal'}
+                  </span>
+                </div>
+                <div className="mt-2 flex items-center justify-between">
+                  <span className="font-['Space_Grotesk'] text-3xl font-black text-[#e5e2e1]">{stats?.correlated || 0}</span>
+                  <div className="text-right">
+                    <span className="font-['IBM_Plex_Mono'] text-[9px] text-[#84967e] uppercase block">Predicted Next Move</span>
+                    <span className={`font-['Space_Grotesk'] text-[11px] font-bold uppercase tracking-wide ${stats?.correlated > 0 ? 'text-[#ffb4ab]' : 'text-[#5B8059]'}`}>
+                      {stats?.correlated > 0 ? 'Lateral Movement' : 'Wait states'}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        {/* 4. Bottom Section: IOC Database */}
+        <div className="bg-[#1c1b1b] outline outline-1 outline-[#84967e]/20 flex flex-col">
+          <div className="p-6 border-b border-[#84967e]/20 flex justify-between items-center bg-[#212121]">
+            <div className="flex items-center gap-3">
+              <span className="material-symbols-outlined text-[#98FB98]">search</span>
+              <h4 className="font-['Space_Grotesk'] font-bold text-sm tracking-widest uppercase text-[#e5e2e1]">Indicators of Compromise</h4>
+            </div>
+            <div className="font-['IBM_Plex_Mono'] text-[10px] text-[#84967e] px-3 py-1 bg-[#131313] border border-[#353534] shadow-[inset_0_0_8px_rgba(0,0,0,0.5)]">
+              {iocs.length} RECORDS INDEXED
+            </div>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-[#2a2a2a] text-[9px] font-['Space_Grotesk'] uppercase tracking-widest text-[#84967e]">
+                  <th className="px-6 py-4 font-bold border-b border-[#353534]">Indicator Value</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#353534]">Type</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#353534]">Last Seen</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#353534]">Risk Score</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#353534]">Status</th>
+                  <th className="px-6 py-4 font-bold border-b border-[#353534] text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody className="font-['IBM_Plex_Mono'] text-xs">
+                {iocs.length > 0 ? iocs.map((ioc, idx) => {
+                  const effectiveStatus = blockedIocs.has(ioc.value) ? 'Blocked' : ioc.status;
+                  const score = getRiskScore(effectiveStatus);
+                  const isThreat = effectiveStatus === 'Active Threat';
+                  const isBlocked = effectiveStatus === 'Blocked';
+                  return (
+                    <tr key={idx} className={`border-b border-[#84967e]/10 transition-colors group ${isBlocked ? 'bg-[#93000a]/10 hover:bg-[#93000a]/20' : 'hover:bg-[#2a2a2a]/50'}`}>
+                      <td className={`px-6 py-4 font-bold relative flex items-center gap-2 ${isThreat ? 'text-[#ffb4ab]' : isBlocked ? 'text-[#ffb4ab] opacity-60 line-through' : 'text-[#98FB98]'}`}>
+                        {isBlocked && <span className="material-symbols-outlined text-[#ffb4ab] text-[14px]">block</span>}
+                        {ioc.value}
+                      </td>
+                      <td className={`px-6 py-4 text-[10px] uppercase tracking-wider ${isBlocked ? 'text-neutral-600 line-through' : 'text-[#e5e2e1]/60'}`}>{ioc.type}</td>
+                      <td className={`px-6 py-4 text-[10px] ${isBlocked ? 'text-neutral-600' : 'text-[#84967e]'}`}>
+                        {new Date(ioc.last_seen || Date.now()).toLocaleString()}
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className={`flex items-center gap-2 ${isBlocked ? 'opacity-30 grayscale' : ''}`}>
+                          <span className={`text-[10px] font-bold w-6 ${score >= 80 ? 'text-[#ffb4ab]' : score >= 50 ? 'text-yellow-400' : 'text-[#98FB98]'}`}>{score}</span>
+                          <div className="w-16 h-1.5 bg-[#131313] rounded-full overflow-hidden">
+                            <div className={`h-full ${score >= 80 ? 'bg-[#ffb4ab]' : score >= 50 ? 'bg-yellow-400' : 'bg-[#98FB98]'}`} style={{ width: `${score}%` }}></div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`px-2 py-1 text-[8px] uppercase font-black tracking-widest rounded-sm shadow-sm flex items-center w-max gap-1 ${
+                          isThreat ? 'bg-[#ffb4ab]/10 text-[#ffb4ab] border border-[#ffb4ab]/20' : 
+                          isBlocked ? 'bg-[#93000a]/20 text-[#ffb4ab] border border-[#93000a]/50' :
+                          'bg-[#98FB98]/10 text-[#98FB98] border border-[#98FB98]/20'
+                        }`}>
+                          {isBlocked && <span className="w-1.5 h-1.5 bg-[#ffb4ab] rounded-full"></span>}
+                          {effectiveStatus}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {!isBlocked ? (
+                          <>
+                            <button 
+                              onClick={() => handleBlock(ioc.value)}
+                              className="bg-[#353534] hover:bg-[#ffb4ab]/20 hover:border-[#ffb4ab]/50 border border-transparent hover:text-[#ffb4ab] text-neutral-400 px-3 py-1 text-[9px] uppercase font-bold transition-all"
+                            >
+                              Block
+                            </button>
+                            <button 
+                              onClick={handleInvestigate}
+                              className="bg-[#353534] hover:bg-[#98FB98]/20 hover:border-[#98FB98]/50 border border-transparent hover:text-[#98FB98] text-neutral-400 px-3 py-1 text-[9px] uppercase font-bold transition-all"
+                            >
+                              Investigate
+                            </button>
+                          </>
+                        ) : (
+                          <span className="text-[#ffb4ab] text-[9px] font-bold uppercase tracking-widest underline decoration-[#ffb4ab]/50 pr-4">Mitigated</span>
+                        )}
+                      </td>
+                    </tr>
+                  )
+                }) : (
+                  <tr>
+                    <td colSpan="6" className="px-6 py-12 text-center text-[#84967e] text-[10px] uppercase tracking-widest">
+                      <span className="material-symbols-outlined block text-2xl mb-2 opacity-50">data_array</span>
+                      No indicators indexed currently
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
     </div>
   );

@@ -9,7 +9,6 @@ import Threats from './pages/Threats';
 import Intelligence from './pages/Intelligence';
 import Archives from './pages/Archives';
 import Settings from './pages/Settings';
-import DeployShield from './pages/DeployShield';
 
 export default function App() {
   return (
@@ -27,7 +26,6 @@ export default function App() {
                 <Route path="/intelligence" element={<Intelligence />} />
                 <Route path="/archives" element={<Archives />} />
                 <Route path="/settings" element={<Settings />} />
-                <Route path="/deploy" element={<DeployShield />} />
               </Routes>
             </div>
           </div>

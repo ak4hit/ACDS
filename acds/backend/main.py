@@ -4,7 +4,7 @@ import os
 import random
 import re
 from datetime import datetime
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, UploadFile, File, Request, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 
 from config import GEMINI_API_KEY
@@ -120,11 +120,18 @@ def reset_system():
 @app.post('/upload')
 async def upload_log_file(file: UploadFile = File(...)):
     """
-    Upload a JSON or NDJSON log file and parse events.
+    Upload a JSON or NDJSON log file and run the full normalization pipeline.
+
+    Processing pipeline (in order):
+      1. Parse file  → list of raw dicts
+      2. normalize() → standard ACDS schema (layer, event_type, bytes, ...)
+      3. detect()    → alert generation using ONLY normalized fields
+      4. broadcast() → push alerts to all connected WebSocket clients
+
     Accepts:
-      - NDJSON: one JSON object per line
-      - JSON array: [ {...}, {...} ]
-      - Single JSON object: { ... }
+      - NDJSON : one JSON object per line
+      - JSON array  : [ {...}, {...} ]
+      - Single JSON : { ... }
     """
     contents = await file.read()
     try:
@@ -132,11 +139,12 @@ async def upload_log_file(file: UploadFile = File(...)):
     except Exception:
         text = contents.decode('latin-1', errors='replace')
 
-    events = []
-
-    text = text.lstrip('\ufeff')
+    events  = []
+    text    = text.lstrip('\ufeff')  # strip BOM if present
     stripped = text.strip()
 
+    # ── STEP 1: Parse raw bytes into a list of dicts ─────────────────
+    # Try JSON array / single object first
     try:
         parsed = json.loads(stripped)
         if isinstance(parsed, list):
@@ -146,6 +154,7 @@ async def upload_log_file(file: UploadFile = File(...)):
     except json.JSONDecodeError:
         pass
 
+    # Try Python literal_eval (handles single-quoted JSON-like dicts)
     if not events:
         try:
             import ast
@@ -157,6 +166,7 @@ async def upload_log_file(file: UploadFile = File(...)):
         except Exception:
             pass
 
+    # Try NDJSON (one JSON object per line)
     if not events:
         for line in stripped.splitlines():
             line = line.strip()
@@ -173,6 +183,7 @@ async def upload_log_file(file: UploadFile = File(...)):
                 except Exception:
                     continue
 
+    # Last resort: brace-matching extractor for malformed / concatenated JSON
     if not events:
         depth = 0
         start = -1
@@ -185,7 +196,7 @@ async def upload_log_file(file: UploadFile = File(...)):
                 depth -= 1
                 if depth == 0 and start != -1:
                     obj_str = stripped[start:i+1]
-                    start = -1
+                    start   = -1
                     try:
                         evt = json.loads(obj_str)
                         if isinstance(evt, dict):
@@ -205,29 +216,118 @@ async def upload_log_file(file: UploadFile = File(...)):
         return {'status': 'error', 'message': 'No valid JSON events found in file', 'filename': file.filename}
 
     findings = []
-    loop = asyncio.get_event_loop()
     for raw_event in events:
         try:
+            # ── STEP 2: Tag source file for audit trail ───────────────
             raw_event['source_file'] = file.filename
-            normalized = normalize(raw_event)
-            alerts = engine.detect(normalized)
 
-            # Do not mass-generate playbooks to avoid hitting Gemini free-tier rate limits.
-            # Users must request playbooks individually via the frontend UI.
-            
+            # ── STEP 3: NORMALIZE ──────────────────────────────────
+            # Routes to normalize_network_log() or normalize_app_log()
+            # based on layer tag or presence of dst_port / protocol.
+            # Output is a standard dict with: event_id, timestamp, src_ip,
+            # dst_ip, layer, event_type, bytes, status_code, metadata.
+            normalized = normalize(raw_event)
+
+            # ── STEP 4: DETECT ───────────────────────────────────
+            # DetectionEngine reads ONLY normalized fields — never raw.
+            # Playbooks are NOT auto-generated here (rate-limit protection);
+            # users request them individually via the UI.
+            alerts = engine.detect(normalized)
             findings.extend(alerts)
         except Exception:
             continue
 
+    # ── STEP 5: STORE & BROADCAST ────────────────────────────
     for f in findings:
         alert_store.append(f)
         await broadcast(f)
 
     return {
-        'status'  : 'processed',
-        'filename': file.filename,
+        'status'       : 'processed',
+        'filename'     : file.filename,
         'events_parsed': len(events),
-        'findings': len(findings),
+        'findings'     : len(findings),
+    }
+
+
+@app.post('/ingest')
+async def ingest_filebeat(request: Request):
+    """
+    Filebeat / HTTP output endpoint — accepts a batch of raw log events
+    via HTTP POST (JSON body) and processes them through the full
+    normalization pipeline before detection.
+
+    Filebeat configuration (filebeat.yml):
+        output.http:
+          hosts: ['http://localhost:8000']
+          path: '/ingest'
+          method: POST
+          codec.json:
+            pretty: false
+
+    Accepted body formats:
+      - Single event   : { ... }
+      - Array of events: [ {...}, {...} ]
+      - Filebeat batch : { 'events': [ {...}, {...} ] }
+
+    Processing pipeline (in order):
+      1. Parse body    → list of raw dicts
+      2. normalize()   → standard ACDS schema
+      3. detect()      → alert generation using ONLY normalized fields
+      4. broadcast()   → push alerts to WebSocket clients
+    """
+    # ── STEP 1: Parse request body ─────────────────────────────
+    try:
+        body = await request.json()
+    except Exception:
+        return {'status': 'error', 'message': 'Invalid JSON body'}, 400
+
+    # Normalise body to a flat list of raw event dicts
+    if isinstance(body, dict):
+        # Filebeat wraps events in a top-level 'events' key
+        raw_events = body.get('events', [body])
+    elif isinstance(body, list):
+        raw_events = body
+    else:
+        return {'status': 'error', 'message': 'Body must be a JSON object or array'}, 400
+
+    if not raw_events:
+        return {'status': 'ok', 'events_received': 0, 'findings': 0}
+
+    findings = []
+    for raw_event in raw_events:
+        if not isinstance(raw_event, dict):
+            continue  # skip malformed entries
+        try:
+            # ── STEP 2: Tag the ingest source ──────────────────────
+            raw_event.setdefault('source_file', 'filebeat-ingest')
+
+            # ── STEP 3: NORMALIZE ────────────────────────────────
+            # normalize() auto-detects the log layer:
+            #   - 'layer': 'network' or presence of dst_port/protocol
+            #     → normalize_network_log() → extracts bytes, dst_port, flags
+            #   - everything else
+            #     → normalize_app_log()     → extracts status_code, endpoint
+            normalized = normalize(raw_event)
+
+            # ── STEP 4: DETECT ────────────────────────────────
+            # Detection rules run on the normalized event only.
+            # MITRE mapping, correlation flags, and whitelist checks
+            # are all applied inside engine.detect().
+            alerts = engine.detect(normalized)
+            findings.extend(alerts)
+        except Exception:
+            continue
+
+    # ── STEP 5: STORE & BROADCAST ────────────────────────────
+    for alert in findings:
+        alert_store.append(alert)
+        await broadcast(alert)
+
+    return {
+        'status'         : 'ingested',
+        'events_received': len(raw_events),
+        'findings'       : len(findings),
     }
 
 @app.post('/playbooks/generate/{alert_id}')
@@ -405,11 +505,7 @@ def get_iocs():
                 'alert_id' : a.get('alert_id'),
             })
 
-    static_iocs = [
-        {'value': 'dc01.corp.internal', 'type': 'Domain',    'last_seen': datetime.utcnow().isoformat(), 'status': 'Monitored',    'alert_id': None},
-        {'value': 'sha256:8f2a...1e4c', 'type': 'File Hash', 'last_seen': datetime.utcnow().isoformat(), 'status': 'Active Threat', 'alert_id': None},
-    ]
-    return iocs[:20] + static_iocs
+    return iocs[:20]
 
 @app.get('/intelligence/propagation')
 def get_propagation_vectors():

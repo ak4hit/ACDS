@@ -1,0 +1,12 @@
+filebeat.inputs:
+  - type: filestream
+    id: acds-backend-logs
+    enabled: true
+    paths:
+      - C:\Users\Akshith\OneDrive\Documents\Desktop\Final winner project\winners-project\acds\backend\fake_logs\*.log
+
+output.console:
+  codec.json:
+    pretty: false
+
+logging.level: warning

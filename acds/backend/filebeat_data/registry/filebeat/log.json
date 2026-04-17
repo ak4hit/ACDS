@@ -1,0 +1,4 @@
+{"op":"set","id":1}
+{"k":"filestream::acds-backend-logs::fingerprint::1c78c23f586f87f281bf7df116bace4f2623ec10e524dd06bf90da6529ef6488","v":{"ttl":-1,"updated":[281470681743360,18446744011573954816],"cursor":null,"meta":{"source":"C:\\Users\\Akshith\\OneDrive\\Documents\\Desktop\\Final winner project\\winners-project\\acds\\backend\\fake_logs\\log_001.log","identifier_name":"fingerprint"}}}
+{"op":"set","id":2}
+{"k":"filestream::acds-backend-logs::fingerprint::1c78c23f586f87f281bf7df116bace4f2623ec10e524dd06bf90da6529ef6488","v":{"ttl":-1,"updated":[1418031925380,1776401665],"cursor":{"offset":3240,"eof":false},"meta":{"source":"C:\\Users\\Akshith\\OneDrive\\Documents\\Desktop\\Final winner project\\winners-project\\acds\\backend\\fake_logs\\log_001.log","identifier_name":"fingerprint"}}}

@@ -116,7 +116,7 @@ export default function Settings() {
               SECTION_02 <span className="text-[#b9ccb2] font-medium">Admin Whitelist</span>
             </h3>
             <div className="flex items-center gap-2 px-3 py-1 bg-[#2a2a2a] border border-[#84967e]/10">
-              <span className="material-symbols-outlined text-xs text-[#98FB98]" style={{ verticalAlign: 'middle' }}>shield_person</span>
+              <span className="material-symbols-outlined text-xs text-[#98FB98]" style={{ verticalAlign: 'middle' }}>verified_user</span>
               <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#b9ccb2] uppercase">Currently 2 whitelisted hosts active</span>
             </div>
           </div>
