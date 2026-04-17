@@ -80,7 +80,7 @@ const getSeverityStyle = (severity) => {
   switch (severity) {
     case 'Critical': return { bg: 'bg-[#93000a]/20', text: 'text-[#ffb4ab]', border: 'border-[#ffb4ab]', bar: 'bg-[#ffb4ab]', dot: 'bg-[#ffb4ab]' };
     case 'High':     return { bg: 'bg-[#ff9800]/15',  text: 'text-[#ffa726]', border: 'border-[#ffa726]', bar: 'bg-[#ffa726]', dot: 'bg-[#ffa726]' };
-    default:         return { bg: 'bg-[#2a2a2a]',     text: 'text-[#84967e]', border: 'border-[#84967e]', bar: 'bg-[#84967e]', dot: 'bg-[#84967e]' };
+    default:         return { bg: 'bg-[#120b0a]',     text: 'text-[#6B6560]', border: 'border-[#6B6560]', bar: 'bg-[#6B6560]', dot: 'bg-[#6B6560]' };
   }
 };
 
@@ -101,7 +101,7 @@ function DetailModal({ entry, onClose }) {
         {/* Modal header */}
         <div className="flex justify-between items-center p-5 bg-[#222] border-b border-[#353534] sticky top-0">
           <div>
-            <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#84967e] uppercase tracking-widest block mb-0.5">
+            <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560] uppercase tracking-widest block mb-0.5">
               Archive Details
             </span>
             <h3 className="font-['Space_Grotesk'] font-black text-lg text-[#e5e2e1] uppercase leading-none">
@@ -111,14 +111,14 @@ function DetailModal({ entry, onClose }) {
           <div className="flex gap-2 items-center">
             <button
               onClick={() => downloadEntry(entry)}
-              className="flex items-center gap-1.5 text-[9px] font-['IBM_Plex_Mono'] uppercase text-[#98FB98] bg-[#98FB98]/10 px-3 py-1.5 border border-[#98FB98]/30 hover:bg-[#98FB98]/20 transition-all"
+              className="flex items-center gap-1.5 text-[9px] font-['IBM_Plex_Mono'] uppercase text-[#A84B2B] bg-[#A84B2B]/10 px-3 py-1.5 border border-[#A84B2B]/30 hover:bg-[#A84B2B]/20 transition-all"
             >
               <span className="material-symbols-outlined text-xs" style={{ verticalAlign: 'middle' }}>download</span>
               Download CSV
             </button>
             <button
               onClick={onClose}
-              className="flex items-center justify-center w-8 h-8 bg-[#2a2a2a] border border-[#353534] text-[#84967e] hover:text-[#e5e2e1] hover:border-[#84967e] transition-all"
+              className="flex items-center justify-center w-8 h-8 bg-[#120b0a] border border-[#353534] text-[#6B6560] hover:text-[#e5e2e1] hover:border-[#6B6560] transition-all"
             >
               <span className="material-symbols-outlined text-sm" style={{ verticalAlign: 'middle' }}>close</span>
             </button>
@@ -145,7 +145,7 @@ function DetailModal({ entry, onClose }) {
               ['Source File', entry.source_file || '—'],
             ].map(([label, value]) => (
               <div key={label} className="bg-[#222] p-3 rounded">
-                <p className="text-[9px] text-[#84967e] uppercase tracking-widest mb-1">{label}</p>
+                <p className="text-[9px] text-[#6B6560] uppercase tracking-widest mb-1">{label}</p>
                 <p className="text-[#e5e2e1] break-all">{String(value)}</p>
               </div>
             ))}
@@ -154,16 +154,16 @@ function DetailModal({ entry, onClose }) {
           {/* MITRE */}
           {entry.mitre && (
             <div className="bg-[#222] p-3 rounded">
-              <p className="text-[9px] text-[#84967e] uppercase tracking-widest mb-2">MITRE ATT&CK</p>
-              <p className="text-[#98FB98]">{entry.mitre.id} — {entry.mitre.name}</p>
-              {entry.mitre.tactic && <p className="text-[#84967e] text-[10px] mt-0.5">Tactic: {entry.mitre.tactic}</p>}
+              <p className="text-[9px] text-[#6B6560] uppercase tracking-widest mb-2">MITRE ATT&CK</p>
+              <p className="text-[#A84B2B]">{entry.mitre.id} — {entry.mitre.name}</p>
+              {entry.mitre.tactic && <p className="text-[#6B6560] text-[10px] mt-0.5">Tactic: {entry.mitre.tactic}</p>}
             </div>
           )}
 
           {/* Why Flagged */}
           {entry.why_flagged && (
             <div className="bg-[#222] p-3 rounded">
-              <p className="text-[9px] text-[#84967e] uppercase tracking-widest mb-2">Why Flagged</p>
+              <p className="text-[9px] text-[#6B6560] uppercase tracking-widest mb-2">Why Flagged</p>
               <p className="text-[#e5e2e1] leading-relaxed">{entry.why_flagged}</p>
             </div>
           )}
@@ -171,19 +171,19 @@ function DetailModal({ entry, onClose }) {
           {/* Attack Path */}
           {entry.attack_path?.length > 0 && (
             <div className="bg-[#222] p-3 rounded">
-              <p className="text-[9px] text-[#84967e] uppercase tracking-widest mb-2">Attack Path</p>
+              <p className="text-[9px] text-[#6B6560] uppercase tracking-widest mb-2">Attack Path</p>
               <p className="text-[#e5e2e1] leading-relaxed">{entry.attack_path.map(n => n.name || n).join(' → ')}</p>
             </div>
           )}
 
           {/* Playbook */}
           {entry.playbook && (
-            <div className="bg-[#222] p-3 rounded border border-[#98FB98]/10">
-              <p className="text-[9px] text-[#98FB98] uppercase tracking-widest mb-2">AI Response Playbook</p>
+            <div className="bg-[#222] p-3 rounded border border-[#A84B2B]/10">
+              <p className="text-[9px] text-[#A84B2B] uppercase tracking-widest mb-2">AI Response Playbook</p>
               <div className="space-y-2">
                 {entry.playbook.split('\n').filter(s => s.trim()).map((step, idx) => (
                   <div key={idx} className="flex gap-3">
-                    <span className="text-[#98FB98] shrink-0">{String(idx + 1).padStart(2, '0')}</span>
+                    <span className="text-[#A84B2B] shrink-0">{String(idx + 1).padStart(2, '0')}</span>
                     <p className="text-[#e5e2e1]">{step}</p>
                   </div>
                 ))}
@@ -192,9 +192,9 @@ function DetailModal({ entry, onClose }) {
           )}
 
           {/* Raw JSON */}
-          <div className="bg-[#0f0f0f] p-3 rounded border border-[#2a2a2a]">
-            <p className="text-[9px] text-[#84967e] uppercase tracking-widest mb-2">Raw Event Data</p>
-            <pre className="text-[10px] text-[#84967e] whitespace-pre-wrap overflow-x-auto leading-relaxed">
+          <div className="bg-[#0f0f0f] p-3 rounded border border-[#120b0a]">
+            <p className="text-[9px] text-[#6B6560] uppercase tracking-widest mb-2">Raw Event Data</p>
+            <pre className="text-[10px] text-[#6B6560] whitespace-pre-wrap overflow-x-auto leading-relaxed">
               {JSON.stringify(entry, null, 2)}
             </pre>
           </div>
@@ -308,7 +308,7 @@ export default function Archives() {
   const filterLabel = filterTabs.find(f => f.key === filter)?.label || 'all';
 
   return (
-    <div className="pt-10 pb-20 px-8 min-h-screen relative overflow-y-auto bg-[#131313] text-[#e5e2e1]">
+    <div className="pt-10 pb-20 px-8 min-h-screen relative overflow-y-auto bg-[#0A0C0E] text-[#e5e2e1]">
       {/* Detail Modal */}
       {detailEntry && (
         <DetailModal entry={detailEntry} onClose={() => setDetailEntry(null)} />
@@ -325,12 +325,12 @@ export default function Archives() {
         <div className="flex justify-between items-start mb-8 gap-6">
           <div>
             <div className="flex items-center space-x-3 mb-2">
-              <button className="w-10 h-10 bg-[#98FB98] flex items-center justify-center text-black">
+              <button className="w-10 h-10 bg-[#A84B2B] flex items-center justify-center text-black">
                 <span className="material-symbols-outlined" style={{ verticalAlign: 'middle' }}>storage</span>
               </button>
               <h2 className="text-3xl font-['Space_Grotesk'] font-bold uppercase tracking-tight">System Archives</h2>
             </div>
-            <p className="font-['IBM_Plex_Mono'] text-xs text-[#84967e] tracking-wider">
+            <p className="font-['IBM_Plex_Mono'] text-xs text-[#6B6560] tracking-wider">
               {stats.total} EVENTS · {stats.critical} CRITICAL
             </p>
             {lastFetched && (
@@ -346,7 +346,7 @@ export default function Archives() {
             <button
               onClick={fetchFromBackend}
               disabled={loading}
-              className="flex items-center gap-1.5 text-[10px] font-['IBM_Plex_Mono'] uppercase tracking-widest text-[#84967e] bg-[#1c1c1c] border border-[#353534] px-3 py-2 hover:border-[#98FB98]/40 hover:text-[#98FB98] transition-all disabled:opacity-50"
+              className="flex items-center gap-1.5 text-[10px] font-['IBM_Plex_Mono'] uppercase tracking-widest text-[#6B6560] bg-[#1c1c1c] border border-[#353534] px-3 py-2 hover:border-[#A84B2B]/40 hover:text-[#A84B2B] transition-all disabled:opacity-50"
             >
               <span className={`material-symbols-outlined text-sm ${loading ? 'animate-spin' : ''}`} style={{ verticalAlign: 'middle' }}>
                 {loading ? 'progress_activity' : 'sync'}
@@ -358,7 +358,7 @@ export default function Archives() {
             <button
               onClick={() => downloadBulk(filteredArchive, filterLabel)}
               disabled={filteredArchive.length === 0}
-              className="flex items-center gap-1.5 text-[10px] font-['IBM_Plex_Mono'] uppercase tracking-widest text-[#98FB98] bg-[#98FB98]/10 border border-[#98FB98]/30 px-3 py-2 hover:bg-[#98FB98]/20 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              className="flex items-center gap-1.5 text-[10px] font-['IBM_Plex_Mono'] uppercase tracking-widest text-[#A84B2B] bg-[#A84B2B]/10 border border-[#A84B2B]/30 px-3 py-2 hover:bg-[#A84B2B]/20 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
             >
               <span className="material-symbols-outlined text-sm" style={{ verticalAlign: 'middle' }}>download</span>
               Download Report ({filteredArchive.length})
@@ -379,19 +379,19 @@ export default function Archives() {
         {/* ── Stat Cards ── */}
         <div className="grid grid-cols-3 gap-3 mb-6">
           {[
-            { label: 'Total Archived', value: stats.total,      color: 'border-[#84967e]/30', text: 'text-[#e5e2e1]' },
+            { label: 'Total Archived', value: stats.total,      color: 'border-[#6B6560]/30', text: 'text-[#e5e2e1]' },
             { label: 'Critical',       value: stats.critical,   color: 'border-[#ffb4ab]/50', text: 'text-[#ffb4ab]' },
             { label: 'High',           value: stats.high,       color: 'border-[#ffa726]/40', text: 'text-[#ffa726]' }
           ].map(s => (
-            <div key={s.label} className={`bg-[#1c1b1b] p-4 border-l-2 ${s.color}`}>
-              <p className="font-['IBM_Plex_Mono'] text-[9px] text-neutral-500 uppercase tracking-widest mb-1">{s.label}</p>
+            <div key={s.label} className={`bg-[#0A0C0E] p-4 border-l-2 ${s.color}`}>
+              <p className="font-['IBM_Plex_Mono'] text-[9px] text-[#6B6560] uppercase tracking-widest mb-1">{s.label}</p>
               <h3 className={`text-2xl font-['Space_Grotesk'] font-black ${s.text}`}>{s.value}</h3>
             </div>
           ))}
         </div>
 
         {/* ── Filter Bar ── */}
-        <div className="flex justify-between items-center bg-[#1c1b1b] px-4 py-2 mb-4">
+        <div className="flex justify-between items-center bg-[#0A0C0E] px-4 py-2 mb-4">
           <div className="flex space-x-1">
             {filterTabs.map(f => (
               <button
@@ -399,12 +399,12 @@ export default function Archives() {
                 onClick={() => setFilter(f.key)}
                 className={`font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest px-3 py-1.5 transition-all ${
                   filter === f.key
-                    ? 'bg-[#98FB98]/10 text-[#98FB98] border border-[#98FB98]/30'
-                    : 'text-neutral-500 hover:text-white border border-transparent hover:border-[#353534]'
+                    ? 'bg-[#A84B2B]/10 text-[#A84B2B] border border-[#A84B2B]/30'
+                    : 'text-[#6B6560] hover:text-white border border-transparent hover:border-[#353534]'
                 }`}
               >
                 {f.label}
-                <span className={`ml-1.5 text-[9px] ${filter === f.key ? 'text-[#98FB98]/70' : 'text-neutral-700'}`}>
+                <span className={`ml-1.5 text-[9px] ${filter === f.key ? 'text-[#A84B2B]/70' : 'text-neutral-700'}`}>
                   {f.count}
                 </span>
               </button>
@@ -416,7 +416,7 @@ export default function Archives() {
         </div>
 
         {/* ── Table Header ── */}
-        <div className="grid grid-cols-12 gap-4 px-4 py-2 bg-[#353534]/50 font-['IBM_Plex_Mono'] text-[10px] text-[#84967e] uppercase tracking-widest mb-0.5">
+        <div className="grid grid-cols-12 gap-4 px-4 py-2 bg-[#353534]/50 font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560] uppercase tracking-widest mb-0.5">
           <div className="col-span-2">TIMESTAMP</div>
           <div className="col-span-3">THREAT TYPE</div>
           <div className="col-span-2">SOURCE IP</div>
@@ -430,7 +430,7 @@ export default function Archives() {
 
           {/* Loading state */}
           {loading && archive.length === 0 && (
-            <div className="px-4 py-12 text-center font-['IBM_Plex_Mono'] text-[#84967e] text-xs uppercase tracking-widest">
+            <div className="px-4 py-12 text-center font-['IBM_Plex_Mono'] text-[#6B6560] text-xs uppercase tracking-widest">
               <span className="material-symbols-outlined text-2xl block mb-2 animate-spin">progress_activity</span>
               Loading archives from backend...
             </div>
@@ -440,13 +440,13 @@ export default function Archives() {
           {!loading && filteredArchive.length === 0 && (
             <div className="px-4 py-12 text-center">
               <span className="material-symbols-outlined text-3xl text-neutral-700 block mb-3">storage</span>
-              <p className="font-['IBM_Plex_Mono'] text-neutral-500 text-xs uppercase tracking-widest mb-2">
+              <p className="font-['IBM_Plex_Mono'] text-[#6B6560] text-xs uppercase tracking-widest mb-2">
                 No events found{filter !== 'all' ? ` for filter: ${filterLabel}` : ''}
               </p>
               {filter !== 'all' ? (
                 <button
                   onClick={() => setFilter('all')}
-                  className="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-[#98FB98] border border-[#98FB98]/30 px-3 py-1.5 hover:bg-[#98FB98]/10 transition-all mt-2"
+                  className="font-['IBM_Plex_Mono'] text-[10px] uppercase tracking-widest text-[#A84B2B] border border-[#A84B2B]/30 px-3 py-1.5 hover:bg-[#A84B2B]/10 transition-all mt-2"
                 >
                   Show All
                 </button>
@@ -466,7 +466,7 @@ export default function Archives() {
             return (
               <div
                 key={a.alert_id || i}
-                className="grid grid-cols-12 gap-4 px-4 py-3 bg-[#1c1b1b] hover:bg-[#201f1f] transition-colors items-center group cursor-pointer"
+                className="grid grid-cols-12 gap-4 px-4 py-3 bg-[#0A0C0E] hover:bg-[#201f1f] transition-colors items-center group cursor-pointer"
                 onClick={() => setDetailEntry(a)}
               >
 
@@ -503,7 +503,7 @@ export default function Archives() {
                 </div>
 
                 {/* MITRE TTP */}
-                <div className="col-span-2 font-['IBM_Plex_Mono'] text-[11px] text-neutral-500">
+                <div className="col-span-2 font-['IBM_Plex_Mono'] text-[11px] text-[#6B6560]">
                   {a.mitre?.id || a.mitre_ttp || '—'}
                   {a.mitre?.name ? (
                     <span className="block text-[9px] text-neutral-700 mt-0.5">{a.mitre.name}</span>
@@ -517,7 +517,7 @@ export default function Archives() {
                   <button
                     onClick={(e) => { e.stopPropagation(); setDetailEntry(a); }}
                     title="View full details"
-                    className="flex items-center gap-1 text-[9px] font-['IBM_Plex_Mono'] uppercase text-[#84967e] bg-[#2a2a2a] px-2 py-1 border border-[#353534] hover:border-[#98FB98]/40 hover:text-[#98FB98] transition-all"
+                    className="flex items-center gap-1 text-[9px] font-['IBM_Plex_Mono'] uppercase text-[#6B6560] bg-[#120b0a] px-2 py-1 border border-[#353534] hover:border-[#A84B2B]/40 hover:text-[#A84B2B] transition-all"
                   >
                     <span className="material-symbols-outlined text-xs" style={{ verticalAlign: 'middle' }}>open_in_new</span>
                     Details
@@ -527,7 +527,7 @@ export default function Archives() {
                   <button
                     onClick={(e) => { e.stopPropagation(); downloadEntry(a); }}
                     title="Download individual log as CSV"
-                    className="flex items-center gap-0.5 text-[9px] font-['IBM_Plex_Mono'] uppercase text-[#98FB98] bg-[#98FB98]/10 px-1.5 py-1 border border-[#98FB98]/20 hover:bg-[#98FB98]/20 transition-all"
+                    className="flex items-center gap-0.5 text-[9px] font-['IBM_Plex_Mono'] uppercase text-[#A84B2B] bg-[#A84B2B]/10 px-1.5 py-1 border border-[#A84B2B]/20 hover:bg-[#A84B2B]/20 transition-all"
                   >
                     <span className="material-symbols-outlined text-xs" style={{ verticalAlign: 'middle' }}>download</span>
                   </button>

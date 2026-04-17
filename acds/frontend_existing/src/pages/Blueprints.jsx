@@ -146,39 +146,39 @@ export default function Blueprints() {
     }
   }, [globeRef.current]);
 
-  // ── Monitor status polling ───────────────────────────────────────
+  const [analysisMode, setAnalysisMode] = useState('synthetic'); // 'synthetic' or 'live'
+  const [transitionMsg, setTransitionMsg] = useState(null);
+
+  // ── Mode Toggles ───────────────────────────────────────────────
   useEffect(() => {
-    const poll = setInterval(async () => {
-      try {
-        const res = await fetch(`${API}/monitor/status`);
-        const data = await res.json();
-        setMonitorStatus(data);
-        setMonitorRunning(data.is_running);
-      } catch (_) {}
-    }, 1500);
-    return () => clearInterval(poll);
+    // When the component mounts, default to synthetic mode
+    if (analysisMode === 'synthetic') {
+      fetch(`${API}/monitor/start`, { method: 'POST' }).catch(() => {});
+    }
   }, []);
 
-  const toggleMonitor = async () => {
-    // Optimistic UI: flip state instantly so button responds in <100ms
-    const wasRunning = monitorRunning;
-    setMonitorRunning(!wasRunning);
-    try {
-      if (wasRunning) {
-        await fetch(`${API}/monitor/stop`, { method: 'POST' });
-      } else {
-        await fetch(`${API}/monitor/start`, { method: 'POST' });
-      }
-    } catch (_) {
-      // Revert on error
-      setMonitorRunning(wasRunning);
-    }
+  const setLiveMode = async () => {
+    if (analysisMode === 'live') return;
+    setTransitionMsg('Switching to Live Analysis...');
+    setAnalysisMode('live');
+    try { await fetch(`${API}/monitor/stop`, { method: 'POST' }); } catch(_) {}
+    setTimeout(() => setTransitionMsg(null), 1500);
+  };
+
+  const setSyntheticMode = async () => {
+    if (analysisMode === 'synthetic') return;
+    setTransitionMsg('Switching to Synthetic Analysis...');
+    setAnalysisMode('synthetic');
+    try { await fetch(`${API}/monitor/start`, { method: 'POST' }); } catch(_) {}
+    setTimeout(() => setTransitionMsg(null), 1500);
   };
 
   const resetMonitor = async () => {
     await fetch(`${API}/monitor/reset`, { method: 'POST' });
-    setMonitorRunning(false);
     setMonitorStatus(s => ({ ...s, current_file: 0, progress_pct: 0 }));
+    if (analysisMode === 'synthetic') {
+      await fetch(`${API}/monitor/start`, { method: 'POST' });
+    }
   };
 
 
@@ -228,7 +228,7 @@ export default function Blueprints() {
     datasets: [{
       label: 'Detections',
       data: countByType.map(c => c || 0),
-      backgroundColor: ['#98FB98', '#5B8059', '#ffb4ab', '#84967e'],
+      backgroundColor: ['#A84B2B', '#5B8059', '#ffb4ab', '#6B6560'],
       borderRadius: 2,
     }]
   };
@@ -238,13 +238,13 @@ export default function Blueprints() {
     maintainAspectRatio: false,
     plugins: { legend: { display: false } },
     scales: {
-      x: { grid: { display: false }, ticks: { color: '#84967e', font: { family: 'IBM Plex Mono', size: 8 } } },
+      x: { grid: { display: false }, ticks: { color: '#6B6560', font: { family: 'IBM Plex Mono', size: 8 } } },
       y: { display: false }
     }
   };
 
   return (
-    <div className="pt-10 pb-20 px-8 min-h-screen relative overflow-y-auto bg-[#131313] text-[#e5e2e1]">
+    <div className="pt-10 pb-20 px-8 min-h-screen relative overflow-y-auto bg-[#0A0C0E] text-[#e5e2e1]">
       {/* Watermark */}
       <div className="fixed bottom-10 right-10 opacity-[0.02] pointer-events-none z-0">
         <h1 className="font-['Space_Grotesk'] font-black text-[12rem] tracking-tighter">ACDS</h1>
@@ -258,33 +258,42 @@ export default function Blueprints() {
             <button
               id="blueprints-reset-btn"
               onClick={resetSystem}
-              className="flex items-center gap-2 bg-[#2a2a2a] px-4 py-2 text-xs font-['IBM_Plex_Mono'] uppercase tracking-widest text-[#e5e2e1] hover:bg-[#3a3939] transition-all"
+              className="flex items-center gap-2 bg-[#120b0a] px-4 py-2 text-xs font-['IBM_Plex_Mono'] uppercase tracking-widest text-[#e5e2e1] hover:bg-[#1e110d] transition-all"
             >
               <span className="material-symbols-outlined text-sm" style={{ verticalAlign: 'middle' }}>refresh</span>
               Reset
             </button>
 
-            {/* ── ANALYSIS TOGGLE ── */}
+            {/* ── ANALYSIS MODE TOGGLES ── */}
             <button
-              id="blueprints-analysis-toggle"
-              onClick={toggleMonitor}
+              onClick={setSyntheticMode}
               className={`flex items-center gap-2 px-4 py-2 text-xs font-['IBM_Plex_Mono'] uppercase tracking-widest transition-all border ${
-                monitorRunning
-                  ? 'bg-[#98FB98]/10 border-[#98FB98]/60 text-[#98FB98]'
-                  : 'bg-[#2a2a2a] border-[#84967e]/30 text-[#84967e] hover:border-[#98FB98]/40 hover:text-[#e5e2e1]'
+                analysisMode === 'synthetic'
+                  ? 'bg-[#A84B2B]/20 border-[#A84B2B] text-[#A84B2B]'
+                  : 'bg-[#120b0a] border-[#6B6560]/30 text-[#6B6560] hover:border-[#A84B2B]/40 hover:text-[#e5e2e1]'
               }`}
             >
-              <span
-                className={`w-2 h-2 rounded-full ${monitorRunning ? 'bg-[#98FB98] animate-pulse' : 'bg-[#84967e]/50'}`}
-              />
-              {monitorRunning ? 'Analysis: ON' : 'Analysis: OFF'}
+              <span className={`w-2 h-2 rounded-full ${analysisMode === 'synthetic' ? 'bg-[#A84B2B] animate-pulse' : 'bg-[#6B6560]/50'}`} />
+              Synthetic Analysis
+            </button>
+
+            <button
+              onClick={setLiveMode}
+              className={`flex items-center gap-2 px-4 py-2 text-xs font-['IBM_Plex_Mono'] uppercase tracking-widest transition-all border ${
+                analysisMode === 'live'
+                  ? 'bg-[#5B8059]/20 border-[#5B8059] text-[#5B8059]'
+                  : 'bg-[#120b0a] border-[#6B6560]/30 text-[#6B6560] hover:border-[#5B8059]/40 hover:text-[#e5e2e1]'
+              }`}
+            >
+              <span className={`w-2 h-2 rounded-full ${analysisMode === 'live' ? 'bg-[#5B8059] animate-pulse' : 'bg-[#6B6560]/50'}`} />
+              Live Analysis
             </button>
 
             {/* Reset scan */}
             {monitorStatus.current_file > 0 && (
               <button
                 onClick={resetMonitor}
-                className="flex items-center gap-2 bg-[#2a2a2a] px-3 py-2 text-xs font-['IBM_Plex_Mono'] uppercase tracking-widest text-[#84967e] hover:text-[#ffb4ab] transition-all"
+                className="flex items-center gap-2 bg-[#120b0a] px-3 py-2 text-xs font-['IBM_Plex_Mono'] uppercase tracking-widest text-[#6B6560] hover:text-[#ffb4ab] transition-all"
               >
                 <span className="material-symbols-outlined text-sm" style={{ verticalAlign: 'middle' }}>restart_alt</span>
                 Rescan
@@ -297,7 +306,7 @@ export default function Blueprints() {
               onDragOver={e => e.preventDefault()}
               onDrop={onDropZone}
               onClick={() => fileInputRef.current?.click()}
-              className="flex items-center gap-2 bg-[#2a2a2a] border border-dashed border-[#84967e]/40 px-4 py-2 text-xs font-['IBM_Plex_Mono'] uppercase tracking-widest text-[#84967e] hover:border-[#98FB98]/60 hover:text-[#98FB98] cursor-pointer transition-all"
+              className="flex items-center gap-2 bg-[#120b0a] border border-dashed border-[#6B6560]/40 px-4 py-2 text-xs font-['IBM_Plex_Mono'] uppercase tracking-widest text-[#6B6560] hover:border-[#A84B2B]/60 hover:text-[#A84B2B] cursor-pointer transition-all"
             >
               <span className="material-symbols-outlined text-sm" style={{ verticalAlign: 'middle' }}>
                 {uploading ? 'hourglass_empty' : 'upload_file'}
@@ -315,7 +324,7 @@ export default function Blueprints() {
             {/* Upload result badge */}
             {uploadResult && (
               <div className={`flex items-center gap-2 px-3 py-2 text-xs font-['IBM_Plex_Mono'] uppercase ${
-                uploadResult.status === 'processed' ? 'text-[#98FB98] bg-[#98FB98]/10' : 'text-[#ffb4ab] bg-[#ffb4ab]/10'
+                uploadResult.status === 'processed' ? 'text-[#A84B2B] bg-[#A84B2B]/10' : 'text-[#ffb4ab] bg-[#ffb4ab]/10'
               }`}>
                 {uploadResult.status === 'processed'
                   ? `✓ ${uploadResult.findings} threats from ${uploadResult.filename}`
@@ -326,77 +335,101 @@ export default function Blueprints() {
 
           {/* KPI Strip */}
           <div className="grid grid-cols-4 gap-4">
-            <div className="bg-[#1c1b1b] p-4 border-l-2 border-[#84967e]/20">
-              <p className="font-['IBM_Plex_Mono'] text-[10px] text-neutral-500 uppercase tracking-widest mb-1">TOTAL EVENTS</p>
+            <div className="bg-[#0A0C0E] p-4 border-l-2 border-[#6B6560]/20">
+              <p className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560] uppercase tracking-widest mb-1">TOTAL EVENTS</p>
               <h3 className="text-2xl font-['Space_Grotesk'] font-black text-[#e5e2e1]">{animTotal}</h3>
             </div>
-            <div className="bg-[#1c1b1b] p-4 border-l-2 border-[#ffb4ab]/40">
-              <p className="font-['IBM_Plex_Mono'] text-[10px] text-neutral-500 uppercase tracking-widest mb-1">CRITICAL</p>
+            <div className="bg-[#0A0C0E] p-4 border-l-2 border-[#ffb4ab]/40">
+              <p className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560] uppercase tracking-widest mb-1">CRITICAL</p>
               <h3 className="text-2xl font-['Space_Grotesk'] font-black text-[#ffb4ab]">{animCritical}</h3>
             </div>
-            <div className="bg-[#1c1b1b] p-4 border-l-2 border-[#84967e]/20">
-              <p className="font-['IBM_Plex_Mono'] text-[10px] text-neutral-500 uppercase tracking-widest mb-1">FALSE POS.</p>
+            <div className="bg-[#0A0C0E] p-4 border-l-2 border-[#6B6560]/20">
+              <p className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560] uppercase tracking-widest mb-1">FALSE POS.</p>
               <h3 className="text-2xl font-['Space_Grotesk'] font-black text-[#e5e2e1]">{animFP}</h3>
             </div>
-            <div className="bg-[#1c1b1b] p-4 border-l-2 border-[#5B8059]/40">
-              <p className="font-['IBM_Plex_Mono'] text-[10px] text-neutral-500 uppercase tracking-widest mb-1">CORRELATED</p>
+            <div className="bg-[#0A0C0E] p-4 border-l-2 border-[#5B8059]/40">
+              <p className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560] uppercase tracking-widest mb-1">CORRELATED</p>
               <h3 className="text-2xl font-['Space_Grotesk'] font-black text-[#5B8059]">{animCorr}</h3>
             </div>
           </div>
         </div>
 
-
+        {/* ── Status Banner ── */}
+        <div className="mb-8">
+          <div className={`p-4 border flex items-center gap-4 font-['IBM_Plex_Mono'] text-xs uppercase tracking-widest transition-all ${
+            transitionMsg 
+              ? 'border-[#6B6560]/50 text-[#e5e2e1] bg-[#120b0a]' 
+              : analysisMode === 'synthetic' 
+                ? 'border-[#A84B2B]/40 text-[#A84B2B] bg-[#A84B2B]/10' 
+                : 'border-[#5B8059]/40 text-[#5B8059] bg-[#5B8059]/10'
+          }`}>
+            {transitionMsg ? (
+              <><span className="material-symbols-outlined animate-spin" style={{ fontSize: '18px' }}>sync</span> {transitionMsg}</>
+            ) : analysisMode === 'synthetic' ? (
+              <><span className="w-2.5 h-2.5 rounded-full bg-[#A84B2B] animate-pulse"></span> SYNTHETIC ANALYSIS MODE ACTIVE</>
+            ) : (
+              <><span className="w-2.5 h-2.5 rounded-full bg-[#5B8059] animate-pulse"></span> LIVE ANALYSIS MODE ACTIVE • Receiving real logs from Filebeat on Windows 11</>
+            )}
+          </div>
+        </div>
 
         {/* ── Main Grid ── */}
         <div className="grid grid-cols-12 gap-6 pb-8">
 
           {/* Left: Alert Feed + Engine Status */}
           <div className="col-span-12 lg:col-span-4 space-y-6">
-            <div className="bg-[#1c1b1b] h-[400px] flex flex-col">
+            <div className="bg-[#0A0C0E] h-[400px] flex flex-col">
               <div className="p-4 bg-[#353534] flex justify-between items-center">
                 <span className="font-['Space_Grotesk'] font-bold uppercase text-sm tracking-widest">Latest Alerts</span>
-                <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#84967e]">{alerts.length} DETECTED</span>
+                <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560]">{alerts.length} DETECTED</span>
               </div>
               <div className="overflow-y-auto flex-1 font-['IBM_Plex_Mono'] text-[11px] no-scrollbar">
                 {alerts.slice(0, 80).map((alert, i) => (
                   <div
                     key={alert.alert_id || i}
                     onClick={() => setActiveAlert(alert)}
-                    className={`p-4 border-b border-[#84967e]/10 cursor-pointer transition-colors group ${activeAlert?.alert_id === alert.alert_id ? 'bg-[#2a2a2a]' : 'hover:bg-[#2a2a2a]'}`}
+                    className={`p-4 border-b border-[#6B6560]/10 cursor-pointer transition-all duration-300 group ${activeAlert?.alert_id === alert.alert_id ? 'bg-[#120b0a]' : 'hover:bg-[#120b0a]'} ${i === 0 ? 'animate-pulse bg-[#A84B2B]/5' : ''}`}
                   >
                     <div className="flex justify-between mb-1">
                       <span className={alert.severity === 'Critical' ? 'text-[#ffb4ab]' : alert.severity === 'High' ? 'text-yellow-400' : 'text-[#5B8059]'}>
                         #{alert.alert_id || `AC-${i}`}
                       </span>
-                      <span className="text-neutral-500">{formatTime(alert.timestamp)}</span>
+                      <span className="text-[#6B6560]">{formatTime(alert.timestamp)}</span>
                     </div>
-                    <p className={`uppercase transition-colors ${activeAlert?.alert_id === alert.alert_id ? 'text-[#98FB98]' : 'text-[#e5e2e1] group-hover:text-[#98FB98]'}`}>
+                    <p className={`uppercase transition-colors ${activeAlert?.alert_id === alert.alert_id ? 'text-[#A84B2B]' : 'text-[#e5e2e1] group-hover:text-[#A84B2B]'}`}>
                       {alert.type}
                     </p>
                     <p className="text-neutral-600 text-[9px] mt-0.5">{alert.src_ip}</p>
                   </div>
                 ))}
                 {alerts.length === 0 && (
-                  <div className="p-8 text-neutral-500 text-center uppercase text-[10px]">
-                    {monitorRunning ? 'Scanning files...' : 'Toggle Analysis to begin'}
+                  <div className="p-8 text-[#6B6560] text-center flex flex-col items-center gap-3 uppercase text-[10px] h-full justify-center">
+                    <span className="material-symbols-outlined text-[32px] opacity-50">data_exploration</span>
+                    {analysisMode === 'synthetic' ? 'Scanning synthetic log stream...' : 'Waiting for live logs from Filebeat...'}
                   </div>
                 )}
               </div>
             </div>
 
-            {/* Engine status */}
-            <div className="bg-[#1c1b1b] p-6">
-              <h4 className="font-['Space_Grotesk'] font-bold uppercase text-xs tracking-widest mb-4">Detection Engines</h4>
-              <div className="space-y-3">
+            {/* Pipeline Status */}
+            <div className="bg-[#0A0C0E] p-6 border border-[#6B6560]/20">
+              <h4 className="font-['Space_Grotesk'] font-bold uppercase text-xs tracking-widest mb-4 text-[#E8E2D9]">System Pipeline</h4>
+              <div className="space-y-3 relative">
+                {/* Visual Line */}
+                <div className="absolute left-[3px] top-6 bottom-4 w-[2px] bg-[#6B6560]/20 z-0 hidden lg:block"></div>
                 {[
-                  { name: 'Brute Force Detector', active: true },
-                  { name: 'C2 Beacon Detector', active: true },
-                  { name: 'Exfil Detector', active: true },
-                  { name: 'Cross-Layer Correlator', active: true },
-                ].map(eng => (
-                  <div key={eng.name} className="flex justify-between items-center bg-[#2a2a2a] p-3">
-                    <span className="font-['IBM_Plex_Mono'] text-xs text-neutral-400 uppercase">{eng.name}</span>
-                    <span className="text-[10px] font-bold text-[#5B8059] bg-[#2f4d2f]/20 px-2 py-0.5 uppercase tracking-tighter">Active</span>
+                  { name: 'Normalization Layer', info: 'Log Ingestion & Schema Parsing', active: true },
+                  { name: 'Detection Engine', info: 'Brute Force, C2, Exfil, FP Catcher', active: true },
+                  { name: 'Cross-Layer Correlation', info: 'Multi-vector contextual link', active: true },
+                  { name: 'MITRE Path Prediction', info: 'Probabilistic Threat Modeling', active: true },
+                  { name: 'Contextual AI Playbook', info: 'Gemini (Critical/Correlated Alerts)', active: true },
+                ].map((step, idx) => (
+                  <div key={idx} className="flex flex-col bg-[#120b0a] p-3 border-l-[3px] border-[#A84B2B] relative z-10">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#A84B2B] uppercase font-bold">{step.name}</span>
+                      <span className="text-[9px] font-bold text-[#5B8059] uppercase tracking-tighter mix-blend-screen animate-pulse">Online</span>
+                    </div>
+                    <span className="font-['IBM_Plex_Mono'] text-[9px] text-[#6B6560] uppercase">{step.info}</span>
                   </div>
                 ))}
               </div>
@@ -405,37 +438,37 @@ export default function Blueprints() {
 
           {/* Middle: Active Alert Analysis */}
           <div className="col-span-12 lg:col-span-5 space-y-6">
-            <div className="bg-[#1c1b1b] flex flex-col" style={{ minHeight: '700px' }}>
+            <div className="bg-[#0A0C0E] flex flex-col" style={{ minHeight: '700px' }}>
               {activeAlert ? (
                 <>
-                  <div className="p-4 bg-[#353534] border-b border-[#98FB98]/20 flex justify-between items-center">
+                  <div className="p-4 bg-[#353534] border-b border-[#A84B2B]/20 flex justify-between items-center">
                     <div>
-                      <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#ebffe2] uppercase">Active Analysis</span>
+                      <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#E8E2D9] uppercase">Active Analysis</span>
                       <h3 className="font-['Space_Grotesk'] font-black text-lg uppercase leading-none">Incident #{activeAlert.alert_id}</h3>
                     </div>
-                    <div className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest ${activeAlert.severity === 'Critical' ? 'bg-[#93000a]/20 text-[#ffb4ab]' : 'bg-[#98FB98]/20 text-[#98FB98]'}`}>
+                    <div className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest ${activeAlert.severity === 'Critical' ? 'bg-[#93000a]/20 text-[#ffb4ab]' : 'bg-[#A84B2B]/20 text-[#A84B2B]'}`}>
                       {activeAlert.severity}
                     </div>
                   </div>
 
                   <div className="p-6 space-y-6 overflow-y-auto no-scrollbar flex-1">
                     {/* Source → Target */}
-                    <div className="flex items-center justify-between bg-[#2a2a2a] p-4 border-l-4 border-[#98FB98]">
+                    <div className="flex items-center justify-between bg-[#120b0a] p-4 border-l-4 border-[#A84B2B]">
                       <div className="text-center">
-                        <p className="font-['IBM_Plex_Mono'] text-[9px] text-neutral-500 uppercase mb-1">Source Origin</p>
+                        <p className="font-['IBM_Plex_Mono'] text-[9px] text-[#6B6560] uppercase mb-1">Source Origin</p>
                         <p className="font-['IBM_Plex_Mono'] text-sm text-[#5B8059]">{activeAlert.src_ip}</p>
                       </div>
                       <span className="material-symbols-outlined text-[#5B8059] animate-pulse" style={{ verticalAlign: 'middle' }}>arrow_forward</span>
                       <div className="text-center">
-                        <p className="font-['IBM_Plex_Mono'] text-[9px] text-neutral-500 uppercase mb-1">Target Node</p>
+                        <p className="font-['IBM_Plex_Mono'] text-[9px] text-[#6B6560] uppercase mb-1">Target Node</p>
                         <p className="font-['IBM_Plex_Mono'] text-sm text-[#ffb4ab]">{activeAlert.dst_ip || 'Internal'}</p>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 gap-4">
                       <div className="space-y-2">
-                        <p className="font-['Space_Grotesk'] font-bold text-[10px] uppercase tracking-widest text-neutral-400">Why Flagged</p>
-                        <div className="bg-[#2a2a2a] p-3 min-h-[80px]">
+                        <p className="font-['Space_Grotesk'] font-bold text-[10px] uppercase tracking-widest text-[#E8E2D9]">Why Flagged</p>
+                        <div className="bg-[#120b0a] p-3 min-h-[80px]">
                           <p className="font-['IBM_Plex_Mono'] text-[11px] leading-relaxed">{activeAlert.why_flagged}</p>
                         </div>
                       </div>
@@ -446,17 +479,18 @@ export default function Blueprints() {
                   </div>
 
                   <div className="flex gap-3 p-6 pt-0 mt-auto">
-                    <button className="flex-1 bg-[#353534] border border-[#98FB98]/30 text-[#98FB98] font-['Space_Grotesk'] font-bold text-[10px] uppercase py-3 hover:bg-[#98FB98]/10 transition-all">
+                    <button className="flex-1 bg-[#353534] border border-[#A84B2B]/30 text-[#A84B2B] font-['Space_Grotesk'] font-bold text-[10px] uppercase py-3 hover:bg-[#A84B2B]/10 transition-all">
                       PREVENTIVE ACTION: ROTATE KEYS
                     </button>
-                    <button className="flex-none bg-[#98FB98] text-[#2f4d2f] px-8 font-['Space_Grotesk'] font-black text-xs uppercase hover:bg-[#ebffe2] transition-all">
+                    <button className="flex-none bg-[#A84B2B] text-[#2f4d2f] px-8 font-['Space_Grotesk'] font-black text-xs uppercase hover:bg-[#E8E2D9] transition-all">
                       EXECUTE
                     </button>
                   </div>
                 </>
               ) : (
-                <div className="h-full flex items-center justify-center text-neutral-500 font-['IBM_Plex_Mono'] uppercase tracking-widest min-h-[400px]">
-                  No alert selected
+                <div className="h-full flex flex-col items-center justify-center text-[#6B6560] font-['IBM_Plex_Mono'] uppercase tracking-widest min-h-[400px]">
+                  <span className="material-symbols-outlined text-4xl mb-4 opacity-30">science</span>
+                  {analysisMode === 'synthetic' ? 'Waiting for detections from synthetic stream...' : 'Waiting for live logs from Filebeat...'}
                 </div>
               )}
             </div>
@@ -465,13 +499,13 @@ export default function Blueprints() {
           {/* Right: Globe + Chart */}
           <div className="col-span-12 lg:col-span-3 space-y-6 mt-8">
             {/* Animated Globe */}
-            <div className="bg-gradient-to-b from-[#0a0a0a] to-[#131514] border border-[#2a2a2a] shadow-lg overflow-hidden relative rounded-xl" style={{ height: '360px' }}>
+            <div className="bg-gradient-to-b from-[#0a0a0a] to-[#131514] border border-[#120b0a] shadow-lg overflow-hidden relative rounded-xl" style={{ height: '360px' }}>
               <div className="p-4 bg-gradient-to-b from-[#111111]/90 to-transparent absolute top-0 left-0 w-full z-10 pointer-events-none">
                 <p className="font-['Space_Grotesk'] font-bold text-[11px] uppercase tracking-widest text-[#e5e2e1] drop-shadow-md">
                   Threat Origin Globe
                 </p>
-                <p className="font-['IBM_Plex_Mono'] text-[10px] text-[#98FB98] mt-1 drop-shadow-sm flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#98FB98] animate-pulse" />
+                <p className="font-['IBM_Plex_Mono'] text-[10px] text-[#A84B2B] mt-1 drop-shadow-sm flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#A84B2B] animate-pulse" />
                   {globePoints.length} attacker IPs resolved
                 </p>
               </div>
@@ -505,9 +539,9 @@ export default function Blueprints() {
                   arcAltitudeAutoScale={0.4}
                   pointLabel={d => `
                     <div style="background:rgba(28,27,27,0.9);backdrop-filter:blur(4px);border:1px solid #5B8059;border-radius:4px;padding:8px 12px;font-family:monospace;font-size:11px;color:#e5e2e1;box-shadow:0 4px 12px rgba(0,0,0,0.5);">
-                      <b style="color:#98FB98;font-size:12px;">${d.ip}</b><br/>
+                      <b style="color:#A84B2B;font-size:12px;">${d.ip}</b><br/>
                       <span style="color:#fff">${d.city}, ${d.country}</span><br/>
-                      <span style="color:#84967e">${d.isp || ''}</span>
+                      <span style="color:#6B6560">${d.isp || ''}</span>
                     </div>
                   `}
                   ringsData={globePoints.filter(p => p.severity === 'Critical')}
@@ -540,7 +574,7 @@ export default function Blueprints() {
             </div>
 
             {/* Alert Type Distribution */}
-            <div className="bg-[#1c1b1b] p-4">
+            <div className="bg-[#0A0C0E] p-4">
               <p className="font-['Space_Grotesk'] font-bold text-[10px] uppercase tracking-widest mb-4">Attack Distribution</p>
               <div className="h-32 w-full relative">
                 <Bar data={chartData} options={chartOptions} />
@@ -548,14 +582,14 @@ export default function Blueprints() {
             </div>
 
             {/* Live IOCs from alerts */}
-            <div className="bg-[#1c1b1b] p-4">
+            <div className="bg-[#0A0C0E] p-4">
               <p className="font-['Space_Grotesk'] font-bold text-[10px] uppercase tracking-widest mb-4">Active IOCs</p>
               <div className="space-y-2">
                 {[...new Set(alerts.slice(0, 5).map(a => a.src_ip).filter(Boolean))].map(ip => (
-                  <div key={ip} className="bg-[#2a2a2a] p-2 flex items-center justify-between">
+                  <div key={ip} className="bg-[#120b0a] p-2 flex items-center justify-between">
                     <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#5B8059]">IP: {ip}</span>
                     <span
-                      className="material-symbols-outlined text-[12px] text-neutral-600 cursor-pointer hover:text-[#98FB98]"
+                      className="material-symbols-outlined text-[12px] text-neutral-600 cursor-pointer hover:text-[#A84B2B]"
                       style={{ verticalAlign: 'middle' }}
                       onClick={() => navigator.clipboard.writeText(ip)}
                     >
@@ -597,33 +631,33 @@ function PlaybookSection({ alert }) {
   return (
     <div className="space-y-2">
       <div className="flex justify-between items-center">
-        <p className="font-['Space_Grotesk'] font-bold text-[10px] uppercase tracking-widest text-[#98FB98]">
+        <p className="font-['Space_Grotesk'] font-bold text-[10px] uppercase tracking-widest text-[#A84B2B]">
           AI Response Playbook
         </p>
         <div className="flex items-center gap-2">
-          <span className="font-['IBM_Plex_Mono'] text-[9px] text-neutral-500 uppercase">Gemini · Critical Only</span>
+          <span className="font-['IBM_Plex_Mono'] text-[9px] text-[#6B6560] uppercase">Gemini · Critical Only</span>
           {!localPlaybook && (
             <button
               id="generate-playbook-btn"
               onClick={generatePlaybook}
               disabled={loading}
-              className="text-[9px] font-['IBM_Plex_Mono'] uppercase bg-[#98FB98]/10 text-[#98FB98] px-2 py-0.5 border border-[#98FB98]/30 hover:bg-[#98FB98]/20 disabled:opacity-50 transition-all"
+              className="text-[9px] font-['IBM_Plex_Mono'] uppercase bg-[#A84B2B]/10 text-[#A84B2B] px-2 py-0.5 border border-[#A84B2B]/30 hover:bg-[#A84B2B]/20 disabled:opacity-50 transition-all"
             >
               {loading ? 'Generating...' : 'Generate'}
             </button>
           )}
         </div>
       </div>
-      <div className="bg-[#2a2a2a]/50 p-4 border border-[#98FB98]/10 space-y-3 max-h-60 overflow-y-auto no-scrollbar">
+      <div className="bg-[#120b0a]/50 p-4 border border-[#A84B2B]/10 space-y-3 max-h-60 overflow-y-auto no-scrollbar">
         {localPlaybook ? (
           localPlaybook.split('\n').filter(s => s.trim()).map((step, idx) => (
             <div key={idx} className="flex gap-4">
-              <span className="font-['IBM_Plex_Mono'] text-[#98FB98] text-[10px] shrink-0">{String(idx + 1).padStart(2, '0')}</span>
+              <span className="font-['IBM_Plex_Mono'] text-[#A84B2B] text-[10px] shrink-0">{String(idx + 1).padStart(2, '0')}</span>
               <p className="font-['IBM_Plex_Mono'] text-xs text-[#e5e2e1]">{step}</p>
             </div>
           ))
         ) : (
-          <p className="font-['IBM_Plex_Mono'] text-[11px] text-neutral-500">
+          <p className="font-['IBM_Plex_Mono'] text-[11px] text-[#6B6560]">
             {loading ? 'Calling Gemini AI...' : 'Click Generate to create an AI playbook for this critical threat.'}
           </p>
         )}

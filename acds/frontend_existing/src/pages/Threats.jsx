@@ -29,7 +29,7 @@ function PlaybookCell({ alert }) {
       {playbook ? (
         <button
           onClick={() => setExpanded(v => !v)}
-          className="text-[9px] font-['IBM_Plex_Mono'] uppercase text-[#98FB98] bg-[#98FB98]/10 px-2 py-1 border border-[#98FB98]/20 hover:bg-[#98FB98]/20 transition-all"
+          className="text-[9px] font-['IBM_Plex_Mono'] uppercase text-[#A84B2B] bg-[#A84B2B]/10 px-2 py-1 border border-[#A84B2B]/20 hover:bg-[#A84B2B]/20 transition-all"
         >
           {expanded ? 'Hide' : 'View'}
         </button>
@@ -43,13 +43,13 @@ function PlaybookCell({ alert }) {
         </button>
       )}
       {expanded && playbook && (
-        <div className="absolute left-0 right-0 z-50 mt-1 mx-6 bg-[#0e0e0e] border border-[#98FB98]/30 p-4 shadow-2xl max-h-48 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
-          <p className="font-['IBM_Plex_Mono'] text-[10px] text-[#98FB98] uppercase tracking-widest mb-2 flex items-center gap-2">
+        <div className="absolute left-0 right-0 z-50 mt-1 mx-6 bg-[#080808] border border-[#A84B2B]/30 p-4 shadow-2xl max-h-48 overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
+          <p className="font-['IBM_Plex_Mono'] text-[10px] text-[#A84B2B] uppercase tracking-widest mb-2 flex items-center gap-2">
             <span className="material-symbols-outlined text-sm" style={{ verticalAlign: 'middle' }}>smart_toy</span>
             AI Playbook — {alert.alert_id}
           </p>
           {playbook.split('\n').filter(s => s.trim()).map((line, i) => (
-            <p key={i} className={`font-['IBM_Plex_Mono'] text-xs leading-relaxed ${/^\d\./.test(line.trim()) ? 'text-[#98FB98] mt-2 font-bold' : 'text-[#e5e2e1]/80'}`}>{line}</p>
+            <p key={i} className={`font-['IBM_Plex_Mono'] text-xs leading-relaxed ${/^\d\./.test(line.trim()) ? 'text-[#A84B2B] mt-2 font-bold' : 'text-[#e5e2e1]/80'}`}>{line}</p>
           ))}
         </div>
       )}
@@ -85,12 +85,12 @@ export default function Threats() {
 
   const getHealthColors = (status) => {
     switch (status) {
-      case 'NOMINAL': return { text: 'text-[#98FB98]', bg: 'bg-[#98FB98]', border: 'border-[#98FB98]' };
+      case 'NOMINAL': return { text: 'text-[#A84B2B]', bg: 'bg-[#A84B2B]', border: 'border-[#A84B2B]' };
       case 'STABLE': return { text: 'text-[#2dd4bf]', bg: 'bg-[#2dd4bf]', border: 'border-[#2dd4bf]' };
       case 'DEGRADED': return { text: 'text-[#fbbf24]', bg: 'bg-[#fbbf24]', border: 'border-[#fbbf24]' };
       case 'IMPAIRED': return { text: 'text-[#f97316]', bg: 'bg-[#f97316]', border: 'border-[#f97316]' };
       case 'CRITICAL': return { text: 'text-[#ef4444]', bg: 'bg-[#ef4444]', border: 'border-[#ef4444]' };
-      default: return { text: 'text-[#98FB98]', bg: 'bg-[#98FB98]', border: 'border-[#98FB98]' };
+      default: return { text: 'text-[#A84B2B]', bg: 'bg-[#A84B2B]', border: 'border-[#A84B2B]' };
     }
   };
   const colors = getHealthColors(threatStats.status);
@@ -110,7 +110,7 @@ export default function Threats() {
   ];
 
   return (
-    <div className="pt-10 pb-20 px-8 min-h-screen relative overflow-y-auto bg-[#131313] text-[#e5e2e1]">
+    <div className="pt-10 pb-20 px-8 min-h-screen relative overflow-y-auto bg-[#0A0C0E] text-[#e5e2e1]">
       {/* FLOATING WATERMARK */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.02] z-0">
         <h1 className="font-['Space_Grotesk'] text-[20vw] font-black leading-none">ACDS</h1>
@@ -120,7 +120,7 @@ export default function Threats() {
         {/* HEADER SECTION — no Reset/File Mode buttons */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
           <div>
-            <div className="font-['IBM_Plex_Mono'] text-[12px] text-[#98FB98] mb-2 tracking-widest uppercase">// threat_reconnaissance_module</div>
+            <div className="font-['IBM_Plex_Mono'] text-[12px] text-[#A84B2B] mb-2 tracking-widest uppercase">// threat_reconnaissance_module</div>
             <h2 className="font-['Space_Grotesk'] text-4xl font-black tracking-tighter uppercase leading-none">
               {alerts.length} ACTIVE THREATS DETECTED
             </h2>
@@ -130,15 +130,15 @@ export default function Threats() {
         {/* FILTERS & METRICS GRID */}
         <div className="grid grid-cols-12 gap-1 mb-8">
           {/* TABS — now functional */}
-          <div className="col-span-12 md:col-span-8 flex bg-[#1c1b1b] p-1">
+          <div className="col-span-12 md:col-span-8 flex bg-[#0A0C0E] p-1">
             {tabs.map(tab => (
               <button
                 key={tab.key}
                 onClick={() => setActiveTab(tab.key)}
                 className={`flex-1 py-3 px-4 font-['IBM_Plex_Mono'] text-[11px] font-bold uppercase tracking-widest transition-all ${
                   activeTab === tab.key
-                    ? 'bg-[#3a3939] text-[#98FB98]'
-                    : 'text-neutral-500 hover:text-[#e5e2e1] hover:bg-[#201f1f]'
+                    ? 'bg-[#1e110d] text-[#A84B2B]'
+                    : 'text-[#6B6560] hover:text-[#e5e2e1] hover:bg-[#201f1f]'
                 }`}
               >
                 {tab.label}
@@ -147,9 +147,9 @@ export default function Threats() {
           </div>
 
           {/* METRIC BLOCK */}
-          <div className="col-span-12 md:col-span-4 bg-[#0e0e0e] border border-[#84967e]/10 p-4 flex flex-col justify-center">
+          <div className="col-span-12 md:col-span-4 bg-[#080808] border border-[#6B6560]/10 p-4 flex flex-col justify-center">
             <div className="flex justify-between items-center mb-1">
-              <span className="font-['IBM_Plex_Mono'] text-[10px] text-neutral-500 uppercase flex items-center gap-2">
+              <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560] uppercase flex items-center gap-2">
                 <span className={`w-1.5 h-1.5 rounded-full ${colors.bg} animate-pulse`}></span>
                 SYSTEM HEALTH
               </span>
@@ -168,64 +168,64 @@ export default function Threats() {
 
         {/* METRIC TILES */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className={`bg-[#1c1b1b] p-6 border-l-4 ${colors.border} transition-colors duration-1000`}>
-            <div className="font-['IBM_Plex_Mono'] text-[10px] text-neutral-500 uppercase mb-1">NETWORK LATENCY</div>
+          <div className={`bg-[#0A0C0E] p-6 border-l-4 ${colors.border} transition-colors duration-1000`}>
+            <div className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560] uppercase mb-1">NETWORK LATENCY</div>
             <div className="font-['Space_Grotesk'] text-3xl font-bold">{threatStats.network_latency} <span className={`text-xs font-['IBM_Plex_Mono'] ${colors.text} uppercase`}>Avg</span></div>
           </div>
-          <div className={`bg-[#1c1b1b] p-6 border-l-4 ${colors.border} transition-colors duration-1000`}>
-            <div className="font-['IBM_Plex_Mono'] text-[10px] text-neutral-500 uppercase mb-1">QUEUE DEPTH</div>
-            <div className="font-['Space_Grotesk'] text-3xl font-bold">{threatStats.queue_depth} <span className="text-xs font-['IBM_Plex_Mono'] text-[#84967e] uppercase">Events</span></div>
+          <div className={`bg-[#0A0C0E] p-6 border-l-4 ${colors.border} transition-colors duration-1000`}>
+            <div className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560] uppercase mb-1">QUEUE DEPTH</div>
+            <div className="font-['Space_Grotesk'] text-3xl font-bold">{threatStats.queue_depth} <span className="text-xs font-['IBM_Plex_Mono'] text-[#6B6560] uppercase">Events</span></div>
           </div>
-          <div className="bg-[#1c1b1b] p-6 border-l-4 border-[#84967e]/40">
-            <div className="font-['IBM_Plex_Mono'] text-[10px] text-neutral-500 uppercase mb-1">ACTIVE DETECTORS</div>
+          <div className="bg-[#0A0C0E] p-6 border-l-4 border-[#6B6560]/40">
+            <div className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560] uppercase mb-1">ACTIVE DETECTORS</div>
             <div className="font-['Space_Grotesk'] text-3xl font-bold">{threatStats.active_detectors} <span className="text-xs font-['IBM_Plex_Mono'] text-neutral-600 uppercase">/ 4 ONLINE</span></div>
           </div>
-          <div className={`bg-[#1c1b1b] p-6 border-l-4 ${colors.border} transition-colors duration-1000`}>
-            <div className="font-['IBM_Plex_Mono'] text-[10px] text-neutral-500 uppercase mb-1">EVENT DENSITY</div>
+          <div className={`bg-[#0A0C0E] p-6 border-l-4 ${colors.border} transition-colors duration-1000`}>
+            <div className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560] uppercase mb-1">EVENT DENSITY</div>
             <div className="font-['Space_Grotesk'] text-3xl font-bold">{filteredAlerts.length} <span className={`text-xs font-['IBM_Plex_Mono'] ${colors.text} uppercase`}>Detected</span></div>
           </div>
         </div>
 
         {/* THREAT TABLE */}
-        <div className="bg-[#1c1b1b] overflow-hidden">
-          <div className="bg-[#353534] px-6 py-4 flex justify-between items-center border-b border-[#84967e]/10">
+        <div className="bg-[#0A0C0E] overflow-hidden">
+          <div className="bg-[#353534] px-6 py-4 flex justify-between items-center border-b border-[#6B6560]/10">
             <span className="font-['IBM_Plex_Mono'] text-xs uppercase tracking-widest font-bold">LATEST_INTEL_STREAM</span>
-            <span className="font-['IBM_Plex_Mono'] text-[10px] text-neutral-500">LAST SYNC: {new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + 'Z'}</span>
+            <span className="font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560]">LAST SYNC: {new Date().toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + 'Z'}</span>
           </div>
 
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
-                <tr className="text-left border-b border-[#84967e]/10">
-                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-neutral-500 tracking-widest">THREAT ID</th>
-                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-neutral-500 tracking-widest">TYPE</th>
-                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-neutral-500 tracking-widest">SOURCE IP</th>
-                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-neutral-500 tracking-widest">SEVERITY</th>
-                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-neutral-500 tracking-widest">MITRE TTP</th>
-                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-neutral-500 tracking-widest">FIRST SEEN</th>
-                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-neutral-500 tracking-widest">STATUS</th>
-                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-neutral-500 tracking-widest">AI PLAYBOOK</th>
+                <tr className="text-left border-b border-[#6B6560]/10">
+                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-[#6B6560] tracking-widest">THREAT ID</th>
+                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-[#6B6560] tracking-widest">TYPE</th>
+                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-[#6B6560] tracking-widest">SOURCE IP</th>
+                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-[#6B6560] tracking-widest">SEVERITY</th>
+                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-[#6B6560] tracking-widest">MITRE TTP</th>
+                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-[#6B6560] tracking-widest">FIRST SEEN</th>
+                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-[#6B6560] tracking-widest">STATUS</th>
+                  <th className="px-6 py-4 font-['IBM_Plex_Mono'] text-[10px] uppercase text-[#6B6560] tracking-widest">AI PLAYBOOK</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#84967e]/5">
+              <tbody className="divide-y divide-[#6B6560]/5">
                 {filteredAlerts.length === 0 ? (
-                  <tr><td colSpan="8" className="px-6 py-10 text-center font-['IBM_Plex_Mono'] text-neutral-500 text-xs uppercase tracking-widest">Awaiting Live Feed...</td></tr>
+                  <tr><td colSpan="8" className="px-6 py-10 text-center font-['IBM_Plex_Mono'] text-[#6B6560] text-xs uppercase tracking-widest">Awaiting Live Feed...</td></tr>
                 ) : (
                   filteredAlerts.map((a, i) => (
-                    <tr key={a.alert_id || i} className="hover:bg-[#3a3939]/50 transition-colors cursor-pointer group relative">
-                      <td className="px-6 py-5 font-['IBM_Plex_Mono'] text-xs text-[#98FB98] group-hover:text-[#98FB98]">
+                    <tr key={a.alert_id || i} className="hover:bg-[#1e110d]/50 transition-colors cursor-pointer group relative">
+                      <td className="px-6 py-5 font-['IBM_Plex_Mono'] text-xs text-[#A84B2B] group-hover:text-[#A84B2B]">
                         {a.threat_id || a.alert_id || `TR-${i}`}
                       </td>
                       <td className="px-6 py-5 text-sm font-medium">{a.type?.toUpperCase()}</td>
-                      <td className="px-6 py-5 font-['IBM_Plex_Mono'] text-xs text-neutral-400">{a.src_ip}</td>
+                      <td className="px-6 py-5 font-['IBM_Plex_Mono'] text-xs text-[#E8E2D9]">{a.src_ip}</td>
                       <td className="px-6 py-5">
-                        <span className={`font-['IBM_Plex_Mono'] text-[9px] px-2 py-0.5 font-bold uppercase tracking-tighter ${a.severity === 'Critical' ? 'bg-[#93000a] text-[#ffdad6]' : a.severity === 'High' ? 'bg-[#ff9800] text-[#000]' : 'bg-[#353534] text-neutral-400'}`}>
+                        <span className={`font-['IBM_Plex_Mono'] text-[9px] px-2 py-0.5 font-bold uppercase tracking-tighter ${a.severity === 'Critical' ? 'bg-[#93000a] text-[#ffdad6]' : a.severity === 'High' ? 'bg-[#ff9800] text-[#000]' : 'bg-[#353534] text-[#E8E2D9]'}`}>
                           {a.severity?.toUpperCase()}
                         </span>
                       </td>
-                      <td className="px-6 py-5 font-['IBM_Plex_Mono'] text-[10px] text-neutral-500">{a.mitre?.id || a.mitre_ttp || 'T1000'}</td>
-                      <td className="px-6 py-5 font-['IBM_Plex_Mono'] text-xs text-neutral-400">{formatTime(a.timestamp)}</td>
-                      <td className={`px-6 py-5 text-xs uppercase font-bold tracking-widest ${a.severity === 'Critical' ? 'text-[#ffb4ab]' : 'text-neutral-500'}`}>
+                      <td className="px-6 py-5 font-['IBM_Plex_Mono'] text-[10px] text-[#6B6560]">{a.mitre?.id || a.mitre_ttp || 'T1000'}</td>
+                      <td className="px-6 py-5 font-['IBM_Plex_Mono'] text-xs text-[#E8E2D9]">{formatTime(a.timestamp)}</td>
+                      <td className={`px-6 py-5 text-xs uppercase font-bold tracking-widest ${a.severity === 'Critical' ? 'text-[#ffb4ab]' : 'text-[#6B6560]'}`}>
                         {a.severity === 'Critical' ? 'ESCALATE' : 'ACTIVE'}
                       </td>
                       <PlaybookCell alert={a} />

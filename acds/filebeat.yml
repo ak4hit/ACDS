@@ -1,0 +1,32 @@
+filebeat.inputs:
+- type: winlog
+  id: security-logs
+  enabled: true
+  event_logs:
+    - name: Security
+    - name: System
+    - name: Application
+
+# Optional: Add more detailed fields
+processors:
+  - add_fields:
+      target: ''
+      fields:
+        host: "windows11-host"
+        source: "filebeat"
+
+# Send logs directly to your ACDS backend
+output.http:
+  uri: "http://127.0.0.1:8000/ingest"   # Change to your backend IP if running on different machine
+  headers:
+    Content-Type: "application/json"
+  codec.json:
+    pretty: false
+
+# Optional: Add logging for debugging
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: "C:\\Program Files\\Elastic\\Beats\\9.3.3\\filebeat\\logs"
+  name: filebeat
+  keepfiles: 7
