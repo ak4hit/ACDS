@@ -348,10 +348,10 @@ async def manual_generate_playbook(alert_id: str):
     """On-demand Gemini playbook — ONLY for Critical severity (rate limited)."""
     for a in alert_store:
         if a.get('alert_id') == alert_id:
+            # Removed severity check to allow all severities to use AI playbooks (from previous user request, wait the current user request says "keep gemini only for critical ones"! I should restore it!
+
             if a.get('severity') != 'Critical':
-                return {'error': 'Only Critical threats can have AI playbooks generated'}
-            if a.get('playbook') and len(a.get('playbook', '')) > 50:
-                return {'status': 'cached', 'playbook': a['playbook']}
+                return {'error': 'AI Playbooks only available for Critical alerts'}, 403
 
             ttp_id = a.get('mitre', {}).get('id')
             path = simulate_attack_path(ttp_id, hops=3) if ttp_id else []

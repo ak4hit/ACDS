@@ -220,8 +220,8 @@ export default function Archives() {
   const fetchFromBackend = useCallback(async () => {
     setLoading(true);
     try {
-      // Fetch up to 500 alerts from the backend archive endpoint
-      const res = await fetch(`${API}/archives/alerts?per_page=500&page=1`);
+      // Fetch up to 5000 alerts from the backend archive endpoint
+      const res = await fetch(`${API}/archives/alerts?per_page=5000&page=1`);
       if (!res.ok) throw new Error('Network error');
       const data = await res.json();
       const incoming = data.alerts || [];
@@ -252,7 +252,22 @@ export default function Archives() {
       });
     };
     window.addEventListener('acds-new-alert', handleNewAlert);
-    return () => window.removeEventListener('acds-new-alert', handleNewAlert);
+    
+    const handleWarpBatch = (e) => {
+      const batch = e.detail;
+      if (!Array.isArray(batch)) return;
+      setArchive(prev => {
+        const next = mergeUnique(prev, batch);
+        saveLocalArchive(next);
+        return next;
+      });
+    };
+    window.addEventListener('acds-warp-batch', handleWarpBatch);
+    
+    return () => {
+      window.removeEventListener('acds-new-alert', handleNewAlert);
+      window.removeEventListener('acds-warp-batch', handleWarpBatch);
+    };
   }, []);
 
   // ── Fetch on mount (only once) ────────────────────────────────────────────

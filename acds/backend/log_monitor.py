@@ -23,6 +23,11 @@ class LogMonitor:
     async def start(self) -> dict:
         if self.is_running:
             return {'status': 'already_running', 'at_file': self.current_file_index}
+        # Implicitly reset if previously finished so users can replay without manual reset
+        if self.current_file_index > 0:
+            self.reset()
+            self.is_running = True
+            
         self.is_running = True
         self._task = asyncio.create_task(self._run_loop())
         return {'status': 'started', 'from_file': self.current_file_index + 1}

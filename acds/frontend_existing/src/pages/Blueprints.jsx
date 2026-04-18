@@ -720,16 +720,20 @@ function PlaybookSection({ alert }) {
           AI Response Playbook
         </p>
         <div className="flex items-center gap-2">
-          <span className="font-['IBM_Plex_Mono'] text-[9px] text-[#6B6560] uppercase">Gemini · Critical Only</span>
-          {!localPlaybook && (
-            <button
-              id="generate-playbook-btn"
-              onClick={generatePlaybook}
-              disabled={loading}
-              className="text-[9px] font-['IBM_Plex_Mono'] uppercase bg-[#A84B2B]/10 text-[#A84B2B] px-2 py-0.5 border border-[#A84B2B]/30 hover:bg-[#A84B2B]/20 disabled:opacity-50 transition-all"
-            >
-              {loading ? 'Generating...' : 'Generate'}
-            </button>
+          <span className="font-['IBM_Plex_Mono'] text-[9px] text-[#6B6560] uppercase">Gemini AI</span>
+          {alert.severity === 'Critical' ? (
+            !localPlaybook && (
+              <button
+                id="generate-playbook-btn"
+                onClick={generatePlaybook}
+                disabled={loading}
+                className="text-[9px] font-['IBM_Plex_Mono'] uppercase bg-[#A84B2B]/10 text-[#A84B2B] px-2 py-0.5 border border-[#A84B2B]/30 hover:bg-[#A84B2B]/20 disabled:opacity-50 transition-all"
+              >
+                {loading ? 'Generating...' : 'Generate'}
+              </button>
+            )
+          ) : (
+            <span className="text-[9px] font-['IBM_Plex_Mono'] text-[#A84B2B]/50">(Critical Only)</span>
           )}
         </div>
       </div>
@@ -743,7 +747,7 @@ function PlaybookSection({ alert }) {
           ))
         ) : (
           <p className="font-['IBM_Plex_Mono'] text-[11px] text-[#6B6560]">
-            {loading ? 'Calling Gemini AI...' : 'Click Generate to create an AI playbook for this critical threat.'}
+            {loading ? 'Calling Gemini AI...' : 'Click Generate to create an AI playbook for this threat.'}
           </p>
         )}
       </div>

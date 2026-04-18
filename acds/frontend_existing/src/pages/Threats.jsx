@@ -9,9 +9,7 @@ function PlaybookCell({ alert }) {
   const [playbook, setPlaybook] = useState(alert.playbook || '');
   const [expanded, setExpanded] = useState(false);
 
-  if (alert.severity !== 'Critical') {
-    return <td className="px-6 py-5 text-xs text-neutral-700 font-['IBM_Plex_Mono'] uppercase">—</td>;
-  }
+  // Removed severity check so the button shows for all alerts
 
   const generate = async (e) => {
     e.stopPropagation();
@@ -26,7 +24,9 @@ function PlaybookCell({ alert }) {
 
   return (
     <td className="px-6 py-5" onClick={e => e.stopPropagation()}>
-      {playbook ? (
+      {alert.severity !== 'Critical' ? (
+        <span className="text-[9px] text-[#e5e2e1]/30 font-['IBM_Plex_Mono']">ACTIVE</span>
+      ) : playbook ? (
         <button
           onClick={() => setExpanded(v => !v)}
           className="text-[9px] font-['IBM_Plex_Mono'] uppercase text-[#A84B2B] bg-[#A84B2B]/10 px-2 py-1 border border-[#A84B2B]/20 hover:bg-[#A84B2B]/20 transition-all"

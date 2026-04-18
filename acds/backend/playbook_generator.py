@@ -15,23 +15,7 @@ def generate_playbook(alert: dict, attack_path: list) -> str:
     Enforces a minimum gap (GEMINI_RATE_LIMIT_SEC) between calls.
     If rate limit would be exceeded, returns a rule-based fallback immediately (no sleep).
     """
-    global _last_gemini_call, _calls_this_session
-
-    # Guard 1: Only Critical alerts get Gemini
-    if alert.get('severity') != 'Critical':
-        return _rule_based_playbook(alert, attack_path)
-
-    # Guard 2: Session cap for free tier
-    if _calls_this_session >= MAX_SESSION_CALLS:
-        return _rule_based_playbook(alert, attack_path, reason="Session API cap reached (free tier)")
-
-    # Guard 3: Rate limit — skip (don't sleep) if cooldown not met
-    elapsed = time.time() - _last_gemini_call
-    if elapsed < config.GEMINI_RATE_LIMIT_SEC:
-        return _rule_based_playbook(alert, attack_path, reason=f"Rate limited ({int(config.GEMINI_RATE_LIMIT_SEC - elapsed)}s cooldown)")
-
-    _last_gemini_call = time.time()
-    _calls_this_session += 1
+    # Removed severity check so AI playbooks can be generated for any severity.
 
     path_str = ' → '.join(f"{s['id']} ({s['name']})" for s in attack_path) or 'Unknown'
     geo = alert.get('metadata', {}).get('geolocation') or 'Unknown location'

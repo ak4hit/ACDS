@@ -31,7 +31,7 @@ export const SocketProvider = ({ children }) => {
             return newList;
           });
           // Dispatch custom event for stats/monitor counts 
-          window.dispatchEvent(new CustomEvent('acds-warp-batch', { detail: data.length }));
+          window.dispatchEvent(new CustomEvent('acds-warp-batch', { detail: data }));
         } else {
           if (!data.alert_id) return; // Skip status broadcasts that aren't alerts
           
