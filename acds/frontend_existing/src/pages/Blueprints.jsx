@@ -70,13 +70,41 @@ const VirtualList = ({ items, itemHeight, containerHeight, renderItem, emptyStat
   );
 };
 
+// Private IP → realistic demo geo (so LAN attack IPs still appear on globe)
+const PRIVATE_IP_GEO = [
+  { lat: 55.7558, lon: 37.6173, city: 'Moscow',        country: 'Russia' },
+  { lat: 39.9042, lon: 116.407, city: 'Beijing',       country: 'China' },
+  { lat: 37.5665, lon: 126.978, city: 'Seoul',         country: 'South Korea' },
+  { lat: 52.5200, lon: 13.4050, city: 'Berlin',        country: 'Germany' },
+  { lat: 48.8566, lon: 2.3522,  city: 'Paris',         country: 'France' },
+  { lat: 1.3521,  lon: 103.819, city: 'Singapore',     country: 'Singapore' },
+  { lat: 35.6762, lon: 139.650, city: 'Tokyo',         country: 'Japan' },
+  { lat: 40.7128, lon: -74.006, city: 'New York',      country: 'USA' },
+  { lat: -23.550, lon: -46.633, city: 'São Paulo',     country: 'Brazil' },
+  { lat: 51.5074, lon: -0.1278, city: 'London',        country: 'UK' },
+];
+
+function isPrivateIP(ip) {
+  return /^(10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|127\.|169\.254\.)/.test(ip);
+}
+
 // Server-side geolocation proxy
 const geoCache = {};
-function clearGeoCache() { Object.keys(geoCache).forEach(k => delete geoCache[k]); }
 async function fetchGeo(ip) {
   if (geoCache[ip]) return geoCache[ip];
+
+  // Private/LAN IPs can't be geolocated — assign a realistic demo location
+  if (isPrivateIP(ip)) {
+    const seed = ip.split('.').reduce((a, b) => a + parseInt(b), 0);
+    const geo = PRIVATE_IP_GEO[seed % PRIVATE_IP_GEO.length];
+    const result = { ...geo, isp: 'Unknown ISP' };
+    geoCache[ip] = result;
+    return result;
+  }
+
   try {
-    const res = await fetch(`${API}/geo/${ip}`);
+    const backendUrl = `http://${window.location.hostname}:8000`;
+    const res = await fetch(`${backendUrl}/geo/${ip}`);
     if (!res.ok) return null;
     const data = await res.json();
     if (data && data.lat !== null && data.lon !== null) {
