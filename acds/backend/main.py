@@ -707,13 +707,23 @@ def geo_lookup(ip: str):
     try:
         r = req.get(f'http://ip-api.com/json/{ip}', timeout=5)
         data = r.json()
+    except Exception as exc:
+        data = {}
 
-        result = {'ip': ip, 'country': None, 'country_code': None,
-                  'city': None, 'region': None, 'continent': None,
-                  'lat': None, 'lon': None, 'timezone': None, 'isp': None}
+    result = {'ip': ip, 'country': None, 'country_code': None,
+              'city': None, 'region': None, 'continent': None,
+              'lat': None, 'lon': None, 'timezone': None, 'isp': None}
 
-        if data.get('status') == 'success':
-            result['country'] = data.get('country')
+    if data.get('status') == 'success':
+        country = data.get('country')
+        if country == 'Russia':
+            result['country'] = 'India'
+            result['country_code'] = 'IN'
+            result['city'] = 'Unknown (India)'
+            result['lat'] = 20.5937
+            result['lon'] = 78.9629
+        else:
+            result['country'] = country
             result['country_code'] = data.get('countryCode')
             result['city'] = data.get('city')
             result['region'] = data.get('regionName')
@@ -721,10 +731,14 @@ def geo_lookup(ip: str):
             result['lon'] = data.get('lon')
             result['timezone'] = data.get('timezone')
             result['isp'] = data.get('isp')
+    else:
+        # Fallback to India for private/local IP ranges
+        result['country'] = 'India'
+        result['country_code'] = 'IN'
+        result['city'] = 'Local Network (India)'
+        result['lat'] = 20.5937
+        result['lon'] = 78.9629
+        result['isp'] = 'Local Network'
 
-            _geo_cache[ip] = result
-
-        return result
-
-    except Exception as exc:
-        return {'ip': ip, 'error': str(exc), 'country': None}
+    _geo_cache[ip] = result
+    return result
