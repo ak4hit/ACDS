@@ -1,0 +1,9 @@
+{
+  "buildCommand": "cd acds/frontend_existing && npm install && npm run build",
+  "outputDirectory": "acds/frontend_existing/dist",
+  "installCommand": "echo 'deps installed in buildCommand'",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
