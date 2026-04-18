@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSocket } from '../context/SocketContext';
 import { useNavigate } from 'react-router-dom';
 
-const API = 'http://localhost:8000';
+const API = `http://${window.location.hostname}:8000`;
 
 export default function Intelligence() {
   const { alerts, stats } = useSocket();

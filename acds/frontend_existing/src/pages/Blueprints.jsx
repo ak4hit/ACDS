@@ -6,7 +6,7 @@ import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables);
 
-const API = 'http://localhost:8000';
+const API = `http://${window.location.hostname}:8000`;
 
 // ── Smooth animated counter ───────────────────────────────────────────────
 function useAnimatedCounter(target, duration = 400) {
@@ -680,7 +680,7 @@ function PlaybookSection({ alert }) {
   const generatePlaybook = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:8000/playbooks/generate/${alert.alert_id}`, { method: 'POST' });
+      const res = await fetch(`http://${window.location.hostname}:8000/playbooks/generate/${alert.alert_id}`, { method: 'POST' });
       const data = await res.json();
       if (data.playbook) setLocalPlaybook(data.playbook);
     } catch (_) {}

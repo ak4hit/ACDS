@@ -16,7 +16,7 @@ export const SocketProvider = ({ children }) => {
     const statInterval = setInterval(fetchStats, 3000);
 
     // WebSocket connect
-    const socket = new WebSocket('ws://localhost:8000/ws/alerts');
+    const socket = new WebSocket(`ws://${window.location.hostname}:8000/ws/alerts`);
     
     socket.onopen = () => console.log("WebSocket Connected");
     
@@ -56,17 +56,16 @@ export const SocketProvider = ({ children }) => {
 
   const fetchStats = async () => {
     try {
-      const res = await axios.get('http://localhost:8000/stats');
+      const res = await axios.get(`http://${window.location.hostname}:8000/stats`);
       setStats(res.data);
     } catch(e) {}
   };
 
   const resetSystem = async () => {
     try {
-      await axios.post('http://localhost:8000/reset');
+      await axios.post(`http://${window.location.hostname}:8000/reset`);
       setAlerts([]);
       fetchStats();
-      // Notify all components to clear their local state
       window.dispatchEvent(new CustomEvent('acds-reset'));
     } catch(e) {}
   };

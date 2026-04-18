@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSocket } from '../context/SocketContext';
 
-const API = 'http://localhost:8000';
+const API = `http://${window.location.hostname}:8000`;
 const formatTime = (ts) => new Date(ts).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + 'Z';
 
 function PlaybookCell({ alert }) {
