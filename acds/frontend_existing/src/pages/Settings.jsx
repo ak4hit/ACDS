@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 export default function Settings() {
   const [whitelist, setWhitelist] = useState([]);
   const [settings, setSettings] = useState(null);
+  const [newIp, setNewIp] = useState('');
+  const [showAddInput, setShowAddInput] = useState(false);
   
   useEffect(() => {
     fetch(`http://${window.location.hostname}:8000/settings`)
@@ -15,7 +17,7 @@ export default function Settings() {
   }, []);
 
   const addIp = async () => {
-    const ip = prompt("Enter new whitelisted IP Address:");
+    const ip = newIp.trim();
     if (!ip) return;
     try {
       const res = await fetch(`http://${window.location.hostname}:8000/settings/whitelist/add`, {
@@ -25,8 +27,10 @@ export default function Settings() {
       });
       const data = await res.json();
       if (data.whitelist) setWhitelist(data.whitelist);
+      setNewIp('');
+      setShowAddInput(false);
     } catch (e) {
-      alert("Failed to add IP");
+      console.error('Failed to add IP', e);
     }
   };
 
@@ -166,7 +170,7 @@ export default function Settings() {
           <div className="space-y-2">
             <label className="block font-['IBM_Plex_Mono'] text-[10px] text-[#b9ccb2] tracking-widest uppercase">GEMINI_API_KEY</label>
             <div className="relative group">
-              <input className="w-full bg-[#080808] border-none py-3 px-4 font-['IBM_Plex_Mono'] text-[#A84B2B] focus:ring-0 outline-none pr-12" type="password" defaultValue="AIzaSyB3X_589X-Yp7ZlQ9m2k0j1h4g3f2e1d" />
+              <input className="w-full bg-[#080808] border-none py-3 px-4 font-['IBM_Plex_Mono'] text-[#A84B2B] focus:ring-0 outline-none pr-12" type="password" placeholder="Set via backend .env → GEMINI_API_KEY" readOnly />
               <button className="absolute right-4 top-1/2 -translate-y-1/2 text-[#6B6560] hover:text-[#A84B2B] transition-colors">
                 <span className="material-symbols-outlined text-lg" style={{ verticalAlign: 'middle', fontVariationSettings: "'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24" }}>visibility</span>
               </button>
@@ -188,7 +192,7 @@ export default function Settings() {
             </div>
           </div>
           <div className="space-y-4">
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 items-center">
               {whitelist.map((ip) => (
                 <div key={ip} className="bg-[#080808] border border-[#A84B2B]/20 px-4 py-2 flex items-center gap-4 group">
                   <span className="font-['IBM_Plex_Mono'] text-sm text-[#A84B2B]">{ip}</span>
@@ -197,10 +201,30 @@ export default function Settings() {
                   </button>
                 </div>
               ))}
-              <button onClick={addIp} className="bg-[#120b0a] border border-[#6B6560]/20 px-4 py-2 font-['IBM_Plex_Mono'] text-[10px] tracking-widest uppercase text-[#e5e2e1] hover:bg-[#A84B2B] hover:text-black transition-all flex items-center gap-2">
-                <span className="material-symbols-outlined text-sm" style={{ verticalAlign: 'middle' }}>add</span>
-                ADD IP ADDRESS
-              </button>
+              {showAddInput ? (
+                <div className="flex items-center gap-2">
+                  <input
+                    autoFocus
+                    type="text"
+                    value={newIp}
+                    onChange={e => setNewIp(e.target.value)}
+                    onKeyDown={e => { if (e.key === 'Enter') addIp(); if (e.key === 'Escape') { setShowAddInput(false); setNewIp(''); } }}
+                    placeholder="e.g. 192.168.1.100"
+                    className="bg-[#080808] border border-[#A84B2B]/40 py-2 px-3 font-['IBM_Plex_Mono'] text-sm text-[#A84B2B] outline-none focus:border-[#A84B2B] w-48 placeholder:text-[#6B6560]/50"
+                  />
+                  <button onClick={addIp} className="bg-[#A84B2B] text-black font-['IBM_Plex_Mono'] text-[10px] font-bold px-4 py-2 uppercase tracking-widest hover:opacity-90 transition-opacity">
+                    ADD
+                  </button>
+                  <button onClick={() => { setShowAddInput(false); setNewIp(''); }} className="bg-[#120b0a] border border-[#6B6560]/20 text-[#6B6560] font-['IBM_Plex_Mono'] text-[10px] px-3 py-2 uppercase tracking-widest hover:text-[#e5e2e1] transition-colors">
+                    CANCEL
+                  </button>
+                </div>
+              ) : (
+                <button onClick={() => setShowAddInput(true)} className="bg-[#120b0a] border border-[#6B6560]/20 px-4 py-2 font-['IBM_Plex_Mono'] text-[10px] tracking-widest uppercase text-[#e5e2e1] hover:bg-[#A84B2B] hover:text-black transition-all flex items-center gap-2">
+                  <span className="material-symbols-outlined text-sm" style={{ verticalAlign: 'middle' }}>add</span>
+                  ADD IP ADDRESS
+                </button>
+              )}
             </div>
             <p className="font-['Inter'] text-[10px] text-[#6B6560]/60 mt-4 italic leading-relaxed">
               Note: Whitelisted hosts are exempt from behavioral analysis and threshold-based locking. Use with extreme caution as this bypasses the ACDS neural engine filters.

@@ -1,13 +1,36 @@
+# Dependencies
 node_modules/
-__pycache__/
-*.pyc
-.env
 venv/
 env/
-.vscode/
-.idea/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment / secrets — NEVER commit
+.env
+.env.local
+.env.*.local
+acds/backend/.env
+
+# Large generated data files
+acds/backend/sample_logs.json
+acds/backend/speed_test_manifest.json
+acds/backend/fake_logs/
+acds/backend/filebeat_data/
+
+# Build outputs
 dist/
 build/
 .next/
+
+# Logs
 *.log
-acds/backend/fake_logs/
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
