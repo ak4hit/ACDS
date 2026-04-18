@@ -90,6 +90,7 @@ function isPrivateIP(ip) {
 
 // Server-side geolocation proxy
 const geoCache = {};
+function clearGeoCache() { Object.keys(geoCache).forEach(k => delete geoCache[k]); }
 async function fetchGeo(ip) {
   if (geoCache[ip]) return geoCache[ip];
 
