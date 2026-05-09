@@ -2,7 +2,6 @@
 
 # ⚔️ ACDS — AI Cyber Defense System
 
-**Built at Xypheria Hackathon 2026 · Team: ACDS**
 
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
@@ -238,7 +237,7 @@ Click **Reset System** in the Settings page or call `POST /reset` to wipe all in
 
 <div align="center">
 
-**Built with ❤️ for Xypheria Hackathon 2026**
+
 
 *ACDS — From Raw Log to Threat Intelligence in Real-Time*
 
